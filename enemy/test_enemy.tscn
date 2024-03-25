@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://yydh2e0e7bdo"]
+
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="1_2mglc"]
+[ext_resource type="Script" path="res://enemy/test_enemy.gd" id="1_yai5s"]
+
+[node name="TestEnemy" type="PathFollow2D"]
+script = ExtResource("1_yai5s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2mglc")

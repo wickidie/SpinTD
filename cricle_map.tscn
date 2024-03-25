@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ghrc36g4j2by"]
+
+[ext_resource type="Script" path="res://cricle_map.gd" id="1_wa886"]
+
+[sub_resource type="Curve2D" id="Curve2D_uvndy"]
+_data = {
+"points": PackedVector2Array(-70.9282, -2.67117, 70.9282, 2.67117, -168, -200, -46.0209, -62.8579, 46.0209, 62.8579, 248, -193, 55.0006, -41.5311, -55.0006, 41.5311, 248, 83, 23.5717, 70.7151, -23.5717, -70.7151, -206, 78, -76.5704, -110.246, 76.5704, 110.246, 128, -72)
+}
+point_count = 5
+
+[node name="CricleMap" type="Node2D"]
+script = ExtResource("1_wa886")
+
+[node name="MapPath" type="Path2D" parent="."]
+position = Vector2(232, 264)
+curve = SubResource("Curve2D_uvndy")
