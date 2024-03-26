@@ -7,15 +7,15 @@ extends Node2D
 var enemy_list: Array
 
 # Called when the node enters the scene tree for the first time.
-func _ready():	
-	for i in range(10):
+func _ready():
+	for i in range(200):
 		spawn_unit()
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.2).timeout
 	pass
 
 func _process(delta):
 	pass
-	
+
 func spawn_unit():
 	var enemy = TEST_ENEMY.instantiate()
 	map_path.add_child(enemy)
