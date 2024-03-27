@@ -7,3 +7,4 @@ res://tower/test_projectile.gd
 res://tower/test_tower.gd
 res://cricle_map.gd
 res://enemy/test_enemy.gd
+res://player/player.gd

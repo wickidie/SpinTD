@@ -1,6 +1,7 @@
 extends PathFollow2D
 
 @export var speed: float = 100
+@onready var hitbox: Area2D = $Hitbox
 
 func _ready():
 	loop = false
@@ -22,7 +23,7 @@ func move_unit(delta):
 	pass
 
 func destroy():
-	#print(self, " Dead")
+	#print(self, " + ", hitbox , " Dead")
 	queue_free()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

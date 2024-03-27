@@ -26,12 +26,12 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			building = TEST_TOWER.instantiate()
 			get_parent().add_child(building)
 		is_building = true
-
 	pass
 
 func _unhandled_input(event):
 	if (event.is_action_pressed("LMB") and is_building and building.can_build_here):
 		build()
+		building.placed()
 		is_building = false
 		building = null
 	elif (event.is_action_pressed("RMB") and is_building):
