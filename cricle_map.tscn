@@ -1,14 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
+[gd_scene load_steps=4 format=3 uid="uid://ghrc36g4j2by"]
 
 [ext_resource type="Script" path="res://cricle_map.gd" id="1_wa886"]
 [ext_resource type="PackedScene" uid="uid://dnoc8l6gk82ee" path="res://player/player.tscn" id="2_g4qoe"]
-[ext_resource type="PackedScene" uid="uid://gah0tyr0hid2" path="res://tower/test_tower.tscn" id="2_uq53e"]
 
-[sub_resource type="Curve2D" id="Curve2D_uvndy"]
+[sub_resource type="Curve2D" id="Curve2D_yqjoy"]
 _data = {
-"points": PackedVector2Array(-70.9282, -2.67117, 70.9282, 2.67117, -168, -200, -46.0209, -62.8579, 46.0209, 62.8579, 248, -193, 55.0006, -41.5311, -55.0006, 41.5311, 248, 83, 23.5717, 70.7151, -23.5717, -70.7151, -206, 78, -76.5704, -110.246, 76.5704, 110.246, 128, -72)
+"points": PackedVector2Array(0, 0, 0, 0, -40, -280, 0, 0, 0, 0, -40, -216, 0, 0, 0, 0, 448, -216, 0, 0, 0, 0, 456, 280, 0, 0, 0, 0, -504, 288, 0, 0, 0, 0, -504, -216, 0, 0, 0, 0, -48, -208, 0, 0, 0, 0, -48, 24)
 }
-point_count = 5
+point_count = 8
 
 [node name="CricleMap" type="Node2D"]
 script = ExtResource("1_wa886")
@@ -16,17 +15,5 @@ script = ExtResource("1_wa886")
 [node name="Player" parent="." instance=ExtResource("2_g4qoe")]
 
 [node name="MapPath" type="Path2D" parent="."]
-position = Vector2(232, 264)
-curve = SubResource("Curve2D_uvndy")
-
-[node name="TestTower" parent="." instance=ExtResource("2_uq53e")]
-position = Vector2(128, -32)
-
-[node name="TestTower2" parent="." instance=ExtResource("2_uq53e")]
-position = Vector2(288, 464)
-
-[node name="TestTower3" parent="." instance=ExtResource("2_uq53e")]
-position = Vector2(440, 192)
-
-[node name="TestTower4" parent="." instance=ExtResource("2_uq53e")]
-position = Vector2(-96, 296)
+position = Vector2(616, 288)
+curve = SubResource("Curve2D_yqjoy")

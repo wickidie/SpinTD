@@ -16,13 +16,18 @@ func move_unit():
 	progress += speed
 	#static_body_2d.position = global_position
 	if (progress_ratio == 1):
-		print(self, " Finish")
+		#print(self, " Finish")
 		queue_free()
 		return
 	pass
 
+func destroy():
+	#print(self, " Dead")
+	queue_free()
+
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if (area.is_in_group("TowerProjectile")):
-		print(self, " Dead")
-		queue_free()
+	#if (area.is_in_group("TowerProjectile")):
+		#print(self, " Dead")
+		#queue_free()
 	pass # Replace with function body.
+

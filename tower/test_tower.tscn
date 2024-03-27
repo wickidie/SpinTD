@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://gah0tyr0hid2"]
+[gd_scene load_steps=5 format=3 uid="uid://gah0tyr0hid2"]
 
 [ext_resource type="Script" path="res://tower/test_tower.gd" id="1_7vwvv"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="1_t3duc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
 radius = 192.167
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
+radius = 64.0
 
 [node name="TestTower" type="Node2D"]
 script = ExtResource("1_7vwvv")
@@ -13,12 +16,15 @@ script = ExtResource("1_7vwvv")
 texture = ExtResource("1_t3duc")
 
 [node name="Range" type="Area2D" parent="."]
-monitorable = false
-priority = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 rotation = -0.000330579
 shape = SubResource("CircleShape2D_ibm4v")
+
+[node name="TowerArea" type="Area2D" parent="." groups=["Tower"]]
+
+[node name="TowerCollision" type="CollisionShape2D" parent="TowerArea"]
+shape = SubResource("CircleShape2D_jatt3")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(128, 0)
@@ -30,4 +36,6 @@ position = Vector2(128, 0)
 
 [connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
 [connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="area_entered" from="TowerArea" to="." method="_on_tower_area_area_entered"]
+[connection signal="area_exited" from="TowerArea" to="." method="_on_tower_area_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
