@@ -24,7 +24,7 @@ func _ready():
 	timer.start()
 
 func _physics_process(delta: float) -> void:
-	set_target()
+	pass
 
 func set_target():
 	if (target_list.size() != 0):
@@ -51,6 +51,7 @@ func shoot():
 
 func _on_timer_timeout() -> void:
 	can_shoot = true
+	set_target()
 	pass # Replace with function body.
 
 func _on_range_area_entered(area: Area2D) -> void:

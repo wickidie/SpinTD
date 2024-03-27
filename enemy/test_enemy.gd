@@ -1,6 +1,6 @@
 extends PathFollow2D
 
-@export var speed: float = 3
+@export var speed: float = 100
 
 func _ready():
 	loop = false
@@ -9,11 +9,11 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	move_unit()
+	move_unit(delta)
 	pass
 
-func move_unit():
-	progress += speed
+func move_unit(delta):
+	progress += speed * delta
 	#static_body_2d.position = global_position
 	if (progress_ratio == 1):
 		#print(self, " Finish")

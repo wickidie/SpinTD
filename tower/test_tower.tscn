@@ -16,6 +16,7 @@ script = ExtResource("1_7vwvv")
 texture = ExtResource("1_t3duc")
 
 [node name="Range" type="Area2D" parent="."]
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 rotation = -0.000330579
@@ -27,10 +28,10 @@ shape = SubResource("CircleShape2D_ibm4v")
 shape = SubResource("CircleShape2D_jatt3")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(128, 0)
+target_position = Vector2(64, 0)
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(128, 0)
+position = Vector2(64, 0)
 
 [node name="Timer" type="Timer" parent="."]
 

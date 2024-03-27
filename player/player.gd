@@ -13,10 +13,10 @@ func _process(delta):
 
 func show_build():
 	building.position = get_global_mouse_position()
-	
+
 func build():
 	building.position = get_global_mouse_position()
-	
+
 func cancel_build():
 	building.queue_free()
 
@@ -26,9 +26,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			building = TEST_TOWER.instantiate()
 			get_parent().add_child(building)
 		is_building = true
-		
+
 	pass
-	
+
 func _unhandled_input(event):
 	if (event.is_action_pressed("LMB") and is_building and building.can_build_here):
 		build()

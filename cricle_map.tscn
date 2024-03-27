@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ghrc36g4j2by"]
+[gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
 
 [ext_resource type="Script" path="res://cricle_map.gd" id="1_wa886"]
 [ext_resource type="PackedScene" uid="uid://dnoc8l6gk82ee" path="res://player/player.tscn" id="2_g4qoe"]
+[ext_resource type="PackedScene" uid="uid://gah0tyr0hid2" path="res://tower/test_tower.tscn" id="3_wdhi4"]
 
 [sub_resource type="Curve2D" id="Curve2D_yqjoy"]
 _data = {
@@ -17,3 +18,9 @@ script = ExtResource("1_wa886")
 [node name="MapPath" type="Path2D" parent="."]
 position = Vector2(616, 288)
 curve = SubResource("Curve2D_yqjoy")
+
+[node name="TestTower" parent="." instance=ExtResource("3_wdhi4")]
+position = Vector2(816, 216)
+
+[node name="TestTower2" parent="." instance=ExtResource("3_wdhi4")]
+position = Vector2(936, 464)
