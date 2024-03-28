@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://do75tovfr1fr8"]
+
+[ext_resource type="Script" path="res://spinner/spinner.gd" id="1_h18x4"]
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="1_m2qdv"]
+[ext_resource type="AudioStream" uid="uid://ddndmlylxyrcw" path="res://spinner/generic-ka-ching.mp3" id="3_i5aqv"]
+[ext_resource type="AudioStream" uid="uid://cf8cbup7wofo0" path="res://spinner/money_2.mp3" id="4_sbrbf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1055m"]
+size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_q2bh0"]
+resource_name = "spinner_spinning"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_bwtup"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hq8fb"]
+_data = {
+"RESET": SubResource("Animation_bwtup"),
+"spinner_spinning": SubResource("Animation_q2bh0")
+}
+
+[node name="Spinner" type="Node2D"]
+script = ExtResource("1_h18x4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_1055m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+texture = ExtResource("1_m2qdv")
+
+[node name="Cooldown" type="Timer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+mouse_filter = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hq8fb")
+}
+
+[node name="SfxSpin" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_i5aqv")
+
+[node name="SfxJackpot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sbrbf")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
+[gd_scene load_steps=6 format=3 uid="uid://ghrc36g4j2by"]
 
 [ext_resource type="Script" path="res://cricle_map.gd" id="1_wa886"]
 [ext_resource type="PackedScene" uid="uid://dnoc8l6gk82ee" path="res://player/player.tscn" id="2_g4qoe"]
 [ext_resource type="PackedScene" uid="uid://gah0tyr0hid2" path="res://tower/test_tower.tscn" id="3_wdhi4"]
+[ext_resource type="PackedScene" uid="uid://do75tovfr1fr8" path="res://spinner/spinner.tscn" id="4_403tx"]
 
 [sub_resource type="Curve2D" id="Curve2D_yqjoy"]
 _data = {
@@ -34,5 +35,8 @@ position = Vector2(816, 216)
 
 [node name="TestTower2" parent="." instance=ExtResource("3_wdhi4")]
 position = Vector2(936, 464)
+
+[node name="Spinner" parent="." instance=ExtResource("4_403tx")]
+position = Vector2(576, 384)
 
 [connection signal="timeout" from="WaveInterval" to="." method="_on_wave_interval_timeout"]

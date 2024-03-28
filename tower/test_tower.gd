@@ -27,8 +27,11 @@ func _ready():
 	timer.start()
 	pass
 
-func _physics_process(delta: float) -> void:
+func _process(delta):
 	reload_bar.value = timer.wait_time - timer.time_left
+	pass
+
+func _physics_process(delta: float) -> void:
 	set_target()
 	pass
 
