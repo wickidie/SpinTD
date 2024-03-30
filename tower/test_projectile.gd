@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Bullet extends CharacterBody2D
 
 @onready var timer: Timer = $Timer
 @onready var hitbox: Area2D = $Area2D

@@ -28,6 +28,7 @@ var wave_list = {
 }
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#Engine.time_scale = 0.1
 	print("Number of Waves : ", wave_list.size())
 	wave_interval.start()
 	pass

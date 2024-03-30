@@ -12,6 +12,7 @@ _data = {
 point_count = 8
 
 [node name="CricleMap" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_wa886")
 
 [node name="WaveInterval" type="Timer" parent="."]

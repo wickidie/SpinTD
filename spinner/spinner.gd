@@ -1,10 +1,10 @@
-extends Node2D
+class_name Spinner extends Node2D
 
-@onready var cooldown = $Cooldown
-@onready var progress_bar = $ProgressBar
-@onready var animation_player = $AnimationPlayer
-@onready var sfx_spin = $SfxSpin
-@onready var sfx_jackpot = $SfxJackpot
+@onready var cooldown: Timer = $Cooldown
+@onready var progress_bar: ProgressBar = $ProgressBar
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var sfx_spin: AudioStreamPlayer2D = $SfxSpin
+@onready var sfx_jackpot: AudioStreamPlayer2D = $SfxJackpot
 
 var loot_table: Dictionary = {
 	"large_gold" : {

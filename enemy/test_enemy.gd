@@ -1,4 +1,4 @@
-extends PathFollow2D
+class_name Enemy extends PathFollow2D
 
 @export var speed: float = 100
 @onready var hitbox: Area2D = $Hitbox
