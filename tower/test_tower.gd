@@ -2,6 +2,7 @@ class_name Tower extends Node2D
 
 signal enemy_spotted(enemy)
 signal placed
+signal build_placed
 signal selected
 signal unselected
 signal build_area_cleared
@@ -12,14 +13,20 @@ signal build_area_cleared
 @onready var tower_collision: CollisionShape2D = $TowerArea/TowerCollision
 @onready var tower_range = $Range/TowerRange
 @onready var tower_area: Area2D = $TowerArea
-@onready var reload_bar: ProgressBar = $ReloadBar
+@onready var tower_click_area = $TowerClickArea
+@onready var reload_bar: ProgressBar = $Debug/ReloadBar
+@onready var debug_text = $Debug/HBox/RichTextLabel
 
 var attack_speed: float = 1
 var can_shoot: bool = false
+
+var player: Player
 var can_build_here: bool = true
 var is_placed: bool = false
 var is_selected: bool = false
-var build_obstacle: Array
+var is_waiting: bool = false
+var building_obstacles: Array
+
 var target_list: Array
 var target_list_progress: Array
 var target: Node2D
@@ -29,20 +36,25 @@ var target_index_progress: float
 var target_first_progress: float
 
 func _ready():
-	placed.connect(tower_placed)
+	build_placed.connect(place_building)
 	selected.connect(tower_selected)
 	unselected.connect(tower_unselected)
+	player = get_parent().get_node("Player")
 	tower_range.disabled = true
 	tower_area.input_pickable = false
 	target = self
 	timer.wait_time = attack_speed
 	timer.start()
+	waiting_to_build()
 	pass
 
 func _process(delta):
+	#if (is_waiting and not player.is_precision_building):
+		#position = get_global_mouse_position()
 	reload_bar.value = timer.wait_time - timer.time_left
+	debug_text.text = "can_build_here : " + str(can_build_here) + "\nis_placed : " + str(is_placed) + "\nis_selected : " + str(is_selected)
 	pass
-
+	
 func _physics_process(delta: float) -> void:
 	set_target()
 	pass
@@ -81,14 +93,23 @@ func debug():
 	print("Index : ", target_list_progress.find(target_list_progress.max()))
 	print("Target : ", target, "\n")
 
-func tower_placed():
+func waiting_to_build():
+	is_waiting = true
+		
+func place_building():
+	is_placed = true
+	is_waiting = false
+	is_selected = false
 	tower_range.disabled = false
 	tower_range.visible = false
-	is_placed = true
+	print("Building Placed : ", self)
 	await get_tree().create_timer(0.1).timeout
-	tower_area.input_pickable = true
-	await check_build_space()
+# Delete new tower if illegally builded
 	tower_area.monitoring = false
+# Wait for next frame so the tower doesnt instantly selected
+	tower_click_area.monitorable = true
+	tower_click_area.input_pickable = true
+	pass
 	
 func tower_selected():
 	tower_range.visible = true
@@ -99,52 +120,48 @@ func tower_unselected():
 	is_selected = false
 
 func check_build_space():
-	#print(self, " Before : ", can_build_here)
-	if (tower_area.get_overlapping_areas().is_empty()):
-		build_area_cleared.emit()
+	if (building_obstacles.is_empty()):
 		tower_collision.debug_color = Color(0, 0.6, 0.7, 0.42)
-	else:
+		can_build_here = true
+		print(self, " Area Empty")
+		return true
+	elif (not building_obstacles.is_empty()):
+		print(self, " Area not Empty")
 		tower_collision.debug_color = Color(1, 0, 0, 0.5)
-		if (is_placed and is_selected and get_parent().get_node("Player").is_building == false):
-			print(self, " : Overlaped")
+		can_build_here = false
+		#player.is_precision_building = true
+		if (is_placed):
+			print(self, " : Illegal Builded")
 			queue_free()
-	#print(self, " After : ", can_build_here, "\n")
+			return false
+	else:
+		print("ELSE")
+		return false
 
 func _on_timer_timeout() -> void:
 	timer.stop()
 	can_shoot = true
-	#set_target()
-	pass # Replace with function body.
 
 func _on_range_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("Enemy")):
 		target_list.append(area.get_parent())
-	pass # Replace with function body.
 
 func _on_range_area_exited(area: Area2D) -> void:
 	if (area.is_in_group("Enemy")):
 		target_list.erase(area.get_parent())
-	pass # Replace with function body.
 
 func _on_tower_area_area_entered(area):
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
-		can_build_here = false
+		building_obstacles.append(area)
 		check_build_space()
-		pass
-	pass # Replace with function body.
 
 func _on_tower_area_area_exited(area):
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
-		can_build_here = true
+		building_obstacles.remove_at(building_obstacles.find(area))
 		check_build_space()
-		pass
-	pass # Replace with function body.
 
-func _on_tower_area_input_event(viewport, event, shape_idx):
-	if (Input.is_action_just_pressed("LMB") and is_placed and get_parent().get_node("Player") == null):
-		get_parent().get_node("Player").selected_building = self
+func _on_tower_click_area_input_event(viewport, event, shape_idx):
+	if (Input.is_action_just_pressed("LMB") and is_placed and player.is_building == false):
+		player.selected_building = self
 		selected.emit()
 		print("Select : ", self)
-		#print(get_parent().get_node("Player"))
-		#print(get_parent().get_node("Player").selected_building)
-	pass # Replace with function body.

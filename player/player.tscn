@@ -8,4 +8,25 @@ script = ExtResource("1_tqoa7")
 [node name="BuildCD" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="Debug" type="Control" parent="."]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Debug"]
+layout_mode = 0
+offset_right = 576.0
+offset_bottom = 40.0
+bbcode_enabled = true
+text = "Debug"
+fit_content = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
 [connection signal="timeout" from="BuildCD" to="." method="_on_build_cd_timeout"]

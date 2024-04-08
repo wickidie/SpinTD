@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ghrc36g4j2by"]
+[gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
 
 [ext_resource type="Script" path="res://cricle_map.gd" id="1_wa886"]
 [ext_resource type="PackedScene" uid="uid://dnoc8l6gk82ee" path="res://player/player.tscn" id="2_g4qoe"]
-[ext_resource type="PackedScene" uid="uid://gah0tyr0hid2" path="res://tower/test_tower.tscn" id="3_wdhi4"]
 [ext_resource type="PackedScene" uid="uid://do75tovfr1fr8" path="res://spinner/spinner.tscn" id="4_403tx"]
 
 [sub_resource type="Curve2D" id="Curve2D_yqjoy"]
@@ -30,12 +29,6 @@ curve = SubResource("Curve2D_yqjoy")
 position = Vector2(-31, -27)
 scale = Vector2(4.1, 3.7)
 polygon = PackedVector2Array(-134.878, -61.8919, -134.878, 93.7838, 130.488, 93.7838, 130.488, -61.8919, 114.878, -61.8919, 114.878, 76.4865, -119.268, 76.4865, -119.268, -44.5946, -10, -44.5946, -10, 24.5946, 5.60976, 24.5946, 5.60976, -44.5946, 114.878, -44.5946, 114.878, -61.8919, 5.60976, -61.8919, 5.60976, -70.5405, -10, -70.5405, -10, -61.8919)
-
-[node name="TestTower" parent="." instance=ExtResource("3_wdhi4")]
-position = Vector2(816, 216)
-
-[node name="TestTower2" parent="." instance=ExtResource("3_wdhi4")]
-position = Vector2(936, 464)
 
 [node name="Spinner" parent="." instance=ExtResource("4_403tx")]
 position = Vector2(576, 384)

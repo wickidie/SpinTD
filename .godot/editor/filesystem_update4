@@ -1,9 +1,5 @@
-res://tower/test_tower.tscn
 res://cricle_map.tscn
-res://enemy/test_enemy.tscn
-res://tower/test_projectile.tscn
-res://spinner/spinner.tscn
+res://player/player.gd
+res://tower/test_tower.tscn
 res://player/player.tscn
 res://tower/test_tower.gd
-res://player/player.gd
-res://cricle_map.gd
