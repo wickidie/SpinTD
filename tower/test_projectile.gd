@@ -7,12 +7,13 @@ var speed: float = 500
 var target: Vector2
 var enemies: Array
 var can_damage: bool = true
+var projectile_owner: Player
 
 func _ready() -> void:
 	timer.wait_time = 2
 	timer.start()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_to_target()
 
 func move_to_target():
@@ -30,6 +31,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 			if (enemy.is_in_group("Enemy")):
 				enemies.append(enemy)
 		#print("Enemies : ", enemies)
+		projectile_owner.economy.money += enemies[0].get_parent().bounty
 		enemies[0].get_parent().destroy()
 	pass # Replace with function body.
 

@@ -1,57 +1,89 @@
 extends Node2D
 
-@onready var map_path = $MapPath
 @onready var ICON = preload("res://icon.svg")
 @onready var TEST_ENEMY = preload("res://enemy/test_enemy.tscn")
+@onready var map_path = $MapPath
 @onready var wave_interval: Timer = $WaveInterval
 
 signal wave_finished
 
-var enemy_list: Array
 var wave: int = 1
-var wave_list = {
-	"1" : {
-		"mob_set" : [10, 15, 5, 3, 20],
-		"spawn_interval" : [0.5, 0.1, 0.5, 0.1, 0.2],
-		"set_interval" : [3, 3, 3, 3, 3]
-	},
-	"2" : {
-		"mob_set" : [5, 10, 15, 20, 3],
-		"spawn_interval" : [1, 0.1, 0.5, 0.1, 1],
-		"set_interval" : [1, 1, 1, 1, 1]
-	},
-	"3" : {
-		"mob_set" : [5, 5, 5, 5, 5],
-		"spawn_interval" : [1, 2, 1, 0, 0],
-		"set_interval" : [1, 1, 1, 1, 1]
-	}
-}
-# Called when the node enters the scene tree for the first time.
+var enemy_list: Array
+var wave_list: Dictionary
+
+enum WAVE {ENEMY_TYPE, MOB_SET, MOB_INTERVAL, SET_INTERVAL}
+
 func _ready():
-	#Engine.time_scale = 0.1
+	wave_list = {
+		"1" : {
+# 2D array concept [enemy_type, mob_set, mob_interval, set_interval]
+			"enemy_set" : [
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3]
+			],
+			"enemy_type" : [TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY],
+			"mob_set" : [50, 15, 5, 3, 20],
+			"spawn_interval" : [0.1, 0.1, 0.5, 0.1, 0.2],
+			"set_interval" : [3, 3, 3, 3, 3]
+		},
+		"2" : {
+			"enemy_set" : [
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3]
+			],
+			"enemy_type" : [TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY],
+			"mob_set" : [5, 10, 15, 20, 3],
+			"spawn_interval" : [1, 0.1, 0.5, 0.1, 1],
+			"set_interval" : [1, 1, 1, 1, 1]
+		},
+		"3" : {
+			"enemy_set" : [
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3],
+				[TEST_ENEMY, 10, 0.1, 3]
+			],
+			"enemy_type" : [TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY],
+			"mob_set" : [5, 5, 5, 5, 5],
+			"spawn_interval" : [1, 2, 1, 0, 0],
+			"set_interval" : [1, 1, 1, 1, 1]
+		}
+	}
 	print("Number of Waves : ", wave_list.size(), "\n")
 	wave_interval.start()
 	pass
 
-func _process(delta):
-	pass
-
-func spawn_unit():
-	var enemy = TEST_ENEMY.instantiate()
+func spawn_unit(enemy_type):
+	var enemy = enemy_type.instantiate()
 	map_path.add_child(enemy)
 	enemy_list.append(enemy)
 
 func new_wave():
-	for i in range(wave_list[str(wave)]["mob_set"].size()):
-		#print("=== Start Of Set ", i+1, " ===")
-		#print("Mob Set Size : ", wave_list[str(wave)]["mob_set"][i])
-		#print("Mob Spawn Interval : ", wave_list[str(wave)]["spawn_interval"][i])
-		for j in range(wave_list[str(wave)]["mob_set"][i]):
-			spawn_unit()
-			await get_tree().create_timer(wave_list[str(wave)]["spawn_interval"][i]).timeout
-		#print("---End Of Set---")
-		#print("\nNext Set in : ", wave_list[str(wave)]["set_interval"][i], " sec\n")
-		await get_tree().create_timer(wave_list[str(wave)]["set_interval"][i]).timeout
+# 2D array implementation
+	for i in range(wave_list[str(wave)]["enemy_set"].size()):
+		for j in range(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_SET]):
+			spawn_unit(wave_list[str(wave)]["enemy_set"][i][WAVE.ENEMY_TYPE])
+			await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_INTERVAL]).timeout
+		await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.SET_INTERVAL]).timeout
+		
+# 1D array implementation
+	#for i in range(wave_list[str(wave)]["mob_set"].size()):
+		##print("=== Start Of Set ", i+1, " ===")
+		##print("Mob Set Size : ", wave_list[str(wave)]["mob_set"][i])
+		##print("Mob Spawn Interval : ", wave_list[str(wave)]["spawn_interval"][i])
+		#for j in range(wave_list[str(wave)]["mob_set"][i]):
+			#spawn_unit(wave_list[str(wave)]["enemy_type"][i])
+			#await get_tree().create_timer(wave_list[str(wave)]["spawn_interval"][i]).timeout
+		##print("---End Of Set---")
+		##print("\nNext Set in : ", wave_list[str(wave)]["set_interval"][i], " sec\n")
+		#await get_tree().create_timer(wave_list[str(wave)]["set_interval"][i]).timeout
 	#print("=== End Of Wave ", wave, " ===")
 	wave += 1
 	#wave_finished.emit()

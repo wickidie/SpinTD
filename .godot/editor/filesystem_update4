@@ -1,5 +1,13 @@
-res://cricle_map.tscn
-res://player/player.gd
 res://tower/test_tower.tscn
+res://cricle_map.tscn
 res://player/player.tscn
+res://player/player.gd
 res://tower/test_tower.gd
+res://cricle_map.gd
+res://enemy/test_enemy.tscn
+res://player/player_economy.gd
+res://game_manager.gd
+res://enemy/test_enemy.gd
+res://tower/test_projectile.gd
+res://tower/test_projectile.tscn
+res://spinner/spinner.gd

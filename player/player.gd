@@ -1,10 +1,15 @@
 class_name Player extends Node2D
 
 @onready var TEST_TOWER: PackedScene = preload("res://tower/test_tower.tscn")
-@onready var build_cd: Timer = $BuildCD
 @onready var debug_text: RichTextLabel = $Debug/RichTextLabel
 
-signal building_prepared
+@onready var nine_patch_rect = $GUI/NinePatchRect
+@onready var tower = $GUI/NinePatchRect/VBoxContainer/Tower
+@onready var target_mode = $GUI/NinePatchRect/VBoxContainer/TargetMode
+@onready var target = $GUI/NinePatchRect/VBoxContainer/Target
+@onready var life = $GUI/HBoxContainer/Life
+@onready var money = $GUI/HBoxContainer/Money
+
 signal building_selected
 
 var building: Tower
@@ -20,31 +25,29 @@ var precision_current_pos: Vector2
 var selected_building_bool: bool
 var building_bool: bool
 
-func _process(delta):
-	if (building != null):
-		building_bool = true
-	else:
-		building_bool = false
-		
-	if (selected_building != null):
-		selected_building_bool = true
-	else:
-		selected_building_bool = false
-		
+var economy: PlayerEconomy
+
+func _ready():
+	building_selected.connect(select_building)
+	GameManager.player_list.append(self)
+	economy = PlayerEconomy.new()
+	nine_patch_rect.visible = false
+
+func _process(_delta):
 	if (is_building):
 		if (is_precision_building and Input.is_action_pressed("LMB")):
 			show_precision_build()
 		elif (not is_precision_building):
 			show_build()
-			
+		
 	debug_text.text = (
 		"building : " + str(building) + 
-		"\nbuilding_bool : " + str(building_bool) +
 		"\nselected_building : " + str(selected_building) + 
-		"\nselected_building_bool : " + str(selected_building_bool) + 
 		"\nis_building : " + str(is_building) + 
 		"\nis_precision_building : " + str(is_precision_building) + 
 		"\ncan_build : " + str(can_build))
+	life.text = ("[center]" + "Life: " + str(GameManager.life) + "[/center]")
+	money.text = ("[center]" + "Money: " + str(economy.money) + "[/center]")
 
 func show_build():
 	building.position = get_global_mouse_position()
@@ -54,30 +57,49 @@ func show_precision_build():
 	building.position = temp_pos
 
 func build():
-	if (building.check_build_space()):
-		build_cd.start()
-		can_build = false
-		is_building = false
-		building = null
-		selected_building = null
-		print("Builded : ", building, "\n")
+	building.build_placed.emit()
+	economy.money -= selected_building.build_cost
+	can_build = true
+	is_building = false
+	building = null
+	selected_building = null
 
 func cancel_build():
-	print("Building Canceled : ", building)
+	#print("Building Canceled : ", building)
 	building.queue_free()
 	is_building = false
 	is_precision_building = false
 	building = null
+	
+func select_building():
+	if (get_global_mouse_position().x <= get_tree().root.size.x / 2):
+		nine_patch_rect.anchors_preset = Control.PRESET_TOP_RIGHT
+	else:
+		nine_patch_rect.anchors_preset = Control.PRESET_TOP_LEFT
+		
+	nine_patch_rect.visible = true
+	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
+	target_mode.text = ("[center]" + str(selected_building.target_mode_string) + "[/center]")
+	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
+
+func unselect_building():
+	#print("Unselect : ", selected_building)
+	selected_building.unselected.emit()
+	selected_building = null
+	print(selected_building)
+	nine_patch_rect.visible = false
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if (Input.is_action_pressed("1") and can_build and not is_building):
+	if (event.is_action_pressed("1") and can_build and not is_building 
+	and economy.money >= 10):
 		if (selected_building != null):
 			selected_building.unselected.emit()
-			can_build = false
+			can_build = true
 			is_building = false
 			building = null
 			selected_building = null
 		building = TEST_TOWER.instantiate()
+		building.name = "Test Tower"
 		selected_building = building
 		building.is_selected = true
 		is_building = true
@@ -91,13 +113,7 @@ func _unhandled_input(event):
 				is_precision_building = false
 			else:
 				print("Builded : ", building, "\n")
-				
-			building.build_placed.emit()
-			build_cd.start()
-			can_build = false
-			is_building = false
-			building = null
-			selected_building = null
+			build()
 		elif (not building.can_build_here):
 			is_precision_building = true
 			precision_start_pos = building.position
@@ -112,11 +128,19 @@ func _unhandled_input(event):
 	
 # Unselect tower
 	if (event.is_action_pressed("LMB") and selected_building != null and not is_building):
-		print("Unselect : ", selected_building)
-		selected_building.unselected.emit()
-		selected_building = null
-		print(selected_building)
-
-func _on_build_cd_timeout():
-	can_build = true
-	build_cd.stop()
+		unselect_building()
+		
+func _on_texture_button_pressed():
+	if (can_build and not is_building and economy.money >= 10):
+		if (selected_building != null):
+			selected_building.unselected.emit()
+			can_build = true
+			is_building = false
+			building = null
+			selected_building = null
+		building = TEST_TOWER.instantiate()
+		building.name = "Test Tower"
+		selected_building = building
+		building.is_selected = true
+		is_building = true
+		get_parent().add_child(building)

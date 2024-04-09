@@ -1,19 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnoc8l6gk82ee"]
+[gd_scene load_steps=3 format=3 uid="uid://dnoc8l6gk82ee"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_tqoa7"]
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="2_r66ck"]
 
 [node name="Player" type="Node2D"]
+top_level = true
 script = ExtResource("1_tqoa7")
 
-[node name="BuildCD" type="Timer" parent="."]
-wait_time = 0.2
-
 [node name="Debug" type="Control" parent="."]
-top_level = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Debug"]
 layout_mode = 0
@@ -23,10 +23,122 @@ bbcode_enabled = true
 text = "Debug"
 fit_content = true
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 0)
-hit_from_inside = true
-collide_with_areas = true
-collide_with_bodies = false
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+metadata/_edit_lock_ = true
 
-[connection signal="timeout" from="BuildCD" to="." method="_on_build_cd_timeout"]
+[node name="NinePatchRect" type="NinePatchRect" parent="GUI"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -192.0
+offset_bottom = 648.0
+grow_horizontal = 0
+texture = ExtResource("2_r66ck")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 46.0
+grow_horizontal = 2
+
+[node name="Tower" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="TargetMode" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Target" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_right = 192.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Life" type="RichTextLabel" parent="GUI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]asdasdasd[/center] "
+fit_content = true
+
+[node name="Money" type="RichTextLabel" parent="GUI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]asdasdasd[/center] "
+scroll_active = false
+
+[node name="Panel" type="PanelContainer" parent="GUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -32.0
+offset_right = 54.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BuildMenu" type="HBoxContainer" parent="GUI/Panel"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("2_r66ck")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureButton2" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("2_r66ck")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureButton3" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("2_r66ck")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="GUI/Panel/BuildMenu/TextureButton" to="." method="_on_texture_button_pressed"]

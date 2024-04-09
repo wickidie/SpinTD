@@ -13,7 +13,7 @@ var loot_table: Dictionary = {
 	},
 	"medium_gold" : {
 		"weight" : 3,
-		"amount" : 30
+		"amount" : 40
 	},
 	"small_gold" : {
 		"weight" : 6,
@@ -24,6 +24,7 @@ var loot_table: Dictionary = {
 var can_spin: bool
 var has_cooldown: bool
 var loot_keys: Array
+var spin_cost: float = 20
 var cumulative_weight: float
 
 func _ready():
@@ -33,7 +34,7 @@ func _ready():
 	cooldown.start()
 	pass
 
-func _process(delta):
+func _process(_delta):
 	progress_bar.value = cooldown.wait_time - cooldown.time_left
 	pass
 
@@ -48,22 +49,25 @@ func roll():
 	animation_player.play("spinner_spinning")
 	can_spin = false
 	cooldown.start()
-	var roll = randi_range(1, cumulative_weight)
-	print("\nRoll : ", roll)
+	var roll_value = randi_range(1, cumulative_weight)
+	GameManager.player_list.front().economy.money -= spin_cost
+	print("\nRoll : ", roll_value)
 	for i in range(loot_table.size()):
-		if (roll <= loot_table[loot_keys[i]]["weight"]):
+		if (roll_value <= loot_table[loot_keys[i]]["weight"]):
 			print(loot_keys[i], " ", loot_table[loot_keys[i]]["amount"])
 			prize_audio(i)
+			GameManager.player_list.front().economy.money += loot_table[loot_keys[i]]["amount"]
 			return
 		else:
-			roll -= loot_table[loot_keys[i]]["weight"]
+			roll_value -= loot_table[loot_keys[i]]["weight"]
 	
 func prize_audio(i: int):
 	if (i == 0):
 		sfx_jackpot.play()
 	
-func _on_area_2d_input_event(viewport, event, shape_idx):
-	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)):
+func _on_area_2d_input_event(_viewport, _event, _shape_idx):
+	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown) 
+	and GameManager.player_list.front().economy.money >= spin_cost):
 		roll()
 		#print("Spin")
 	pass # Replace with function body.

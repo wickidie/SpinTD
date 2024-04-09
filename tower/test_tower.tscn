@@ -19,6 +19,10 @@ script = ExtResource("1_7vwvv")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_t3duc")
 
+[node name="Marker2D" type="Marker2D" parent="Sprite2D"]
+position = Vector2(64, 0)
+scale = Vector2(2, 2)
+
 [node name="Range" type="Area2D" parent="."]
 monitorable = false
 
@@ -30,6 +34,7 @@ shape = SubResource("CircleShape2D_ibm4v")
 
 [node name="TowerCollision" type="CollisionShape2D" parent="TowerArea"]
 shape = SubResource("CircleShape2D_jatt3")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="TowerClickArea" type="Area2D" parent="."]
 input_pickable = false
@@ -39,8 +44,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_qepsb")
 debug_color = Color(0.482353, 0.588235, 0, 0.419608)
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(32, 0)
+[node name="RayCast2D" type="RayCast2D" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
 
