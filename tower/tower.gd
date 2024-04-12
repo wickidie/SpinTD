@@ -9,9 +9,12 @@ signal build_area_cleared
 
 enum TargetMode {FIRST, LAST}
 
-@onready var TEST_PROJECTILE: PackedScene = preload("res://tower/test_projectile.tscn")
-@onready var sprite_2d = $Sprite2D
-@onready var marker_2d = $Sprite2D/Marker2D
+var TowersData: Resource = preload("res://tower/towers_data.gd")
+
+@onready var TEST_PROJECTILE: PackedScene = preload("res://projectile/test/test_projectile.tscn")
+@onready var tower_base = $Base
+@onready var tower_nozzle = $Nozzle
+@onready var marker_2d = $Nozzle/Marker2D
 @onready var timer: Timer = $Timer
 @onready var tower_collision: CollisionShape2D = $TowerArea/TowerCollision
 @onready var tower_range = $Range/TowerRange
@@ -21,23 +24,24 @@ enum TargetMode {FIRST, LAST}
 @onready var debug_text = $Debug/HBox/RichTextLabel
 @onready var ray_cast_2d = $RayCast2D
 
-var build_cost: float = 10
-var attack_speed: float = 1
-var can_shoot: bool = false
+# Tower stats
+var tower_name: String
+var build_cost: float
+var attack_speed: float
 
 var player: Player
-var tower_name = "Test Tower"
+var can_shoot: bool = false
 var can_build_here: bool = true
 var is_placed: bool = false
 var is_selected: bool = false
 var is_waiting: bool = false
 var building_obstacles: Array
 
-var target_list: Array
-var target_list_progress: Array
 var target: Node2D
 var target_index: Node2D
 var target_first: Node2D
+var target_list: Array
+var target_list_progress: Array
 var target_index_progress: float
 var target_first_progress: float
 var target_mode: TargetMode
@@ -57,12 +61,13 @@ func _ready():
 	tower_range.disabled = true
 	tower_area.input_pickable = false
 	target = self
-	timer.wait_time = attack_speed
+	timer.wait_time = 1 / attack_speed
+	reload_bar.max_value = timer.wait_time
 	timer.start()
 	waiting_to_build()
 
 func _process(_delta):
-	reload_bar.value = timer.wait_time - timer.time_left
+	reload_bar.value = reload_bar.max_value - timer.time_left
 	debug_text.text = (
 		"target_mode : " + str(target_mode))
 	
@@ -84,16 +89,16 @@ func set_target():
 		ray_cast_2d.target_position = target.global_position - ray_cast_2d.global_position
 		turn()
 		if (can_shoot):
-			shoot()
+			shoot_projectile()
 	elif (target == null):
 		target = self
 
 func turn():
-	sprite_2d.look_at(target.global_position)
+	tower_nozzle.look_at(target.global_position)
 
-func shoot():
+func shoot_projectile():
 	timer.start()
-	var bullet: Bullet = TEST_PROJECTILE.instantiate()
+	var bullet: Projectile = TEST_PROJECTILE.instantiate()
 	get_parent().add_child(bullet)
 	bullet.projectile_owner = player
 	bullet.position = marker_2d.global_position

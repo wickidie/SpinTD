@@ -86,18 +86,25 @@ offset_right = 192.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
+[node name="Wave" type="RichTextLabel" parent="GUI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Wave: 123[/center] "
+fit_content = true
+
 [node name="Life" type="RichTextLabel" parent="GUI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[center]asdasdasd[/center] "
+text = "[center]Life: 123[/center] "
 fit_content = true
 
 [node name="Money" type="RichTextLabel" parent="GUI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[center]asdasdasd[/center] "
+text = "[center]Money: 123[/center] "
 scroll_active = false
 
 [node name="Panel" type="PanelContainer" parent="GUI"]
@@ -117,7 +124,7 @@ grow_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="TextureButton" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+[node name="Tower1" type="TextureButton" parent="GUI/Panel/BuildMenu"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -125,7 +132,23 @@ texture_normal = ExtResource("2_r66ck")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="TextureButton2" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower1"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tower2" type="TextureButton" parent="GUI/Panel/BuildMenu"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -133,7 +156,23 @@ texture_normal = ExtResource("2_r66ck")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="TextureButton3" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tower3" type="TextureButton" parent="GUI/Panel/BuildMenu"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -141,4 +180,21 @@ texture_normal = ExtResource("2_r66ck")
 ignore_texture_size = true
 stretch_mode = 0
 
-[connection signal="pressed" from="GUI/Panel/BuildMenu/TextureButton" to="." method="_on_texture_button_pressed"]
+[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="GUI/Panel/BuildMenu/Tower1" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="GUI/Panel/BuildMenu/Tower2" to="." method="_on_texture_button_2_pressed"]

@@ -1,3 +1,6 @@
+TextureProgressBar
+Label
+Sprite2D
 TextureRect
 AspectRatioContainer
 HBoxContainer
@@ -10,6 +13,3 @@ Control
 AnimationPlayer
 NinePatchRect
 VBoxContainer
-RayCast2D
-CollisionShape2D
-Area2D

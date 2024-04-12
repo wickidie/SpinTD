@@ -1,15 +1,20 @@
-class_name Bullet extends CharacterBody2D
+class_name Projectile extends CharacterBody2D
+
+signal enemy_killed
 
 @onready var timer: Timer = $Timer
 @onready var hitbox: Area2D = $Area2D
 
-var speed: float = 500
+var projectile_name: String
+var speed: float
+var damage: float
 var target: Vector2
 var enemies: Array
 var can_damage: bool = true
 var projectile_owner: Player
 
 func _ready() -> void:
+	enemy_killed.connect(receive_bounty)
 	timer.wait_time = 2
 	timer.start()
 
@@ -19,7 +24,9 @@ func _physics_process(_delta: float) -> void:
 func move_to_target():
 	velocity = target.normalized() * speed
 	move_and_slide()
-	pass
+
+func receive_bounty():
+	projectile_owner.economy.money += enemies[0].get_parent().bounty
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("Enemy") and can_damage):
@@ -31,9 +38,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 			if (enemy.is_in_group("Enemy")):
 				enemies.append(enemy)
 		#print("Enemies : ", enemies)
-		projectile_owner.economy.money += enemies[0].get_parent().bounty
-		enemies[0].get_parent().destroy()
-	pass # Replace with function body.
+		if (enemies[0].get_parent().take_damage(damage)):
+			enemy_killed.emit()
 
 func _on_area_2d_area_exited(area):
 	if (area.is_in_group("Enemy")):
@@ -41,13 +47,6 @@ func _on_area_2d_area_exited(area):
 			if (enemy.is_in_group("Enemy")):
 				enemies.erase(enemy)
 				#print(enemy, " Exit")
-	pass # Replace with function body.
-
 
 func _on_timer_timeout() -> void:
-	#print("\n")
 	queue_free()
-	pass # Replace with function body.
-
-
-

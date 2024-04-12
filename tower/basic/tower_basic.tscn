@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://dn1roosptm8rd"]
+
+[ext_resource type="Script" path="res://tower/basic/tower_basic.gd" id="1_bxpgv"]
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="2_ovsa3"]
+[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_deols"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
+radius = 192.167
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
+radius = 32.0
+
+[node name="BasicTower" type="Node2D"]
+script = ExtResource("1_bxpgv")
+
+[node name="Base" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 1, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ovsa3")
+
+[node name="Nozzle" type="Sprite2D" parent="."]
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(4, 4)
+texture = ExtResource("3_deols")
+
+[node name="Marker2D" type="Marker2D" parent="Nozzle"]
+position = Vector2(6, -4.76837e-07)
+
+[node name="Range" type="Area2D" parent="."]
+monitorable = false
+
+[node name="TowerRange" type="CollisionShape2D" parent="Range"]
+rotation = -0.000330579
+shape = SubResource("CircleShape2D_ibm4v")
+
+[node name="TowerArea" type="Area2D" parent="." groups=["Tower"]]
+
+[node name="TowerCollision" type="CollisionShape2D" parent="TowerArea"]
+shape = SubResource("CircleShape2D_jatt3")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="TowerClickArea" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+
+[node name="ClickCollision" type="CollisionShape2D" parent="TowerClickArea"]
+shape = SubResource("CircleShape2D_qepsb")
+debug_color = Color(0.482353, 0.588235, 0, 0.419608)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 8.0
+offset_bottom = -32.0
+mouse_filter = 2
+
+[node name="HBox" type="VBoxContainer" parent="Debug"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Debug/HBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "dasdes"
+fit_content = true
+
+[node name="ReloadBar" type="ProgressBar" parent="Debug"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 43.0
+mouse_filter = 2
+max_value = 1.0
+
+[connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="area_entered" from="TowerArea" to="." method="_on_tower_area_area_entered"]
+[connection signal="area_exited" from="TowerArea" to="." method="_on_tower_area_area_exited"]
+[connection signal="input_event" from="TowerClickArea" to="." method="_on_tower_click_area_input_event"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

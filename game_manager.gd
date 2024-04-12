@@ -3,7 +3,7 @@ extends Node
 signal life_setted(new_life)
 
 var life: int
-var map: PackedScene
+var map: Map
 var player_list: Array
 
 func _ready():
