@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnoc8l6gk82ee"]
+[gd_scene load_steps=4 format=3 uid="uid://dnoc8l6gk82ee"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_tqoa7"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="2_r66ck"]
+[ext_resource type="Texture2D" uid="uid://dswcagyst0smr" path="res://enemy/nine_patch_red.png" id="3_yfpks"]
 
 [node name="Player" type="Node2D"]
 top_level = true
@@ -40,6 +41,7 @@ anchor_right = 1.0
 offset_left = -192.0
 offset_bottom = 648.0
 grow_horizontal = 0
+mouse_filter = 0
 texture = ExtResource("2_r66ck")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/NinePatchRect"]
@@ -60,13 +62,26 @@ text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="TargetMode" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/NinePatchRect/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
-bbcode_enabled = true
-text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
-fit_content = true
-scroll_active = false
+alignment = 1
+
+[node name="TargetChangeLeft" type="TextureButton" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture_normal = ExtResource("3_yfpks")
+stretch_mode = 0
+
+[node name="TargetMode" type="Label" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "TARGETMODE"
+horizontal_alignment = 1
+
+[node name="TargetChangeRight" type="TextureButton" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_yfpks")
+stretch_mode = 0
 
 [node name="Target" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
 layout_mode = 2
@@ -124,7 +139,8 @@ grow_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Tower1" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+[node name="TowerTemplate" type="TextureButton" parent="GUI/Panel/BuildMenu"]
+visible = false
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -132,7 +148,7 @@ texture_normal = ExtResource("2_r66ck")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower1"]
+[node name="Price" type="Label" parent="GUI/Panel/BuildMenu/TowerTemplate"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -148,53 +164,5 @@ text = "123"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Tower2" type="TextureButton" parent="GUI/Panel/BuildMenu"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 6
-texture_normal = ExtResource("2_r66ck")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower2"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "123"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Tower3" type="TextureButton" parent="GUI/Panel/BuildMenu"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 6
-texture_normal = ExtResource("2_r66ck")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="GUI/Panel/BuildMenu/Tower3"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "123"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="pressed" from="GUI/Panel/BuildMenu/Tower1" to="." method="_on_texture_button_pressed"]
-[connection signal="pressed" from="GUI/Panel/BuildMenu/Tower2" to="." method="_on_texture_button_2_pressed"]
+[connection signal="pressed" from="GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetChangeLeft" to="." method="_on_target_change_left_pressed"]
+[connection signal="pressed" from="GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetChangeRight" to="." method="_on_target_change_right_pressed"]

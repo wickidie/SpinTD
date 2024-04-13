@@ -27,6 +27,13 @@ func _process(delta):
 		sprite_2d.flip_v = false
 	move_unit(delta)
 
+func load_enemy_stat(enemy_name: String):
+	var enemies_data: EnemiesData = EnemiesData.new()
+	health = enemies_data.enemies_data[enemy_name]["health"]
+	speed = enemies_data.enemies_data[enemy_name]["speed"]
+	bounty = enemies_data.enemies_data[enemy_name]["bounty"]
+	life_damage = enemies_data.enemies_data[enemy_name]["life_damage"]
+
 func move_unit(delta):
 	progress += speed * delta
 	if (progress_ratio == 1):

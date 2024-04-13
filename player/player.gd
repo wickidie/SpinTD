@@ -6,15 +6,14 @@ class_name Player extends Node2D
 @onready var debug_text: RichTextLabel = $Debug/RichTextLabel
 @onready var nine_patch_rect = $GUI/NinePatchRect
 @onready var tower = $GUI/NinePatchRect/VBoxContainer/Tower
-@onready var target_mode = $GUI/NinePatchRect/VBoxContainer/TargetMode
+@onready var target_mode = $GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetMode
 @onready var target = $GUI/NinePatchRect/VBoxContainer/Target
 @onready var wave = $GUI/HBoxContainer/Wave
 @onready var life = $GUI/HBoxContainer/Life
 @onready var money = $GUI/HBoxContainer/Money
 
-@onready var tower_1 = $GUI/Panel/BuildMenu/Tower1
-@onready var tower_2 = $GUI/Panel/BuildMenu/Tower2
-@onready var tower_3 = $GUI/Panel/BuildMenu/Tower3
+@onready var build_menu = $GUI/Panel/BuildMenu
+@onready var tower_menu_template: TextureButton = $GUI/Panel/BuildMenu/TowerTemplate
 
 signal building_selected
 
@@ -32,10 +31,29 @@ var selected_building_bool: bool
 var building_bool: bool
 
 var economy: PlayerEconomy
+var tower_list_path: Array
+var tower_list: Array
 
 func _ready():
-	tower_1.get_child(0).text = "10"
-	tower_2.get_child(0).text = "30"
+	tower_list_path = [
+		"res://tower/test/test_tower.tscn",
+		"res://tower/basic/tower_basic.tscn",
+		"res://tower/gatling/tower_gatling.tscn"
+	]
+	for tower in tower_list_path:
+		var temp_tower: Tower = load(tower).instantiate()
+		tower_list.append(temp_tower)
+		
+		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+		temp_tower_menu.visible = true
+		temp_tower_menu.name = temp_tower.tower_name
+		temp_tower_menu.set_meta("TowerPath", tower)
+		temp_tower_menu.pressed.connect(buy_tower.bind(temp_tower_menu.get_meta("TowerPath")))
+		temp_tower_menu.texture_normal = temp_tower.tower_icon
+		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
+		#temp_tower_menu.connect()
+		build_menu.add_child(temp_tower_menu)
+		
 	building_selected.connect(select_building)
 	GameManager.player_list.append(self)
 	economy = PlayerEconomy.new()
@@ -88,7 +106,7 @@ func select_building():
 		
 	nine_patch_rect.visible = true
 	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
-	target_mode.text = ("[center]" + str(selected_building.target_mode_string) + "[/center]")
+	target_mode.text = str(selected_building.target_mode_string)
 	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
 
 func unselect_building():
@@ -100,7 +118,7 @@ func unselect_building():
 
 func buy_tower(tower_scene):
 	if (is_building):
-		var new_building = tower_scene.instantiate()
+		var new_building = load(tower_scene).instantiate()
 		if (building.name == new_building.name):
 			print("Building the same")
 		else:
@@ -120,7 +138,7 @@ func buy_tower(tower_scene):
 			building = null
 			selected_building = null
 		else:
-			building = tower_scene.instantiate()
+			building = load(tower_scene).instantiate()
 			selected_building = building
 			if (economy.money >= selected_building.build_cost):
 				building.is_selected = true
@@ -133,9 +151,14 @@ func buy_tower(tower_scene):
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("1") and can_build):
-		buy_tower(TEST_TOWER)
+		#print(tower_list.find("TowerTest"))
+		print(tower_list.find("TowerTest"))
+		buy_tower(tower_list_path[0])
 	if (event.is_action_pressed("2") and can_build):
-		buy_tower(BASIC_TOWER)
+		#buy_tower(BASIC_TOWER)
+		buy_tower(tower_list_path[1])
+	if (event.is_action_pressed("3") and can_build):
+		buy_tower(tower_list_path[2])
 
 func _unhandled_input(event):
 	if (event.is_action_released("LMB") and is_building and building != null):
@@ -162,10 +185,14 @@ func _unhandled_input(event):
 	if (event.is_action_pressed("LMB") and selected_building != null and not is_building):
 		unselect_building()
 		
-func _on_texture_button_pressed():
-	if (can_build and not is_building):
-		buy_tower(TEST_TOWER)
+func _on_target_change_left_pressed():
+	selected_building.change_target_mode(-1)
+	target_mode.text = str(selected_building.target_mode_string)
+	print(selected_building.target_mode)
+	print(selected_building.target_mode_string)
 
-func _on_texture_button_2_pressed():
-	if (can_build and not is_building):
-		buy_tower(BASIC_TOWER)
+func _on_target_change_right_pressed():
+	selected_building.change_target_mode(1)
+	target_mode.text = str(selected_building.target_mode_string)
+	print(selected_building.target_mode)
+	print(selected_building.target_mode_string)

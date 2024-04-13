@@ -26,6 +26,7 @@ var TowersData: Resource = preload("res://tower/towers_data.gd")
 
 # Tower stats
 var tower_name: String
+var tower_icon
 var build_cost: float
 var attack_speed: float
 
@@ -49,11 +50,7 @@ var target_mode_string: String
 
 func _ready():
 	target_mode = randi_range(0, TargetMode.size() - 1)
-	match target_mode:
-		TargetMode.FIRST:
-			target_mode_string = "FIRST"
-		TargetMode.LAST:
-			target_mode_string = "LAST"
+	target_mode_to_string(target_mode)
 	build_placed.connect(place_building)
 	selected.connect(tower_selected)
 	unselected.connect(tower_unselected)
@@ -74,24 +71,40 @@ func _process(_delta):
 func _physics_process(_delta: float) -> void:
 	set_target()
 
+func load_tower_stat(tower_name):
+	var towers_data: TowersData = TowersData.new()
+	build_cost = towers_data.towers_data[tower_name]["build_cost"]
+	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
+	tower_icon = load(towers_data.towers_data[tower_name]["base"])
+	
 func set_target():
 	target_list_progress = []
 	if (target_list.size() != 0):
 		for enemy in target_list:
 			target_list_progress.append(enemy.progress)
-		match target_mode:
-			TargetMode.FIRST:
-				target_mode_string = "FIRST"
-				target = target_list[target_list_progress.find(target_list_progress.max())]
-			TargetMode.LAST:
-				target_mode_string = "LAST"
-				target = target_list[target_list_progress.find(target_list_progress.min())]
+			match target_mode:
+				TargetMode.FIRST:
+					target = target_list[target_list_progress.find(target_list_progress.max())]
+				TargetMode.LAST:
+					target = target_list[target_list_progress.find(target_list_progress.min())]
+			target_mode_to_string(target_mode)
 		ray_cast_2d.target_position = target.global_position - ray_cast_2d.global_position
 		turn()
 		if (can_shoot):
 			shoot_projectile()
 	elif (target == null):
 		target = self
+
+func target_mode_to_string(target_mode):
+	match target_mode:
+		TargetMode.FIRST:
+			target_mode_string = "FIRST"
+		TargetMode.LAST:
+			target_mode_string = "LAST"
+
+func change_target_mode(i: int):
+	target_mode = abs((target_mode + i) % TargetMode.size())
+	target_mode_to_string(target_mode)
 
 func turn():
 	tower_nozzle.look_at(target.global_position)

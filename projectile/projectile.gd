@@ -21,6 +21,11 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	move_to_target()
 
+func load_projectile_stat(projectile_name):
+	var projectiles_data: ProjectilesData = ProjectilesData.new()
+	speed = projectiles_data.projectiles_data[projectile_name]["speed"]
+	damage = projectiles_data.projectiles_data[projectile_name]["damage"]
+
 func move_to_target():
 	velocity = target.normalized() * speed
 	move_and_slide()

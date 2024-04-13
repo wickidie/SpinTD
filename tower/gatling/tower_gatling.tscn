@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://gah0tyr0hid2"]
+[gd_scene load_steps=7 format=3 uid="uid://b0dp2d0tpc861"]
 
-[ext_resource type="Script" path="res://tower/test/test_tower.gd" id="1_gt11w"]
-[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/test_tower_base.png" id="2_1687l"]
-[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_kjxvf"]
+[ext_resource type="Script" path="res://tower/gatling/tower_gatling.gd" id="1_1u5ns"]
+[ext_resource type="Texture2D" uid="uid://5f1jmspowgho" path="res://tower/gatling/tower_base_gatling.png" id="2_0gmrd"]
+[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_36rmg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
 radius = 192.167
@@ -13,17 +13,17 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
 radius = 32.0
 
-[node name="TowerTest" type="Node2D"]
-script = ExtResource("1_gt11w")
+[node name="TowerGatling" type="Node2D"]
+script = ExtResource("1_1u5ns")
 
 [node name="Base" type="Sprite2D" parent="."]
 scale = Vector2(4, 4)
-texture = ExtResource("2_1687l")
+texture = ExtResource("2_0gmrd")
 
 [node name="Nozzle" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(4, 4)
-texture = ExtResource("3_kjxvf")
+texture = ExtResource("3_36rmg")
 
 [node name="Marker2D" type="Marker2D" parent="Nozzle"]
 position = Vector2(6, -4.76837e-07)
