@@ -1,3 +1,4 @@
+NinePatchRect
 Label
 TextureButton
 HBoxContainer
@@ -11,4 +12,3 @@ Panel
 RichTextLabel
 Control
 AnimationPlayer
-NinePatchRect

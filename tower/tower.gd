@@ -189,12 +189,14 @@ func _on_range_area_exited(area: Area2D) -> void:
 # Tower building obstacle
 func _on_tower_area_area_entered(area):
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
+		modulate += Color(1, 0, 0, 1)
 		area.modulate += Color(1, 0, 0, 1)
 		building_obstacles.append(area)
 		check_build_space()
 
 func _on_tower_area_area_exited(area):
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
+		modulate -= Color(1, 0, 0, 1)
 		area.modulate -= Color(1, 0, 0, 1)
 		building_obstacles.remove_at(building_obstacles.find(area))
 		check_build_space()
