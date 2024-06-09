@@ -21,9 +21,15 @@ GameManager="*res://game_manager.gd"
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=270
-window/stretch/mode="viewport"
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/custom="res://gui/SpinTDTheme.tres"
 
 [input]
 
@@ -88,6 +94,12 @@ RMB={
 ]
 }
 
+[physics]
+
+2d/run_on_separate_thread=true
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

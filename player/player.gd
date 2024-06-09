@@ -3,11 +3,11 @@ class_name Player extends Node2D
 @onready var TEST_TOWER: PackedScene = preload("res://tower/test/test_tower.tscn")
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
-@onready var debug_text: RichTextLabel = $Debug/RichTextLabel
-@onready var nine_patch_rect = $GUI/NinePatchRect
-@onready var tower = $GUI/NinePatchRect/VBoxContainer/Tower
-@onready var target_mode = $GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetMode
-@onready var target = $GUI/NinePatchRect/VBoxContainer/Target
+@onready var debug_label = $Debug/DebugLabel
+@onready var info_panel = $GUI/InfoPanel
+@onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
+@onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
+@onready var target = $GUI/InfoPanel/VBoxContainer/Target
 @onready var wave = $GUI/HBoxContainer/Wave
 @onready var life = $GUI/HBoxContainer/Life
 @onready var money = $GUI/HBoxContainer/Money
@@ -57,7 +57,7 @@ func _ready():
 	building_selected.connect(select_building)
 	GameManager.player_list.append(self)
 	economy = PlayerEconomy.new()
-	nine_patch_rect.visible = false
+	info_panel.visible = false
 
 func _process(_delta):
 	if (is_building):
@@ -65,8 +65,8 @@ func _process(_delta):
 			show_precision_build()
 		elif (not is_precision_building):
 			show_build()
-		
-	debug_text.text = (
+	
+	debug_label.text = (
 		"building : " + str(building) + 
 		"\nselected_building : " + str(selected_building) + 
 		"\nis_building : " + str(is_building) + 
@@ -99,12 +99,13 @@ func cancel_build():
 	building = null
 	
 func select_building():
-	if (get_global_mouse_position().x <= get_tree().root.size.x / 2):
-		nine_patch_rect.anchors_preset = Control.PRESET_TOP_RIGHT
+	if (get_global_mouse_position().x <= 
+	get_tree().root.get_viewport().get_window().content_scale_size.x / 2):
+		info_panel.anchors_preset = Control.PRESET_TOP_RIGHT
 	else:
-		nine_patch_rect.anchors_preset = Control.PRESET_TOP_LEFT
+		info_panel.anchors_preset = Control.PRESET_TOP_LEFT
 		
-	nine_patch_rect.visible = true
+	info_panel.visible = true
 	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
 	target_mode.text = str(selected_building.target_mode_string)
 	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
@@ -114,7 +115,7 @@ func unselect_building():
 	selected_building.unselected.emit()
 	selected_building = null
 	print(selected_building)
-	nine_patch_rect.visible = false
+	info_panel.visible = false
 
 func buy_tower(tower_scene):
 	if (is_building):
@@ -132,7 +133,7 @@ func buy_tower(tower_scene):
 	else:
 		if (selected_building != null):
 			selected_building.unselected.emit()
-			nine_patch_rect.visible = false
+			info_panel.visible = false
 			can_build = true
 			is_building = false
 			building = null

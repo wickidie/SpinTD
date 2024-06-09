@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnoc8l6gk82ee"]
+[gd_scene load_steps=6 format=3 uid="uid://dnoc8l6gk82ee"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_tqoa7"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="2_r66ck"]
-[ext_resource type="Texture2D" uid="uid://dswcagyst0smr" path="res://enemy/nine_patch_red.png" id="3_yfpks"]
+[ext_resource type="Texture2D" uid="uid://codr0iqkprgd6" path="res://gui/gradient_bnw_arrow.png" id="4_kss2q"]
+[ext_resource type="LabelSettings" uid="uid://dpjcyio37q86j" path="res://gui/DefaultLabel.tres" id="4_vhc4r"]
+[ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_1ydk1"]
 
 [node name="Player" type="Node2D"]
 top_level = true
@@ -11,99 +13,97 @@ script = ExtResource("1_tqoa7")
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
-metadata/_edit_lock_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Debug"]
+[node name="DebugLabel" type="Label" parent="Debug"]
 layout_mode = 0
-offset_right = 576.0
-offset_bottom = 40.0
-bbcode_enabled = true
+offset_right = 320.0
+offset_bottom = 192.0
 text = "Debug"
-fit_content = true
+label_settings = ExtResource("4_vhc4r")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
-metadata/_edit_lock_ = true
+theme = ExtResource("5_1ydk1")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="GUI"]
-self_modulate = Color(0, 0, 0, 1)
+[node name="InfoPanel" type="Panel" parent="GUI"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -192.0
-offset_bottom = 648.0
+offset_left = -128.0
+offset_bottom = 360.0
 grow_horizontal = 0
-mouse_filter = 0
-texture = ExtResource("2_r66ck")
+theme = ExtResource("5_1ydk1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/NinePatchRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/InfoPanel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -96.0
-offset_right = 96.0
-offset_bottom = 46.0
+offset_left = -62.0
+offset_right = 62.0
+offset_bottom = 76.0
 grow_horizontal = 2
 
-[node name="Tower" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+[node name="Tower" type="RichTextLabel" parent="GUI/InfoPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 2
+theme = ExtResource("5_1ydk1")
 bbcode_enabled = true
 text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/NinePatchRect/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/InfoPanel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="TargetChangeLeft" type="TextureButton" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+[node name="TargetChangeLeft" type="TextureButton" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-texture_normal = ExtResource("3_yfpks")
+texture_normal = ExtResource("4_kss2q")
 stretch_mode = 0
+flip_h = true
 
-[node name="TargetMode" type="Label" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+[node name="TargetMode" type="Label" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "TARGETMODE"
+label_settings = ExtResource("4_vhc4r")
 horizontal_alignment = 1
 
-[node name="TargetChangeRight" type="TextureButton" parent="GUI/NinePatchRect/VBoxContainer/HBoxContainer"]
+[node name="TargetChangeRight" type="TextureButton" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("3_yfpks")
+texture_normal = ExtResource("4_kss2q")
 stretch_mode = 0
 
-[node name="Target" type="RichTextLabel" parent="GUI/NinePatchRect/VBoxContainer"]
+[node name="Target" type="RichTextLabel" parent="GUI/InfoPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 2
+theme = ExtResource("5_1ydk1")
 bbcode_enabled = true
 text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
 fit_content = true
 scroll_active = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -192.0
-offset_right = 192.0
-offset_bottom = 23.0
+layout_mode = 2
+offset_left = 224.0
+offset_right = 416.0
+offset_bottom = 18.0
 grow_horizontal = 2
 
 [node name="Wave" type="RichTextLabel" parent="GUI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_1ydk1")
 bbcode_enabled = true
 text = "[center]Wave: 123[/center] "
 fit_content = true
@@ -111,6 +111,7 @@ fit_content = true
 [node name="Life" type="RichTextLabel" parent="GUI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_1ydk1")
 bbcode_enabled = true
 text = "[center]Life: 123[/center] "
 fit_content = true
@@ -118,6 +119,7 @@ fit_content = true
 [node name="Money" type="RichTextLabel" parent="GUI/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_1ydk1")
 bbcode_enabled = true
 text = "[center]Money: 123[/center] "
 scroll_active = false
@@ -129,11 +131,12 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -54.0
+offset_left = -24.0
 offset_top = -32.0
-offset_right = 54.0
+offset_right = 24.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("5_1ydk1")
 
 [node name="BuildMenu" type="HBoxContainer" parent="GUI/Panel"]
 layout_mode = 2
@@ -141,28 +144,31 @@ size_flags_horizontal = 4
 
 [node name="TowerTemplate" type="TextureButton" parent="GUI/Panel/BuildMenu"]
 visible = false
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 6
+size_flags_vertical = 8
 texture_normal = ExtResource("2_r66ck")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 4
 
 [node name="Price" type="Label" parent="GUI/Panel/BuildMenu/TowerTemplate"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -17.0
+offset_right = 16.0
+offset_bottom = 15.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 text = "123"
+label_settings = ExtResource("4_vhc4r")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetChangeLeft" to="." method="_on_target_change_left_pressed"]
-[connection signal="pressed" from="GUI/NinePatchRect/VBoxContainer/HBoxContainer/TargetChangeRight" to="." method="_on_target_change_right_pressed"]
+[connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeLeft" to="." method="_on_target_change_left_pressed"]
+[connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeRight" to="." method="_on_target_change_right_pressed"]

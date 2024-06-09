@@ -5,24 +5,22 @@
 [ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_36rmg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
-radius = 192.167
+radius = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
-radius = 32.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
-radius = 32.0
+radius = 8.0
 
 [node name="TowerGatling" type="Node2D"]
 script = ExtResource("1_1u5ns")
 
 [node name="Base" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
 texture = ExtResource("2_0gmrd")
 
 [node name="Nozzle" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
-scale = Vector2(4, 4)
 texture = ExtResource("3_36rmg")
 
 [node name="Marker2D" type="Marker2D" parent="Nozzle"]
@@ -54,6 +52,7 @@ debug_color = Color(0.482353, 0.588235, 0, 0.419608)
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Debug" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -32.0

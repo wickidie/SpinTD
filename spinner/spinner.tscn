@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://do75tovfr1fr8"]
+[gd_scene load_steps=12 format=3 uid="uid://do75tovfr1fr8"]
 
 [ext_resource type="Script" path="res://spinner/spinner.gd" id="1_h18x4"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="1_m2qdv"]
 [ext_resource type="AudioStream" uid="uid://ddndmlylxyrcw" path="res://spinner/generic-ka-ching.mp3" id="3_i5aqv"]
 [ext_resource type="AudioStream" uid="uid://cf8cbup7wofo0" path="res://spinner/money_2.mp3" id="4_sbrbf"]
+[ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_2nyfp"]
+[ext_resource type="SpriteFrames" uid="uid://fe6lf6frugob" path="res://spinner/spinner_anim.tres" id="6_dqk8o"]
+[ext_resource type="Material" uid="uid://s2gufyst0h5u" path="res://spinner/normal_spinner_particle.tres" id="7_sdqhg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1055m"]
 size = Vector2(128, 128)
@@ -52,18 +55,19 @@ script = ExtResource("1_h18x4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_1055m")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(8, 8)
+sprite_frames = ExtResource("6_dqk8o")
+animation = &"spinning"
+frame = 3
+frame_progress = 0.220358
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(1, 1, 0, 1)
 texture = ExtResource("1_m2qdv")
 
 [node name="Cooldown" type="Timer" parent="."]
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = -32.0
-offset_top = -16.0
-offset_right = 32.0
-offset_bottom = 16.0
-mouse_filter = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -75,6 +79,52 @@ stream = ExtResource("3_i5aqv")
 
 [node name="SfxJackpot" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sbrbf")
+
+[node name="Info" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Info"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Price" type="Label" parent="Info"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_right = 24.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme = ExtResource("5_2nyfp")
+theme_override_font_sizes/font_size = 64
+text = "20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = ExtResource("7_sdqhg")
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 10
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

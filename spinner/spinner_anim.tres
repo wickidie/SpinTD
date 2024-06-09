@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://fe6lf6frugob"]
+
+[ext_resource type="Texture2D" uid="uid://dlru66hf0x38m" path="res://spinner/spinner.png" id="1_v6r1p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jpa1"]
+atlas = ExtResource("1_v6r1p")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxeen"]
+atlas = ExtResource("1_v6r1p")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krx5o"]
+atlas = ExtResource("1_v6r1p")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2i14"]
+atlas = ExtResource("1_v6r1p")
+region = Rect2(48, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jpa1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxeen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krx5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2i14")
+}],
+"loop": true,
+"name": &"spinning",
+"speed": 10.0
+}]

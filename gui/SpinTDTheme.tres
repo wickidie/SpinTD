@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dfjac8wn71aur"]
+
+[ext_resource type="FontFile" uid="uid://2tro13tmh4y2" path="res://gui/font/m5x7/m5x7.ttf" id="1_ciopm"]
+[ext_resource type="StyleBox" uid="uid://dg7gjp74wus2a" path="res://gui/PanelFlat.tres" id="1_m8o2n"]
+
+[resource]
+default_font = ExtResource("1_ciopm")
+default_font_size = 16
+Panel/styles/panel = ExtResource("1_m8o2n")
+PanelContainer/styles/panel = ExtResource("1_m8o2n")
+RichTextLabel/fonts/normal_font = ExtResource("1_ciopm")

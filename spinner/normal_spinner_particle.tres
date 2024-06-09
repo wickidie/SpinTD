@@ -1,0 +1,17 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://s2gufyst0h5u"]
+
+[sub_resource type="Gradient" id="Gradient_aeo1w"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xye4v"]
+gradient = SubResource("Gradient_aeo1w")
+
+[resource]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_xye4v")

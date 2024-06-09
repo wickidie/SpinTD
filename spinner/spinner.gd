@@ -1,10 +1,16 @@
 class_name Spinner extends Node2D
 
 @onready var cooldown: Timer = $Cooldown
-@onready var progress_bar: ProgressBar = $ProgressBar
+@onready var progress_bar: ProgressBar = $Info/ProgressBar
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var spinner: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sfx_spin: AudioStreamPlayer2D = $SfxSpin
 @onready var sfx_jackpot: AudioStreamPlayer2D = $SfxJackpot
+@onready var gpu_particles_2d = $GPUParticles2D
+var particle_list: Array = [
+	"res://spinner/normal_spinner_particle.tres",
+	"res://spinner/jackpot_spinner_particle.tres"
+]
 
 var loot_table: Dictionary = {
 	"large_gold" : {
@@ -28,6 +34,9 @@ var spin_cost: float = 20
 var cumulative_weight: float
 
 func _ready():
+	gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
+	gpu_particles_2d.emitting = false
+	gpu_particles_2d.one_shot = true
 	has_cooldown = true
 	load_table()
 	progress_bar.max_value = cooldown.wait_time
@@ -46,7 +55,8 @@ func load_table():
 
 func roll():
 	sfx_spin.play()
-	animation_player.play("spinner_spinning")
+	#animation_player.play("spinner_spinning")
+	spinner.play()
 	can_spin = false
 	cooldown.start()
 	var roll_value = randi_range(1, cumulative_weight)
@@ -63,7 +73,14 @@ func roll():
 	
 func prize_audio(i: int):
 	if (i == 0):
+		print("ASD")
+		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[1])
+		gpu_particles_2d.restart()
 		sfx_jackpot.play()
+	else:
+		print("DAS")
+		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
+		gpu_particles_2d.restart()
 	
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown) 
@@ -73,6 +90,7 @@ func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 	pass # Replace with function body.
 
 func _on_cooldown_timeout():
+	spinner.stop()
 	cooldown.stop()
 	can_spin = true;
 	pass # Replace with function body.
