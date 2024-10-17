@@ -20,5 +20,3 @@ var towers_data: Dictionary = {
 		"nozzle" : "res://tower/test/test_tower_nozzle.png"
 	}
 }
-
-

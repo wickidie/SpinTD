@@ -69,7 +69,7 @@ func new_wave():
 			spawn_unit(wave_list[str(wave)]["enemy_set"][i][WAVE.ENEMY_TYPE])
 			await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_INTERVAL]).timeout
 		await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.SET_INTERVAL]).timeout
-		
+
 # 1D array implementation
 	#for i in range(wave_list[str(wave)]["mob_set"].size()):
 		##print("=== Start Of Set ", i+1, " ===")

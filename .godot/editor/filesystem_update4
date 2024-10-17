@@ -1,6 +1,14 @@
 res://player/player.tscn
-res://spinner/spinner.tscn
 res://spinner/spinner_anim.tres
-res://spinner/spinner.gd
-res://spinner/jackpot_spinner_particle.tres
 res://spinner/normal_spinner_particle.tres
+res://map/cricle_map.gd
+res://player/player.gd
+res://spinner/spinner.gd
+res://enemy/test/test_enemy.gd
+res://tower/test/test_tower.gd
+res://tower/tower.gd
+res://tower/towers_data.gd
+res://tower/basic/tower_basic.gd
+res://tower/gatling/tower_gatling.gd
+res://spinner/spinner.tscn
+res://map/cricle_map.tscn

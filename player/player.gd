@@ -43,7 +43,7 @@ func _ready():
 	for tower in tower_list_path:
 		var temp_tower: Tower = load(tower).instantiate()
 		tower_list.append(temp_tower)
-		
+
 		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
 		temp_tower_menu.visible = true
 		temp_tower_menu.name = temp_tower.tower_name
@@ -53,7 +53,7 @@ func _ready():
 		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
 		#temp_tower_menu.connect()
 		build_menu.add_child(temp_tower_menu)
-		
+
 	building_selected.connect(select_building)
 	GameManager.player_list.append(self)
 	economy = PlayerEconomy.new()
@@ -65,12 +65,12 @@ func _process(_delta):
 			show_precision_build()
 		elif (not is_precision_building):
 			show_build()
-	
+
 	debug_label.text = (
-		"building : " + str(building) + 
-		"\nselected_building : " + str(selected_building) + 
-		"\nis_building : " + str(is_building) + 
-		"\nis_precision_building : " + str(is_precision_building) + 
+		"building : " + str(building) +
+		"\nselected_building : " + str(selected_building) +
+		"\nis_building : " + str(is_building) +
+		"\nis_precision_building : " + str(is_precision_building) +
 		"\ncan_build : " + str(can_build))
 	wave.text = ("[center]" + "Wave: " + str(GameManager.map.wave) + "[/center]")
 	life.text = ("[center]" + "Life: " + str(GameManager.life) + "[/center]")
@@ -78,7 +78,7 @@ func _process(_delta):
 
 func show_build():
 	building.position = get_global_mouse_position()
-	
+
 func show_precision_build():
 	var temp_pos = precision_start_pos + (get_global_mouse_position() - precision_current_pos) / 3
 	building.position = temp_pos
@@ -97,14 +97,14 @@ func cancel_build():
 	is_building = false
 	is_precision_building = false
 	building = null
-	
+
 func select_building():
-	if (get_global_mouse_position().x <= 
+	if (get_global_mouse_position().x <=
 	get_tree().root.get_viewport().get_window().content_scale_size.x / 2):
 		info_panel.anchors_preset = Control.PRESET_TOP_RIGHT
 	else:
 		info_panel.anchors_preset = Control.PRESET_TOP_LEFT
-		
+
 	info_panel.visible = true
 	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
 	target_mode.text = str(selected_building.target_mode_string)
@@ -174,18 +174,18 @@ func _unhandled_input(event):
 			is_precision_building = true
 			precision_start_pos = building.position
 			precision_current_pos = get_global_mouse_position()
-	
+
 	if (event.is_action_pressed("LMB") and is_building and is_precision_building and building != null):
 		precision_current_pos = get_global_mouse_position()
-		
+
 # Cancel building
 	elif (event.is_action_pressed("RMB") and is_building and building != null):
 		cancel_build()
-	
+
 # Unselect tower
 	if (event.is_action_pressed("LMB") and selected_building != null and not is_building):
 		unselect_building()
-		
+
 func _on_target_change_left_pressed():
 	selected_building.change_target_mode(-1)
 	target_mode.text = str(selected_building.target_mode_string)
