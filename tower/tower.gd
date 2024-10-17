@@ -11,7 +11,7 @@ enum TargetMode {FIRST, LAST}
 
 var TowersData: Resource = preload("res://tower/towers_data.gd")
 
-@onready var TEST_PROJECTILE: PackedScene = preload("res://projectile/test/test_projectile.tscn")
+@onready var projectile: PackedScene
 @onready var tower_base = $Base
 @onready var tower_nozzle = $Nozzle
 @onready var marker_2d = $Nozzle/Marker2D
@@ -75,6 +75,7 @@ func load_tower_stat(tower_name):
 	var towers_data: TowersData = TowersData.new()
 	build_cost = towers_data.towers_data[tower_name]["build_cost"]
 	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
+	projectile = load(towers_data.towers_data[tower_name]["projectile"])
 	tower_icon = load(towers_data.towers_data[tower_name]["base"])
 	
 func set_target():
@@ -111,12 +112,11 @@ func turn():
 
 func shoot_projectile():
 	timer.start()
-	var bullet: Projectile = TEST_PROJECTILE.instantiate()
+	var bullet: Projectile = projectile.instantiate()
 	get_parent().add_child(bullet)
-	bullet.projectile_owner = player
+	bullet.m_projectile_owner = player
 	bullet.position = marker_2d.global_position
-	bullet.look_at(target.global_position)
-	bullet.target = target.global_position - global_position
+	bullet.start(target.global_position - global_position)
 	can_shoot = false
 
 func debug():

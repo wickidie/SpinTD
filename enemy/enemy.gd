@@ -5,12 +5,15 @@ var EnemiesData: Resource = preload("res://enemy/enemy_data.gd")
 @onready var hitbox: Area2D = $Hitbox
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var hp_bar: TextureProgressBar = $HPBar
+@onready var animation_player = $AnimationPlayer
 
 var enemy_name: String
 var health: float
 var speed: float
 var bounty: float
 var life_damage: float
+
+# TODO : Need to refactor Enemy code
 
 func _ready():
 	hp_bar.max_value = health

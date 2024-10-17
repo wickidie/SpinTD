@@ -4,12 +4,16 @@ var projectiles_data: Dictionary
 
 func _init():
 	projectiles_data = {
-		"TestProjectile" : {
-			"speed" = 500,
+		"ProjectileTest" : {
+			"speed" = 100,
 			"damage" = 2
 		},
-		"BasicProjectile" : {
-			"speed" = 500,
+		"ProjectileBasic" : {
+			"speed" = 100,
+			"damage" = 1
+		},
+		"ProjectileExplosive" : {
+			"speed" = 100,
 			"damage" = 1
 		}
 	}

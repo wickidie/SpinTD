@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://sd7jjnlo1huc"]
+
+[ext_resource type="Script" path="res://projectile/explosive/projectile_explosive.gd" id="1_ckrlf"]
+[ext_resource type="Texture2D" uid="uid://c5ql2syben01i" path="res://projectile/test/projectile_test.png" id="2_l2w8q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aos1u"]
+size = Vector2(2, 2)
+
+[node name="ProjectileTest" type="CharacterBody2D"]
+script = ExtResource("1_ckrlf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_l2w8q")
+
+[node name="Area2D" type="Area2D" parent="." groups=["TowerProjectile"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_aos1u")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -6,19 +6,19 @@ func _init():
 	enemies_data = {
 		"TestEnemy" : {
 			"health" : 3,
-			"speed" : 100,
+			"speed" : 80,
 			"bounty" : 1,
 			"life_damage" : 1,
 		},
 		"BasicEnemy" : {
 			"health" : 3,
-			"speed" : 100,
+			"speed" : 80,
 			"bounty" : 1,
 			"life_damage" : 1,
 		},
 		"FastEnemy" : {
 			"health" : 2,
-			"speed" : 200,
+			"speed" : 100,
 			"bounty" : 2,
 			"life_damage" : 2,
 		},
@@ -30,7 +30,7 @@ func _init():
 		},
 		"BonusEnemy" : {
 			"health" : 1,
-			"speed" : 150,
+			"speed" : 120,
 			"bounty" : 2,
 			"life_damage" : 1,
 		}

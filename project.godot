@@ -13,11 +13,12 @@ config_version=5
 config/name="SpinTD"
 run/main_scene="res://map/cricle_map.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://godot_icon.svg"
 
 [autoload]
 
 GameManager="*res://game_manager.gd"
+Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [display]
 
@@ -26,6 +27,10 @@ window/size/viewport_height=360
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/nv.file_system/plugin.cfg", "res://addons/script_panel_plus/plugin.cfg")
 
 [gui]
 
@@ -103,3 +108,8 @@ RMB={
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+
+[script_panel_plus]
+
+panel_settings/show_top_bar=true
+panel_settings/show_bottom_bar=true

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dnoc8l6gk82ee"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_tqoa7"]
-[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="2_r66ck"]
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://godot_icon.svg" id="2_r66ck"]
 [ext_resource type="Texture2D" uid="uid://codr0iqkprgd6" path="res://gui/gradient_bnw_arrow.png" id="4_kss2q"]
 [ext_resource type="LabelSettings" uid="uid://dpjcyio37q86j" path="res://gui/DefaultLabel.tres" id="4_vhc4r"]
 [ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_1ydk1"]
