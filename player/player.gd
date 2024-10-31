@@ -55,7 +55,7 @@ func _ready():
 		build_menu.add_child(temp_tower_menu)
 		
 	building_selected.connect(select_building)
-	GameManager.player_list.append(self)
+	#GameManager.player_list.append(self)
 	economy = PlayerEconomy.new()
 	info_panel.visible = false
 

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SpinTD"
-run/main_scene="res://map/cricle_map.tscn"
+run/main_scene="res://GameManager.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://godot_icon.svg"
 

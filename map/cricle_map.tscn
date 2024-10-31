@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://ghrc36g4j2by"]
+[gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
 
 [ext_resource type="Script" path="res://map/cricle_map.gd" id="1_wa886"]
-[ext_resource type="PackedScene" uid="uid://dnoc8l6gk82ee" path="res://player/player.tscn" id="2_g4qoe"]
 [ext_resource type="Texture2D" uid="uid://dapy8oe4vov86" path="res://map/map_circle.png" id="4_8qhj7"]
 [ext_resource type="PackedScene" uid="uid://do75tovfr1fr8" path="res://spinner/spinner.tscn" id="4_403tx"]
 
@@ -23,8 +22,6 @@ texture = ExtResource("4_8qhj7")
 
 [node name="WaveInterval" type="Timer" parent="."]
 one_shot = true
-
-[node name="Player" parent="." instance=ExtResource("2_g4qoe")]
 
 [node name="MapPath" type="Path2D" parent="."]
 position = Vector2(616, 288)

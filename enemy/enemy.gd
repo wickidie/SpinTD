@@ -1,17 +1,18 @@
 class_name Enemy extends PathFollow2D
 
 var EnemiesData: Resource = preload("res://enemy/enemy_data.gd")
+var HitFlash: PackedScene = preload("res://enemy/hit_flash.tscn")
 
 @onready var hitbox: Area2D = $Hitbox
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var hp_bar: TextureProgressBar = $HPBar
-@onready var animation_player = $AnimationPlayer
 
 var enemy_name: String
 var health: float
 var speed: float
 var bounty: float
 var life_damage: float
+var animation_player: AnimationPlayer
 
 # TODO : Need to refactor Enemy code
 
@@ -21,6 +22,9 @@ func _ready():
 	loop = false
 	#rotates = false
 	rotation = 0
+	#animation_player.assigned_animation = hit_flash
+	animation_player = HitFlash.instantiate()
+	add_child(animation_player)
 
 func _process(delta):
 	hp_bar.rotation = -rotation
@@ -48,6 +52,8 @@ func move_unit(delta):
 func take_damage(damage):
 	health -= damage
 	hp_bar.value = health
+	animation_player.play("hit_flash")
 	if (health <= 0):
+		GameManager.player.economy.money += bounty
 		queue_free()
 		return true
