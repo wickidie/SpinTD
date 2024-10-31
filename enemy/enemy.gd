@@ -54,6 +54,6 @@ func take_damage(damage):
 	hp_bar.value = health
 	animation_player.play("hit_flash")
 	if (health <= 0):
-		GameManager.player.economy.money += bounty
+		#GameManager.player.economy.money += bounty
 		queue_free()
 		return true

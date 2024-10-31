@@ -40,7 +40,7 @@ func stop_moving():
 func receive_bounty():
 	# m_projectile_owner.economy.money += m_enemies[0].get_parent().bounty
 	pass
-	
+
 func apply_single_damage(enemy):
 	enemy.get_parent().take_m_damage(m_damage)
 
@@ -66,7 +66,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		#print("m_enemies : ", m_enemies)
 		if (m_enemies[0].get_parent().take_damage(m_damage)):
 			enemy_killed.emit()
-			
+
 func _on_area_2d_area_exited(area):
 	if (area.is_in_group("Enemy")):
 		for enemy in m_hitbox.get_overlapping_areas():

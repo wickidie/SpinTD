@@ -47,7 +47,7 @@ func _ready():
 		return
 	editor_interface = plugin.interface
 	filesystem = plugin.filesystem
-	
+
 	# get callable `FileSystemDock::_tree_rmb_option`
 	for connection in plugin.filesystem_popup.get_signal_connection_list("id_pressed"):
 		var callable : Callable = connection.callable
@@ -55,14 +55,14 @@ func _ready():
 			_tree_rmb_option = callable
 			break
 	assert(_tree_rmb_option, "can't find callable `_tree_rmb_option`")
-	
-	# set_hide_on_window_lose_focus(true)
-	
 
-func fill(paths: PackedStringArray): 
+	# set_hide_on_window_lose_focus(true)
+
+
+func fill(paths: PackedStringArray):
 	clear()
 	set_size(Vector2(1,1))
-	
+
 	var all_files = true
 	var all_files_scene = true
 	var all_folders = true
@@ -73,7 +73,7 @@ func fill(paths: PackedStringArray):
 		else:
 			all_folders = false
 			all_files_scene = all_files_scene and filesystem.get_file_type(path) == "PackedScene"
-			
+
 	if all_files:
 		if paths.size() == 1 or all_files_scene:
 			_add_item(Menu.FILE_OPEN, "Open", "Load")
@@ -83,14 +83,14 @@ func fill(paths: PackedStringArray):
 				_add_item(Menu.FSV_PLAY_SCENE, "Play Scene", "PlayScene")
 			_add_item(Menu.FILE_INSTANTIATE, "Instance", "Instance")
 		# TODO handle other types
-		
+
 	# Favorite removed
-		
+
 	if all_files and paths.size() == 1:
 		_fix_separator()
 		_add_item(Menu.FILE_DEPENDENCIES, "Edit Dependencies...")
 		_add_item(Menu.FILE_OWNERS, "View Owners...")
-	
+
 	_fix_separator()
 	# TODO waiting for editor's shortcuts (#58585)
 	_add_item(Menu.FSV_COPY_PATHS, "Copy Path", "ActionCopy")
@@ -100,7 +100,7 @@ func fill(paths: PackedStringArray):
 			_add_item(Menu.FILE_DUPLICATE, "Duplicate...", "Duplicate")
 		_add_item(Menu.FILE_MOVE, "Move To...", "MoveUp")
 		_add_item(Menu.FILE_REMOVE, "Remove", "Remove")
-	
+
 	if paths.size() == 1:
 		_fix_separator()
 		if not new_menu:
@@ -136,12 +136,12 @@ func _fix_separator():
 
 func _rmb_option(id):
 	var paths = get_parent().get_selected_paths()
-	
+
 	if id < 50:
 		plugin.fsd_select_paths(paths)
 		_tree_rmb_option.call(id)
 		return
-	
+
 	match id:
 		Menu.FSV_COPY_PATHS:
 			var file_paths = ""

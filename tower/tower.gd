@@ -67,7 +67,7 @@ func _process(_delta):
 	reload_bar.value = reload_bar.max_value - timer.time_left
 	debug_text.text = (
 		"target_mode : " + str(target_mode))
-	
+
 func _physics_process(_delta: float) -> void:
 	set_target()
 
@@ -77,7 +77,7 @@ func load_tower_stat(tower_name):
 	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
 	projectile = load(towers_data.towers_data[tower_name]["projectile"])
 	tower_icon = load(towers_data.towers_data[tower_name]["base"])
-	
+
 func set_target():
 	target_list_progress = []
 	if (target_list.size() != 0):
@@ -130,7 +130,7 @@ func debug():
 
 func waiting_to_build():
 	is_waiting = true
-		
+
 func place_building():
 	is_placed = true
 	is_waiting = false
@@ -144,7 +144,7 @@ func place_building():
 # Wait for next frame so the tower doesnt instantly selected
 	tower_click_area.monitorable = true
 	tower_click_area.input_pickable = true
-	
+
 func tower_selected():
 	tower_range.visible = true
 	is_selected = true

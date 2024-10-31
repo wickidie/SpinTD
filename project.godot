@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="SpinTD"
-run/main_scene="res://GameManager.tscn"
+run/main_scene="res://mainmenu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=60
 config/icon="res://godot_icon.svg"
 
 [autoload]
@@ -98,6 +99,11 @@ RMB={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":51,"echo":false,"script":null)
 ]
 }
+esc={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
 
 [physics]
 
@@ -108,8 +114,3 @@ RMB={
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
-
-[script_panel_plus]
-
-panel_settings/show_top_bar=true
-panel_settings/show_bottom_bar=true

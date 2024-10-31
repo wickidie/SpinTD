@@ -7,7 +7,6 @@
 [ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_1ydk1"]
 
 [node name="Player" type="Node2D"]
-top_level = true
 script = ExtResource("1_tqoa7")
 
 [node name="Debug" type="Control" parent="."]
