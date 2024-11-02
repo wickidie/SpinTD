@@ -1,7 +1,7 @@
 class_name LevelManager extends Node2D
 
-const LEVEL_SELECTION: PackedScene = preload("res://mainmenu/level_selection.tscn")
-const MAIN_MENU: PackedScene = preload("res://mainmenu/main_menu.tscn")
+const LEVEL_SELECTION: PackedScene = preload("res://menu/level_selection.tscn")
+const MAIN_MENU: PackedScene = preload("res://menu/main_menu.tscn")
 
 @onready var ui: Control = $UI
 

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SpinTD"
-run/main_scene="res://mainmenu/main_menu.tscn"
+run/main_scene="res://menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=60
 config/icon="res://godot_icon.svg"
@@ -20,6 +20,10 @@ config/icon="res://godot_icon.svg"
 
 GameManager="*res://game_manager.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
+
+[debug]
+
+gdscript/warnings/enable=false
 
 [display]
 
@@ -114,3 +118,8 @@ esc={
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+
+[script_panel_plus]
+
+panel_settings/show_top_bar=true
+panel_settings/show_bottom_bar=true

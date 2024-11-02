@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpx03kqhd0ag1"]
+
+[ext_resource type="Script" path="res://menu/main_menu.gd" id="1_vjm3y"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_vjm3y")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -23.5
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Play" type="RichTextLabel" parent="GUI/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Play[/center]"
+fit_content = true
+
+[node name="Settings" type="RichTextLabel" parent="GUI/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Settings[/center]"
+fit_content = true
+
+[node name="Exit" type="RichTextLabel" parent="GUI/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Exit[/center]"
+fit_content = true
+
+[connection signal="gui_input" from="GUI/VBoxContainer/Play" to="." method="_on_play_gui_input"]
+[connection signal="gui_input" from="GUI/VBoxContainer/Settings" to="." method="_on_settings_gui_input"]
+[connection signal="gui_input" from="GUI/VBoxContainer/Exit" to="." method="_on_exit_gui_input"]

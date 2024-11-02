@@ -1,10 +1,10 @@
 extends Node2D
 
-@onready var play: RichTextLabel = $Control/VBoxContainer/Play
-@onready var settings: RichTextLabel = $Control/VBoxContainer/Settings
-@onready var exit: RichTextLabel = $Control/VBoxContainer/Exit
+@onready var play: RichTextLabel = $GUI/VBoxContainer/Play
+@onready var settings: RichTextLabel = $GUI/VBoxContainer/Settings
+@onready var exit: RichTextLabel = $GUI/VBoxContainer/Exit
 
-const LEVEL_SELECTION: PackedScene = preload("res://mainmenu/level_selection.tscn")
+var LEVEL_SELECTION_path = "res://menu/level_selection.tscn"
 
 func _ready() -> void:
 
@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func _on_play_gui_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("LMB")):
+		var LEVEL_SELECTION = load(LEVEL_SELECTION_path)
 		get_tree().change_scene_to_packed(LEVEL_SELECTION)
 		print(event)
 	pass # Replace with function body.
