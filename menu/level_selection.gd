@@ -8,15 +8,13 @@ var current_level
 
 func _on_level_1_gui_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("LMB")):
-		var CRICLE_MAP = load(CRICLE_MAP_PATH)
-		change_to_level(CRICLE_MAP)
+		change_to_level(CRICLE_MAP_PATH)
 		print(event)
 	pass # Replace with function body.
 
-func change_to_level(LEVEL_SCENE: PackedScene):
+func change_to_level(LEVEL_SCENE_PATH):
 	var LEVEL_MANAGER = load(LEVEL_MANAGER_PATH)
-	var PLAYER = load(PLAYER_PATH)
 	current_level = LEVEL_MANAGER.instantiate()
-	current_level.setup_game(LEVEL_SCENE, PLAYER)
+	current_level.setup_game(LEVEL_SCENE_PATH, PLAYER_PATH)
 	get_parent().add_child(current_level)
 	queue_free()
