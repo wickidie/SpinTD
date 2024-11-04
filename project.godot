@@ -18,7 +18,7 @@ config/icon="res://godot_icon.svg"
 
 [autoload]
 
-GameManager="*res://game_manager.gd"
+GameManager="res://game_manager.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [debug]

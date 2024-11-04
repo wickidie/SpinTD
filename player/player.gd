@@ -9,8 +9,8 @@ class_name Player extends Node2D
 @onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
 @onready var target = $GUI/InfoPanel/VBoxContainer/Target
 @onready var wave = $GUI/HBoxContainer/Wave
-@onready var life = $GUI/HBoxContainer/Life
-@onready var money = $GUI/HBoxContainer/Money
+@onready var lives_text = $GUI/HBoxContainer/Life
+@onready var money_text = $GUI/HBoxContainer/Money
 
 @onready var build_menu = $GUI/Panel/BuildMenu
 @onready var tower_menu_template: TextureButton = $GUI/Panel/BuildMenu/TowerTemplate
@@ -30,11 +30,16 @@ var precision_current_pos: Vector2
 var selected_building_bool: bool
 var building_bool: bool
 
-var economy: PlayerEconomy
+#var economy: PlayerEconomy
 var tower_list_path: Array
 var tower_list: Array
+var level_manager: LevelManager
+var lives
+var money
 
 func _ready():
+	level_manager = get_parent()
+	#money = level_manager.map.starting_money
 	tower_list_path = [
 		"res://tower/test/test_tower.tscn",
 		"res://tower/basic/tower_basic.tscn",
@@ -56,7 +61,7 @@ func _ready():
 
 	building_selected.connect(select_building)
 	#GameManager.player_list.append(self)
-	economy = PlayerEconomy.new()
+	#economy = PlayerEconomy.new()
 	info_panel.visible = false
 
 func _process(_delta):
@@ -72,9 +77,9 @@ func _process(_delta):
 		"\nis_building : " + str(is_building) +
 		"\nis_precision_building : " + str(is_precision_building) +
 		"\ncan_build : " + str(can_build))
-	wave.text = ("[center]" + "Wave: " + str(GameManager.map.wave) + "[/center]")
-	life.text = ("[center]" + "Life: " + str(GameManager.life) + "[/center]")
-	money.text = ("[center]" + "Money: " + str(economy.money) + "[/center]")
+	wave.text = ("[center]" + "Wave: " + str(level_manager.map.wave) + "[/center]")
+	lives_text.text = ("[center]" + "Life: " + str(lives) + "[/center]")
+	money_text.text = ("[center]" + "Money: " + str(money) + "[/center]")
 
 func show_build():
 	building.position = get_global_mouse_position()
@@ -85,7 +90,7 @@ func show_precision_build():
 
 func build():
 	building.build_placed.emit()
-	economy.money -= selected_building.build_cost
+	money -= selected_building.build_cost
 	can_build = true
 	is_building = false
 	building = null
@@ -123,7 +128,7 @@ func buy_tower(tower_scene):
 		if (building.name == new_building.name):
 			print("Building the same")
 		else:
-			if (economy.money >= new_building.build_cost):
+			if (money >= new_building.build_cost):
 				building.queue_free()
 				building = new_building
 				selected_building = new_building
@@ -141,7 +146,7 @@ func buy_tower(tower_scene):
 		else:
 			building = load(tower_scene).instantiate()
 			selected_building = building
-			if (economy.money >= selected_building.build_cost):
+			if (money >= selected_building.build_cost):
 				building.is_selected = true
 				is_building = true
 				get_parent().add_child(building)

@@ -14,11 +14,13 @@ signal wave_finished
 var wave: int = 1
 var enemy_list: Array
 var wave_list: Dictionary
+var level_manager: LevelManager
+var starting_money = 50
 
 enum WAVE {ENEMY_TYPE, MOB_SET, MOB_INTERVAL, SET_INTERVAL}
 
 func _ready():
-	GameManager.map = self
+	level_manager = get_parent()
 	wave_list = {
 		"1" : {
 # 2D array concept [enemy_type, mob_set, mob_interval, set_interval]

@@ -38,7 +38,7 @@ func stop_moving():
 	m_projectile_state = stop_moving
 
 func receive_bounty():
-	# m_projectile_owner.economy.money += m_enemies[0].get_parent().bounty
+	#m_projectile_owner.economy.money += m_enemies[0].get_parent().bounty
 	pass
 
 func apply_single_damage(enemy):

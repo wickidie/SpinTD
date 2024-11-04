@@ -30,7 +30,7 @@ var tower_icon
 var build_cost: float
 var attack_speed: float
 
-var player: Player
+var tower_owner: Player
 var can_shoot: bool = false
 var can_build_here: bool = true
 var is_placed: bool = false
@@ -54,7 +54,7 @@ func _ready():
 	build_placed.connect(place_building)
 	selected.connect(tower_selected)
 	unselected.connect(tower_unselected)
-	player = get_parent().get_node("Player")
+	tower_owner = get_parent().get_node("Player")
 	tower_range.disabled = true
 	tower_area.input_pickable = false
 	target = self
@@ -114,7 +114,7 @@ func shoot_projectile():
 	timer.start()
 	var bullet: Projectile = projectile.instantiate()
 	get_parent().add_child(bullet)
-	bullet.m_projectile_owner = player
+	bullet.m_projectile_owner = tower_owner
 	bullet.position = marker_2d.global_position
 	bullet.start(target.global_position - global_position)
 	can_shoot = false
@@ -165,7 +165,7 @@ func check_build_space():
 		can_build_here = false
 		if (is_placed):
 			print(self, " : Illegal Builded")
-			player.economy.money += build_cost
+			tower_owner.economy.money += build_cost
 			queue_free()
 			return false
 	else:
@@ -201,10 +201,10 @@ func _on_tower_area_area_exited(area):
 		building_obstacles.remove_at(building_obstacles.find(area))
 		check_build_space()
 
-# Receiving player mouse input to select
+# Receiving tower_owner mouse input to select
 func _on_tower_click_area_input_event(_viewport, _event, _shape_idx):
-	if (Input.is_action_just_pressed("LMB") and is_placed and player.is_building == false):
-		player.selected_building = self
+	if (Input.is_action_just_pressed("LMB") and is_placed and tower_owner.is_building == false):
+		tower_owner.selected_building = self
 		selected.emit()
-		player.building_selected.emit()
+		tower_owner.building_selected.emit()
 		print("Select : ", self)
