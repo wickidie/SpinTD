@@ -41,11 +41,9 @@ func _ready():
 	load_table()
 	progress_bar.max_value = cooldown.wait_time
 	cooldown.start()
-	pass
 
 func _process(_delta):
 	progress_bar.value = cooldown.wait_time - cooldown.time_left
-	pass
 
 func load_table():
 	loot_keys = loot_table.keys()
@@ -73,12 +71,10 @@ func roll():
 
 func prize_audio(i: int):
 	if (i == 0):
-		print("ASD")
 		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[1])
 		gpu_particles_2d.restart()
 		sfx_jackpot.play()
 	else:
-		print("DAS")
 		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 		gpu_particles_2d.restart()
 
@@ -86,11 +82,8 @@ func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)
 	and GameManager.player_list.front().economy.money >= spin_cost):
 		roll()
-		#print("Spin")
-	pass # Replace with function body.
 
 func _on_cooldown_timeout():
 	spinner.stop()
 	cooldown.stop()
 	can_spin = true;
-	pass # Replace with function body.

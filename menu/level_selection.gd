@@ -9,8 +9,6 @@ var current_level
 func _on_level_1_gui_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("LMB")):
 		change_to_level(CRICLE_MAP_PATH)
-		print(event)
-	pass # Replace with function body.
 
 func change_to_level(LEVEL_SCENE_PATH):
 	var LEVEL_MANAGER = load(LEVEL_MANAGER_PATH)

@@ -53,7 +53,6 @@ func apply_area_damage():
 	aoe.monitorable = false
 	aoe.add_child(collision)
 	add_child(aoe)
-	pass
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("Enemy") and m_can_damage):

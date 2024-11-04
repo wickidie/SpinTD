@@ -90,4 +90,3 @@ func _on_wave_interval_timeout() -> void:
 	for i in range(wave_list.size()):
 		#print("\n=== Wave ", wave, " ===\n")
 		await new_wave()
-	pass # Replace with function body.

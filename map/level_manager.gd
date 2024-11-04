@@ -9,7 +9,6 @@ var map: Map
 var player: Player
 var level_menu_ui
 
-# TODO : fix setup and restart
 func setup_game(MAP_PATH, PLAYER_PATH):
 	self.MAP_PATH = MAP_PATH
 	self.PLAYER_PATH = PLAYER_PATH
@@ -19,9 +18,8 @@ func setup_game(MAP_PATH, PLAYER_PATH):
 	add_child(level_menu_ui)
 	add_child(map)
 	add_child(player)
-	
+
 func restart_game():
 	for child in get_children():
 		child.queue_free()
 	setup_game(MAP_PATH, PLAYER_PATH)
-
