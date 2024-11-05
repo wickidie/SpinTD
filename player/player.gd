@@ -34,7 +34,6 @@ var building_bool: bool
 var tower_list_path: Array
 var tower_list: Array
 var level_manager: LevelManager
-var lives
 var money
 
 func _ready():
@@ -78,7 +77,7 @@ func _process(_delta):
 		"\nis_precision_building : " + str(is_precision_building) +
 		"\ncan_build : " + str(can_build))
 	wave.text = ("[center]" + "Wave: " + str(level_manager.map.wave) + "[/center]")
-	lives_text.text = ("[center]" + "Life: " + str(lives) + "[/center]")
+	lives_text.text = ("[center]" + "Life: " + str(level_manager.lives) + "[/center]")
 	money_text.text = ("[center]" + "Money: " + str(money) + "[/center]")
 
 func show_build():

@@ -11,13 +11,15 @@ var enemy_name: String
 var health: float
 var speed: float
 var bounty: float
-var life_damage: float
+var damage_to_lives: float
 var animation_player: AnimationPlayer
 var player_projectile: Player
+var level_manager: LevelManager
 
 # TODO : Need to refactor Enemy code
 
 func _ready():
+	level_manager = get_parent().get_parent().level_manager
 	hp_bar.max_value = health
 	hp_bar.value = health
 	loop = false
@@ -40,19 +42,18 @@ func load_enemy_stat(enemy_name: String):
 	health = enemies_data.enemies_data[enemy_name]["health"]
 	speed = enemies_data.enemies_data[enemy_name]["speed"]
 	bounty = enemies_data.enemies_data[enemy_name]["bounty"]
-	life_damage = enemies_data.enemies_data[enemy_name]["life_damage"]
+	damage_to_lives = enemies_data.enemies_data[enemy_name]["damage_to_lives"]
 
 func move_unit(delta):
 	progress += speed * delta
 	if (progress_ratio == 1):
-		#print(self, " Finish")
+		level_manager.lives -= damage_to_lives
+		level_manager.lives_damaged.emit()
 		queue_free()
-		#GameManager.life_setted.emit(GameManager.life - life_damage)
 	pass
 
 func take_damage(damage, projectile):
 	player_projectile = projectile
-	print(player_projectile)
 	health -= damage
 	hp_bar.value = health
 	animation_player.play("hit_flash")

@@ -19,6 +19,7 @@ var enemy_list: Array
 var wave_list: Dictionary
 var level_manager: LevelManager
 var starting_money = 50
+var starting_lives = 20
 var spinner: Spinner
 
 enum WAVE {ENEMY_TYPE, MOB_SET, MOB_INTERVAL, SET_INTERVAL}
@@ -28,16 +29,13 @@ func _enter_tree() -> void:
 	level_manager = get_parent()
 
 func _ready():
-	print(level_manager)
-	#spinner = load(SPINNER_PATH).instantiate()
-	#spinner.transform = spinner_spawn_point.transform
-	#add_child(spinner)
+	level_manager.lives = starting_lives
 	wave_list = {
-		"1" : {
 # 2D array concept [enemy_type, mob_set, mob_interval, set_interval]
+		"1" : {
 			"enemy_set" : [
+				[FAST_ENEMY, 20, 0.3, 1],
 				[TEST_ENEMY, 5, 0.3, 1],
-				[FAST_ENEMY, 5, 0.3, 1],
 				[BASIC_ENEMY, 10, 0.1, 1],
 				[TANK_ENEMY, 5, 0.5, 1],
 				[BONUS_ENEMY, 10, 0.2, 1]
