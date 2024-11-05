@@ -63,7 +63,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 			if (enemy.is_in_group("Enemy")):
 				m_enemies.append(enemy)
 		#print("m_enemies : ", m_enemies)
-		if (m_enemies[0].get_parent().take_damage(m_damage)):
+		if (m_enemies[0].get_parent().take_damage(m_damage, m_projectile_owner)):
 			enemy_killed.emit()
 
 func _on_area_2d_area_exited(area):

@@ -165,7 +165,7 @@ func check_build_space():
 		can_build_here = false
 		if (is_placed):
 			print(self, " : Illegal Builded")
-			tower_owner.economy.money += build_cost
+			tower_owner.money += build_cost
 			queue_free()
 			return false
 	else:

@@ -32,8 +32,10 @@ var has_cooldown: bool
 var loot_keys: Array
 var spin_cost: float = 20
 var cumulative_weight: float
+var player: Player
 
 func _ready():
+	player = get_parent().level_manager.player
 	gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 	gpu_particles_2d.emitting = false
 	gpu_particles_2d.one_shot = true
@@ -58,13 +60,13 @@ func roll():
 	can_spin = false
 	cooldown.start()
 	var roll_value = randi_range(1, cumulative_weight)
-	GameManager.player_list.front().economy.money -= spin_cost
+	player.money -= spin_cost
 	print("\nRoll : ", roll_value)
 	for i in range(loot_table.size()):
 		if (roll_value <= loot_table[loot_keys[i]]["weight"]):
 			print(loot_keys[i], " ", loot_table[loot_keys[i]]["amount"])
 			prize_audio(i)
-			GameManager.player_list.front().economy.money += loot_table[loot_keys[i]]["amount"]
+			player.money += loot_table[loot_keys[i]]["amount"]
 			return
 		else:
 			roll_value -= loot_table[loot_keys[i]]["weight"]
@@ -80,8 +82,9 @@ func prize_audio(i: int):
 
 func _on_area_2d_input_event(_viewport, _event, _shape_idx):
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)
-	and GameManager.player_list.front().economy.money >= spin_cost):
+	and player.money >= spin_cost):
 		roll()
+
 
 func _on_cooldown_timeout():
 	spinner.stop()

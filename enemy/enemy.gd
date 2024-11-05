@@ -13,6 +13,7 @@ var speed: float
 var bounty: float
 var life_damage: float
 var animation_player: AnimationPlayer
+var player_projectile: Player
 
 # TODO : Need to refactor Enemy code
 
@@ -46,14 +47,16 @@ func move_unit(delta):
 	if (progress_ratio == 1):
 		#print(self, " Finish")
 		queue_free()
-		GameManager.life_setted.emit(GameManager.life - life_damage)
+		#GameManager.life_setted.emit(GameManager.life - life_damage)
 	pass
 
-func take_damage(damage):
+func take_damage(damage, projectile):
+	player_projectile = projectile
+	print(player_projectile)
 	health -= damage
 	hp_bar.value = health
 	animation_player.play("hit_flash")
 	if (health <= 0):
-		#GameManager.player.economy.money += bounty
+		player_projectile.money += bounty
 		queue_free()
 		return true

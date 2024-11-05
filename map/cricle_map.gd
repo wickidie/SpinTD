@@ -8,6 +8,9 @@ class_name Map extends Node2D
 @onready var BONUS_ENEMY = preload("res://enemy/bonus/bonus_enemy.tscn")
 @onready var map_path = $MapPath
 @onready var wave_interval: Timer = $WaveInterval
+@onready var spinner_spawn_point: Marker2D = $SpinnerSpawnPoint
+
+var SPINNER_PATH = "res://spinner/spinner.tscn"
 
 signal wave_finished
 
@@ -16,11 +19,19 @@ var enemy_list: Array
 var wave_list: Dictionary
 var level_manager: LevelManager
 var starting_money = 50
+var spinner: Spinner
 
 enum WAVE {ENEMY_TYPE, MOB_SET, MOB_INTERVAL, SET_INTERVAL}
 
-func _ready():
+func _enter_tree() -> void:
+	print(self, " Enter")
 	level_manager = get_parent()
+
+func _ready():
+	print(level_manager)
+	#spinner = load(SPINNER_PATH).instantiate()
+	#spinner.transform = spinner_spawn_point.transform
+	#add_child(spinner)
 	wave_list = {
 		"1" : {
 # 2D array concept [enemy_type, mob_set, mob_interval, set_interval]

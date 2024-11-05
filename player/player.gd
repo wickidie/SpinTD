@@ -39,7 +39,7 @@ var money
 
 func _ready():
 	level_manager = get_parent()
-	#money = level_manager.map.starting_money
+	money = level_manager.map.starting_money
 	tower_list_path = [
 		"res://tower/test/test_tower.tscn",
 		"res://tower/basic/tower_basic.tscn",

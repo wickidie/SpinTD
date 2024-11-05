@@ -23,6 +23,9 @@ texture = ExtResource("4_8qhj7")
 [node name="WaveInterval" type="Timer" parent="."]
 one_shot = true
 
+[node name="SpinnerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(320, 192)
+
 [node name="MapPath" type="Path2D" parent="."]
 position = Vector2(616, 288)
 curve = SubResource("Curve2D_yqjoy")
