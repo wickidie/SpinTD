@@ -16,8 +16,6 @@ var animation_player: AnimationPlayer
 var player_projectile: Player
 var level_manager: LevelManager
 
-# TODO : Need to refactor Enemy code
-
 func _ready():
 	level_manager = get_parent().get_parent().level_manager
 	hp_bar.max_value = health

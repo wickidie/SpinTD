@@ -9,9 +9,3 @@ res://player/player.tscn
 res://spinner/spinner.tscn
 res://map/cricle_map.tscn
 res://enemy/test/test_enemy.tscn
-res://map/cricle_map.gd
-res://map/level_manager.gd
-res://player/player.gd
-res://enemy/enemy.gd
-res://enemy/enemy_data.gd
-res://map/level_menu_ui.gd

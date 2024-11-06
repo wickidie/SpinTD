@@ -201,3 +201,9 @@ func _on_target_change_right_pressed():
 	target_mode.text = str(selected_building.target_mode_string)
 	print(selected_building.target_mode)
 	print(selected_building.target_mode_string)
+
+func _on_sell_tower_button_up():
+	money += selected_building.build_cost / 2
+	selected_building.queue_free()
+	unselect_building()
+	pass # Replace with function body.

@@ -22,6 +22,7 @@ func setup_game(MAP_PATH, PLAYER_PATH):
 	add_child(level_menu_ui)
 	add_child(map)
 	add_child(player)
+	# FIXME : fix ald connected error
 	lives_damaged.connect(_on_lives_damaged)
 
 func restart_game():

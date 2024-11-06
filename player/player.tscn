@@ -92,6 +92,23 @@ text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
 fit_content = true
 scroll_active = false
 
+[node name="BottomBox" type="VBoxContainer" parent="GUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SellTower" type="TextureButton" parent="GUI/InfoPanel/BottomBox"]
+layout_mode = 2
+texture_normal = ExtResource("2_r66ck")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
 layout_mode = 2
 offset_left = 224.0
@@ -171,3 +188,4 @@ vertical_alignment = 1
 
 [connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeLeft" to="." method="_on_target_change_left_pressed"]
 [connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeRight" to="." method="_on_target_change_right_pressed"]
+[connection signal="button_up" from="GUI/InfoPanel/BottomBox/SellTower" to="." method="_on_sell_tower_button_up"]
