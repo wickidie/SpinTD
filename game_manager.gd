@@ -1,4 +1,4 @@
-#extends Node
+extends Node
 #
 #signal life_setted(new_life)
 #

@@ -1,39 +1,78 @@
-[gd_scene load_steps=3 format=3 uid="uid://dr8ua8ve7dfxw"]
+[gd_scene load_steps=4 format=3 uid="uid://dr8ua8ve7dfxw"]
 
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://godot_icon.svg" id="1_143s1"]
 [ext_resource type="Script" path="res://menu/level_selection.gd" id="1_t5trb"]
+[ext_resource type="Texture2D" uid="uid://dapy8oe4vov86" path="res://map/map_circle.png" id="2_2o241"]
 
 [node name="LevelSelection" type="Node2D"]
 script = ExtResource("1_t5trb")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+[node name="Control" type="Panel" parent="."]
 offset_right = 640.0
 offset_bottom = 360.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -196.0
 offset_top = -64.0
+offset_right = 196.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Level1" type="TextureButton" parent="Control/HBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("1_143s1")
+size_flags_horizontal = 3
+alignment = 1
 
-[node name="Level2" type="TextureButton" parent="Control/HBoxContainer"]
+[node name="Level1" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("1_143s1")
+texture = ExtResource("2_2o241")
+expand_mode = 4
+stretch_mode = 5
 
-[node name="Level3" type="TextureButton" parent="Control/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/HBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("1_143s1")
+text = "Easy"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="gui_input" from="Control/HBoxContainer/Level1" to="." method="_on_level_1_gui_input"]
+[node name="HBoxContainer2" type="VBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Level2" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("1_143s1")
+expand_mode = 4
+
+[node name="Label" type="Label" parent="Control/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Medium"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="VBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Level3" type="TextureRect" parent="Control/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("1_143s1")
+expand_mode = 4
+
+[node name="Label" type="Label" parent="Control/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Hard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="Control/HBoxContainer/HBoxContainer/Level1" to="." method="_on_level_1_gui_input"]

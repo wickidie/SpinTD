@@ -1,8 +1,10 @@
-Label
-RichTextLabel
-HBoxContainer
-TextureButton
+Panel
 VBoxContainer
+HBoxContainer
+Label
+TextureRect
+RichTextLabel
+TextureButton
 Marker2D
 Node2D
 ColorRect
@@ -10,5 +12,3 @@ Control
 AnimationPlayer
 GPUParticles2D
 AnimatedSprite2D
-Panel
-Container
