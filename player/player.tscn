@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnoc8l6gk82ee"]
+[gd_scene load_steps=7 format=3 uid="uid://dnoc8l6gk82ee"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_tqoa7"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://godot_icon.svg" id="2_r66ck"]
-[ext_resource type="Texture2D" uid="uid://codr0iqkprgd6" path="res://gui/gradient_bnw_arrow.png" id="4_kss2q"]
+[ext_resource type="Texture2D" uid="uid://slxpqtm0l3hl" path="res://gui/triangle.png" id="4_g0ujx"]
 [ext_resource type="LabelSettings" uid="uid://dpjcyio37q86j" path="res://gui/DefaultLabel.tres" id="4_vhc4r"]
 [ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_1ydk1"]
+[ext_resource type="Texture2D" uid="uid://dje4n6n0dtfjt" path="res://gui/button.png" id="5_qc0a5"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_tqoa7")
@@ -67,8 +68,7 @@ alignment = 1
 [node name="TargetChangeLeft" type="TextureButton" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-texture_normal = ExtResource("4_kss2q")
-stretch_mode = 0
+texture_normal = ExtResource("4_g0ujx")
 flip_h = true
 
 [node name="TargetMode" type="Label" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
@@ -80,8 +80,8 @@ horizontal_alignment = 1
 
 [node name="TargetChangeRight" type="TextureButton" parent="GUI/InfoPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("4_kss2q")
-stretch_mode = 0
+texture_normal = ExtResource("4_g0ujx")
+stretch_mode = 5
 
 [node name="Target" type="RichTextLabel" parent="GUI/InfoPanel/VBoxContainer"]
 layout_mode = 2
@@ -100,14 +100,38 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -64.0
-offset_top = -128.0
+offset_top = -64.0
 offset_right = 64.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="SellTower" type="TextureButton" parent="GUI/InfoPanel/BottomBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/InfoPanel/BottomBox"]
 layout_mode = 2
-texture_normal = ExtResource("2_r66ck")
+size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
+
+[node name="SellTower" type="TextureButton" parent="GUI/InfoPanel/BottomBox/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_1ydk1")
+texture_normal = ExtResource("5_qc0a5")
+
+[node name="RichTextLabel" type="Label" parent="GUI/InfoPanel/BottomBox/HBoxContainer/SellTower"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -16.0
+offset_right = 24.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sell"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
 layout_mode = 2
@@ -188,4 +212,4 @@ vertical_alignment = 1
 
 [connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeLeft" to="." method="_on_target_change_left_pressed"]
 [connection signal="pressed" from="GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetChangeRight" to="." method="_on_target_change_right_pressed"]
-[connection signal="button_up" from="GUI/InfoPanel/BottomBox/SellTower" to="." method="_on_sell_tower_button_up"]
+[connection signal="button_up" from="GUI/InfoPanel/BottomBox/HBoxContainer/SellTower" to="." method="_on_sell_tower_button_up"]

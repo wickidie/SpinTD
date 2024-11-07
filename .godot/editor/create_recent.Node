@@ -1,14 +1,14 @@
+Label
+RichTextLabel
+HBoxContainer
 TextureButton
 VBoxContainer
 Marker2D
 Node2D
 ColorRect
 Control
-RichTextLabel
-HBoxContainer
 AnimationPlayer
 GPUParticles2D
 AnimatedSprite2D
-Label
 Panel
 Container
