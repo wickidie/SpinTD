@@ -1,8 +1,10 @@
-res://menu/level_selection.tscn
+res://menu/settings.tscn
 res://projectile/explosive/projectile_explosive.gd
 res://enemy/hit_shader.tres
 res://spinner/spinner_anim.tres
 res://spinner/normal_spinner_particle.tres
+res://menu/settings.gd
+res://menu/level_selection.tscn
 res://map/level_manager.tscn
 res://map/level_menu_ui.tscn
 res://player/player.tscn
@@ -11,7 +13,3 @@ res://map/cricle_map.tscn
 res://enemy/test/test_enemy.tscn
 res://menu/main_menu.tscn
 res://GameManager.tscn
-res://music_manager.gd
-res://default_bus_layout.tres
-res://menu/settings.tscn
-res://menu/settings.gd
