@@ -20,6 +20,7 @@ config/icon="res://godot_icon.svg"
 
 GameManager="res://game_manager.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
+MusicManager="*res://music_manager.gd"
 
 [debug]
 
@@ -118,3 +119,8 @@ esc={
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+
+[script_panel_plus]
+
+panel_settings/show_top_bar=true
+panel_settings/show_bottom_bar=true
