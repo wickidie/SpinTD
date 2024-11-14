@@ -1,9 +1,11 @@
 class_name Settings extends Control
 
-@onready var resolution_option = $Panel/HBoxContainer/RightVBox/ResolutionOption
-@onready var display_mode_option = $Panel/HBoxContainer/RightVBox/DisplayModeOption
-@onready var music_slider = $Panel/HBoxContainer/RightVBox/MusicHBox/MusicSlider
-@onready var sfx_slider = $Panel/HBoxContainer/RightVBox/SfxHBox/SfxSlider
+@onready var resolution_option = $Panel/MarginContainer/VBoxContainer2/ResolutionHBoxContainer/ResolutionOption
+@onready var display_mode_option = $Panel/MarginContainer/VBoxContainer2/DisplayModeHBoxContainer/DisplayModeOption
+@onready var borderless_check_box = $Panel/MarginContainer/VBoxContainer2/BorderlessHBoxContainer/BorderlessCheckBox
+@onready var music_slider = $Panel/MarginContainer/VBoxContainer2/MusicHBoxContainer/MusicHBox/MusicSlider
+@onready var sfx_slider = $Panel/MarginContainer/VBoxContainer2/SfxHBoxContainer/SfxHBox/SfxSlider
+
 @onready var root_window = get_tree().root.get_window()
 
 const RESOLUTIONS = [

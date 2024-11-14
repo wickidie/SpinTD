@@ -37,15 +37,15 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
+[node name="ResolutionHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Resolution" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer3"]
+[node name="ResolutionLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/ResolutionHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Resolution"
 
-[node name="ResolutionOption" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer3"]
+[node name="ResolutionOption" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer2/ResolutionHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -57,15 +57,15 @@ popup/item_1/id = 1
 popup/item_2/text = "640 x 360"
 popup/item_2/id = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
+[node name="DisplayModeHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="DisplayMode" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer4"]
+[node name="DisplayModeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/DisplayModeHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Display Mode"
 
-[node name="DisplayModeOption" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer4"]
+[node name="DisplayModeOption" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer2/DisplayModeHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -81,49 +81,49 @@ popup/item_3/id = 3
 popup/item_4/text = "Exclusive Fullscreen"
 popup/item_4/id = 4
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
+[node name="BorderlessHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Windowed" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer5"]
+[node name="BorderlessLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/BorderlessHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Windowed"
 
-[node name="WindowedCheckBox" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer5"]
+[node name="BorderlessCheckBox" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer2/BorderlessHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
+[node name="MusicHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Music" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer"]
+[node name="MusicLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/MusicHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Music"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MusicHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer"]
+[node name="MusicHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2/MusicHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="MusicSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer/MusicHBox"]
+[node name="MusicSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer2/MusicHBoxContainer/MusicHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 tick_count = 5
 ticks_on_borders = true
 
-[node name="MusicLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer/MusicHBox"]
+[node name="MusicValue" type="Label" parent="Panel/MarginContainer/VBoxContainer2/MusicHBoxContainer/MusicHBox"]
 layout_mode = 2
 text = "100"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
+[node name="SfxHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Sfx" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer2"]
+[node name="SfxLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/SfxHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -132,18 +132,18 @@ text = "Sfx
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SfxHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer2"]
+[node name="SfxHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2/SfxHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="SfxSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer2/SfxHBox"]
+[node name="SfxSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer2/SfxHBoxContainer/SfxHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 tick_count = 5
 ticks_on_borders = true
 
-[node name="SfxLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/HBoxContainer2/SfxHBox"]
+[node name="SfxValue" type="Label" parent="Panel/MarginContainer/VBoxContainer2/SfxHBoxContainer/SfxHBox"]
 layout_mode = 2
 text = "100"
