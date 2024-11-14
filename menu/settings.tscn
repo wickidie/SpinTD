@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://crsx4wa7qfy2d"]
+[gd_scene load_steps=2 format=3 uid="uid://crsx4wa7qfy2d"]
+
+[ext_resource type="Script" path="res://menu/settings.gd" id="1_noliy"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_noliy")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -49,13 +52,6 @@ text = "Resolution"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-item_count = 3
-popup/item_0/text = "1920 x 1080"
-popup/item_0/id = 0
-popup/item_1/text = "1280 x 720"
-popup/item_1/id = 1
-popup/item_2/text = "640 x 360"
-popup/item_2/id = 2
 
 [node name="DisplayModeHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
@@ -69,17 +65,6 @@ text = "Display Mode"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-item_count = 5
-popup/item_0/text = "Windowed"
-popup/item_0/id = 0
-popup/item_1/text = "Minimized"
-popup/item_1/id = 1
-popup/item_2/text = "Maximized"
-popup/item_2/id = 2
-popup/item_3/text = "Fullscreen"
-popup/item_3/id = 3
-popup/item_4/text = "Exclusive Fullscreen"
-popup/item_4/id = 4
 
 [node name="BorderlessHBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
@@ -87,7 +72,7 @@ layout_mode = 2
 [node name="BorderlessLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer2/BorderlessHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Windowed"
+text = "Borderless"
 
 [node name="BorderlessCheckBox" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer2/BorderlessHBoxContainer"]
 layout_mode = 2
