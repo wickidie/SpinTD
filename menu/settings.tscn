@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://crsx4wa7qfy2d"]
+[gd_scene load_steps=2 format=3 uid="uid://c7u7y0gxdylc"]
 
 [ext_resource type="Script" path="res://menu/settings.gd" id="1_noliy"]
 
@@ -98,6 +98,8 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
 tick_count = 5
 ticks_on_borders = true
 
@@ -126,6 +128,8 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
 tick_count = 5
 ticks_on_borders = true
 

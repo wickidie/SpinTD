@@ -49,4 +49,3 @@ func _on_resolution_option_item_selected(index):
 	
 func _on_borderless_check_box_toggled(toggled_on):
 	root_window.borderless = toggled_on
-

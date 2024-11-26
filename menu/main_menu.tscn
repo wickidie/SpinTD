@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpx03kqhd0ag1"]
+[gd_scene load_steps=2 format=3 uid="uid://bpx03kqhd0ag1"]
 
 [ext_resource type="Script" path="res://menu/main_menu.gd" id="1_vjm3y"]
-[ext_resource type="PackedScene" uid="uid://crsx4wa7qfy2d" path="res://menu/settings.tscn" id="2_i4v7p"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_vjm3y")
@@ -43,18 +42,6 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[center]Exit[/center]"
 fit_content = true
-
-[node name="Settings" parent="." instance=ExtResource("2_i4v7p")]
-visible = false
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 160.0
-offset_top = 120.0
-offset_right = 160.0
-offset_bottom = 120.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [connection signal="gui_input" from="GUI/VBoxContainer/Play" to="." method="_on_play_gui_input"]
 [connection signal="gui_input" from="GUI/VBoxContainer/Settings" to="." method="_on_settings_gui_input"]
