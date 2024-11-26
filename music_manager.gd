@@ -15,6 +15,7 @@ func _ready():
 	change_music_to("MainMenu")
 	print(AudioServer.get_bus_name(1))
 
+# TODO : Music too loud at first cus this loaded b4 volume change
 func change_music_to(musics_name: String):
 	if (is_music_settings_on):
 		music_player.stream = load(musics[musics_name])

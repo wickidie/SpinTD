@@ -1,6 +1,7 @@
+LineEdit
+TextEdit
 HBoxContainer
 Label
-TextEdit
 VBoxContainer
 GridContainer
 MarginContainer
