@@ -1,3 +1,4 @@
+GPUParticles2D
 LineEdit
 TextEdit
 HBoxContainer
@@ -12,4 +13,3 @@ HFlowContainer
 Control
 NinePatchRect
 BoxContainer
-OptionButton

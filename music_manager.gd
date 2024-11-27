@@ -9,7 +9,7 @@ var musics: Dictionary = {
 var is_music_settings_on: bool
 
 func _ready():
-	is_music_settings_on = true
+	#is_music_settings_on = true
 	music_player.bus = AudioServer.get_bus_name(1)
 	add_child(music_player)
 	change_music_to("MainMenu")
