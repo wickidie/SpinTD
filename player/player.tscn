@@ -19,6 +19,22 @@ limit_right = 640
 limit_bottom = 360
 editor_draw_limits = true
 
+[node name="CameraNotifier" type="Node2D" parent="."]
+
+[node name="Top" type="VisibleOnScreenNotifier2D" parent="CameraNotifier"]
+rect = Rect2(0, 0, 640, 0)
+
+[node name="Bottom" type="VisibleOnScreenNotifier2D" parent="CameraNotifier"]
+position = Vector2(0, 360)
+rect = Rect2(0, 0, 640, 0)
+
+[node name="Left" type="VisibleOnScreenNotifier2D" parent="CameraNotifier"]
+rect = Rect2(0, 0, 0, 360)
+
+[node name="Right" type="VisibleOnScreenNotifier2D" parent="CameraNotifier"]
+position = Vector2(640, 0)
+rect = Rect2(0, 0, 0, 360)
+
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0

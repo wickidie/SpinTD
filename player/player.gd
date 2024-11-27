@@ -4,6 +4,11 @@ class_name Player extends Node2D
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
 @onready var player_camera: Camera2D = $PlayerCamera
+@onready var top: VisibleOnScreenNotifier2D = $CameraNotifier/Top
+@onready var bottom: VisibleOnScreenNotifier2D = $CameraNotifier/Bottom
+@onready var left: VisibleOnScreenNotifier2D = $CameraNotifier/Left
+@onready var right: VisibleOnScreenNotifier2D = $CameraNotifier/Right
+
 @onready var debug_label = $Debug/DebugLabel
 
 @onready var wave = $GUI/HBoxContainer/Wave
@@ -40,14 +45,13 @@ var tower_list: Array
 var level_manager: LevelManager
 var money
 
-
 var player_camera_min_position: Vector2 = Vector2(0, 0)
 var player_camera_max_position: Vector2 = Vector2(640, 360)
 var zoom_sensitivity: Vector2 = Vector2(0.1, 0.1)
 var player_camera_min_zoom: Vector2 = Vector2(1, 1)
 var player_camera_max_zoom: Vector2 = Vector2(2, 2)
 
-
+# TODO : Money text overflow if float or 5 digit mayb?
 func _ready():
 	level_manager = get_parent()
 	money = level_manager.map.starting_money
@@ -56,6 +60,13 @@ func _ready():
 	#economy = PlayerEconomy.new()
 	info_panel.visible = false
 	fill_build_panel()
+	top.screen_entered.connect(mamamia)
+	bottom.screen_entered.connect(mamamia)
+	left.screen_entered.connect(mamamia)
+	right.screen_entered.connect(mamamia)
+
+func mamamia():
+	print("mamamia")
 
 func _process(delta):
 	if (is_building):
@@ -77,19 +88,23 @@ func _process(delta):
 	var speed = 100.0
 	var direction = Vector2.ZERO
 	
-	if Input.is_action_pressed("ui_right"):
-		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("ui_up"):  
+	if (Input.is_action_pressed("ui_up") && !top.is_on_screen()):  
 		direction.y -= 1
-	if Input.is_action_pressed("ui_down"):
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_down") && !bottom.is_on_screen()):
 		direction.y += 1
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_left") && !left.is_on_screen()):
+		direction.x -= 1
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_right") && !right.is_on_screen()):
+		direction.x += 1
+		print(player_camera.position)
 	
 	if (player_camera_min_position < player_camera.position):
 		direction = direction.normalized() * speed * delta
 		player_camera.position += direction
-		print(player_camera.position)
+		#print(player_camera.position)
 		#print(player_camera.get_screen_center_position())
 		
 func fill_build_panel():
