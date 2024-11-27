@@ -13,3 +13,4 @@ res://GameManager.tscn
 res://music_manager.gd
 res://projectile/explosive/projectile_explosive.tscn
 res://projectile/explosive/explosive_particle.tres
+res://projectile/projectiles_data.gd

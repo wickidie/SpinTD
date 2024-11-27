@@ -13,7 +13,7 @@ func _init():
 			"damage" = 1
 		},
 		"ProjectileExplosive" : {
-			"speed" = 100,
+			"speed" = 300,
 			"damage" = 1
 		}
 	}

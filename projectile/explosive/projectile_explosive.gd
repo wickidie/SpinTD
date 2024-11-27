@@ -4,6 +4,7 @@ var aoe: Area2D = Area2D.new()
 var collision: CollisionShape2D = CollisionShape2D.new()
 var circle_shape: CircleShape2D = CircleShape2D.new()
 @onready var explosive_particle: GPUParticles2D = $ExplosiveParticle
+@onready var sprite_2d: Sprite2D = $Sprite2D
 
 func _init():
 	m_projectile_name = "ProjectileExplosive"
@@ -25,6 +26,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		m_can_damage = false
 		stop_moving()
 		get_enemies_in_aoe()
+		sprite_2d.queue_free()
 		explosive_particle.restart()
 		await explosive_particle.finished
 		queue_free()
