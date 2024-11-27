@@ -14,3 +14,10 @@ res://music_manager.gd
 res://projectile/explosive/projectile_explosive.tscn
 res://projectile/explosive/explosive_particle.tres
 res://projectile/projectiles_data.gd
+res://enemy/enemy.gd
+res://enemy/basic/basic_enemy.tscn
+res://enemy/bonus/bonus_enemy.tscn
+res://enemy/fast/fast_enemy.tscn
+res://enemy/tank/tank_enemy.tscn
+res://map/cricle_map.gd
+res://enemy/hit_flash.tscn

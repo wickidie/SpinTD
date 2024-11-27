@@ -2,6 +2,7 @@ class_name Enemy extends PathFollow2D
 
 var EnemiesData: Resource = preload("res://enemy/enemy_data.gd")
 var HitFlash: PackedScene = preload("res://enemy/hit_flash.tscn")
+var HIT_SHADER: Shader = preload("res://enemy/hit_shader.tres")
 
 @onready var hitbox: Area2D = $Hitbox
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -24,8 +25,7 @@ func _ready():
 	#rotates = false
 	rotation = 0
 	#animation_player.assigned_animation = hit_flash
-	animation_player = HitFlash.instantiate()
-	add_child(animation_player)
+	setup_hit_shader()
 
 func _process(delta):
 	hp_bar.rotation = -rotation
@@ -48,7 +48,6 @@ func move_unit(delta):
 		level_manager.lives -= damage_to_lives
 		level_manager.lives_damaged.emit()
 		queue_free()
-	pass
 
 func take_damage(damage, projectile):
 	player_projectile = projectile
@@ -59,3 +58,10 @@ func take_damage(damage, projectile):
 		player_projectile.money += bounty
 		queue_free()
 		return true
+
+func setup_hit_shader():
+	var shader_material: ShaderMaterial = ShaderMaterial.new()
+	shader_material.shader = HIT_SHADER
+	sprite_2d.material = shader_material
+	animation_player = HitFlash.instantiate()
+	add_child(animation_player)

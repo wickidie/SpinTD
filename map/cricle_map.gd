@@ -34,10 +34,10 @@ func _ready():
 # 2D array concept [enemy_type, mob_set, mob_interval, set_interval]
 		"1" : {
 			"enemy_set" : [
-				[FAST_ENEMY, 20, 0.3, 1],
-				[TEST_ENEMY, 5, 0.3, 1],
+				[TEST_ENEMY, 10, 0.3, 1],
 				[BASIC_ENEMY, 10, 0.1, 1],
-				[TANK_ENEMY, 5, 0.5, 1],
+				[FAST_ENEMY, 10, 0.1, 1],
+				[TANK_ENEMY, 10, 0.5, 1],
 				[BONUS_ENEMY, 10, 0.2, 1]
 			],
 			"enemy_type" : [TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY],
