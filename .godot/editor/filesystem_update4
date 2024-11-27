@@ -21,3 +21,9 @@ res://enemy/fast/fast_enemy.tscn
 res://enemy/tank/tank_enemy.tscn
 res://map/cricle_map.gd
 res://enemy/hit_flash.tscn
+res://player/player.gd
+res://tower/towers_data.gd
+res://tower/test/test_tower.gd
+res://tower/basic/tower_basic.gd
+res://tower/gatling/tower_gatling.gd
+res://tower/tower.gd

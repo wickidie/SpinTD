@@ -4,16 +4,19 @@ class_name Player extends Node2D
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
 @onready var debug_label = $Debug/DebugLabel
-@onready var info_panel = $GUI/InfoPanel
-@onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
-@onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
-@onready var target = $GUI/InfoPanel/VBoxContainer/Target
+
 @onready var wave = $GUI/HBoxContainer/Wave
 @onready var lives_text = $GUI/HBoxContainer/Life
 @onready var money_text = $GUI/HBoxContainer/Money
 
-@onready var build_menu = $GUI/Panel/BuildMenu
-@onready var tower_menu_template: TextureButton = $GUI/Panel/BuildMenu/TowerTemplate
+@onready var info_panel = $GUI/InfoPanel
+@onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
+@onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
+@onready var target = $GUI/InfoPanel/VBoxContainer/Target
+@onready var tower_image: TextureRect = $GUI/InfoPanel/VBoxContainer/TowerImage
+
+@onready var build_menu = $GUI/BuildPanel/BuildMenu
+@onready var tower_menu_template: TextureButton = $GUI/BuildPanel/BuildMenu/TowerTemplate
 
 signal building_selected
 
@@ -39,29 +42,11 @@ var money
 func _ready():
 	level_manager = get_parent()
 	money = level_manager.map.starting_money
-	tower_list_path = [
-		"res://tower/test/test_tower.tscn",
-		"res://tower/basic/tower_basic.tscn",
-		"res://tower/gatling/tower_gatling.tscn"
-	]
-	for tower in tower_list_path:
-		var temp_tower: Tower = load(tower).instantiate()
-		tower_list.append(temp_tower)
-
-		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
-		temp_tower_menu.visible = true
-		temp_tower_menu.name = temp_tower.tower_name
-		temp_tower_menu.set_meta("TowerPath", tower)
-		temp_tower_menu.pressed.connect(buy_tower.bind(temp_tower_menu.get_meta("TowerPath")))
-		temp_tower_menu.texture_normal = temp_tower.tower_icon
-		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
-		#temp_tower_menu.connect()
-		build_menu.add_child(temp_tower_menu)
-
 	building_selected.connect(select_building)
 	#GameManager.player_list.append(self)
 	#economy = PlayerEconomy.new()
 	info_panel.visible = false
+	fill_build_panel()
 
 func _process(_delta):
 	if (is_building):
@@ -79,6 +64,35 @@ func _process(_delta):
 	wave.text = ("[center]" + "Wave: " + str(level_manager.map.wave) + "[/center]")
 	lives_text.text = ("[center]" + "Life: " + str(level_manager.lives) + "[/center]")
 	money_text.text = ("[center]" + "Money: " + str(money) + "[/center]")
+
+func fill_build_panel():
+	var tower_list_limit: int = 10
+	tower_list_path = [
+		"res://tower/test/test_tower.tscn",
+		"res://tower/basic/tower_basic.tscn",
+		"res://tower/gatling/tower_gatling.tscn"
+	]
+	for tower in tower_list_path:
+		var temp_tower: Tower = load(tower).instantiate()
+		tower_list.append(temp_tower)
+		print(temp_tower.tower_name)
+
+		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+		temp_tower_menu.visible = true
+		temp_tower_menu.name = temp_tower.tower_name
+		temp_tower_menu.set_meta("TowerPath", tower)
+		temp_tower_menu.pressed.connect(buy_tower.bind(temp_tower_menu.get_meta("TowerPath")))
+		temp_tower_menu.texture_normal = temp_tower.tower_icon
+		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
+		temp_tower_menu.get_child(1).text = str(temp_tower.tower_name)
+		build_menu.add_child(temp_tower_menu)
+	
+	if (len(tower_list_path) < 10):
+		for i in range(tower_list_limit - len(tower_list_path)):
+			var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+			temp_tower_menu.visible = true
+			build_menu.add_child(temp_tower_menu)
+			temp_tower_menu.get_child(1).text = "Empty"
 
 func show_build():
 	building.position = get_global_mouse_position()
@@ -113,6 +127,7 @@ func select_building():
 	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
 	target_mode.text = str(selected_building.target_mode_string)
 	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
+	tower_image.texture = selected_building.tower_icon
 
 func unselect_building():
 	#print("Unselect : ", selected_building)

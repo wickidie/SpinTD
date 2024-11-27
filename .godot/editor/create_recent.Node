@@ -1,8 +1,9 @@
+TextureRect
+Label
 GPUParticles2D
 LineEdit
 TextEdit
 HBoxContainer
-Label
 VBoxContainer
 GridContainer
 MarginContainer
@@ -12,4 +13,3 @@ AspectRatioContainer
 HFlowContainer
 Control
 NinePatchRect
-BoxContainer

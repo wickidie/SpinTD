@@ -22,9 +22,7 @@ func _ready():
 	hp_bar.max_value = health
 	hp_bar.value = health
 	loop = false
-	#rotates = false
 	rotation = 0
-	#animation_player.assigned_animation = hit_flash
 	setup_hit_shader()
 
 func _process(delta):

@@ -26,7 +26,7 @@ var TowersData: Resource = preload("res://tower/towers_data.gd")
 
 # Tower stats
 var tower_name: String
-var tower_icon
+var tower_icon: CompressedTexture2D
 var build_cost: float
 var attack_speed: float
 
@@ -77,6 +77,7 @@ func load_tower_stat(tower_name):
 	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
 	projectile = load(towers_data.towers_data[tower_name]["projectile"])
 	tower_icon = load(towers_data.towers_data[tower_name]["base"])
+	print(tower_icon)
 
 func set_target():
 	target_list_progress = []
