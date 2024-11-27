@@ -33,7 +33,7 @@ func restart_game():
 func _on_lives_damaged():
 	if (lives <= 0):
 		print("Game over bro u suck")
-		is_game_over = true
-		level_menu_ui.open_menu()
+		#is_game_over = true
+		#level_menu_ui.open_menu()
 	else:
 		print("Oi open ur eye, the enemy is damaging u")

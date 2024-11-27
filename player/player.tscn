@@ -11,6 +11,14 @@
 [node name="Player" type="Node2D"]
 script = ExtResource("1_tqoa7")
 
+[node name="PlayerCamera" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 360
+editor_draw_limits = true
+
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -93,11 +101,18 @@ text = "[center]asdasdasdasdasdasdasdasdasdas[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="TowerImage" type="TextureRect" parent="GUI/InfoPanel/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GUI/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TowerImage" type="TextureRect" parent="GUI/InfoPanel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("5_o0egp")
-expand_mode = 5
-stretch_mode = 3
+expand_mode = 4
+stretch_mode = 4
 
 [node name="BottomBox" type="VBoxContainer" parent="GUI/InfoPanel"]
 layout_mode = 1

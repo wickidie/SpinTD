@@ -3,6 +3,7 @@ class_name Player extends Node2D
 @onready var TEST_TOWER: PackedScene = preload("res://tower/test/test_tower.tscn")
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
+@onready var player_camera: Camera2D = $PlayerCamera
 @onready var debug_label = $Debug/DebugLabel
 
 @onready var wave = $GUI/HBoxContainer/Wave
@@ -13,7 +14,7 @@ class_name Player extends Node2D
 @onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
 @onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
 @onready var target = $GUI/InfoPanel/VBoxContainer/Target
-@onready var tower_image: TextureRect = $GUI/InfoPanel/VBoxContainer/TowerImage
+@onready var tower_image: TextureRect = $GUI/InfoPanel/VBoxContainer/MarginContainer/TowerImage
 
 @onready var build_menu = $GUI/BuildPanel/BuildMenu
 @onready var tower_menu_template: TextureButton = $GUI/BuildPanel/BuildMenu/TowerTemplate
@@ -39,6 +40,14 @@ var tower_list: Array
 var level_manager: LevelManager
 var money
 
+
+var player_camera_min_position: Vector2 = Vector2(0, 0)
+var player_camera_max_position: Vector2 = Vector2(640, 360)
+var zoom_sensitivity: Vector2 = Vector2(0.1, 0.1)
+var player_camera_min_zoom: Vector2 = Vector2(1, 1)
+var player_camera_max_zoom: Vector2 = Vector2(2, 2)
+
+
 func _ready():
 	level_manager = get_parent()
 	money = level_manager.map.starting_money
@@ -48,7 +57,7 @@ func _ready():
 	info_panel.visible = false
 	fill_build_panel()
 
-func _process(_delta):
+func _process(delta):
 	if (is_building):
 		if (is_precision_building and Input.is_action_pressed("LMB")):
 			show_precision_build()
@@ -64,7 +73,25 @@ func _process(_delta):
 	wave.text = ("[center]" + "Wave: " + str(level_manager.map.wave) + "[/center]")
 	lives_text.text = ("[center]" + "Life: " + str(level_manager.lives) + "[/center]")
 	money_text.text = ("[center]" + "Money: " + str(money) + "[/center]")
-
+	
+	var speed = 100.0
+	var direction = Vector2.ZERO
+	
+	if Input.is_action_pressed("ui_right"):
+		direction.x += 1
+	if Input.is_action_pressed("ui_left"):
+		direction.x -= 1
+	if Input.is_action_pressed("ui_up"):  
+		direction.y -= 1
+	if Input.is_action_pressed("ui_down"):
+		direction.y += 1
+	
+	if (player_camera_min_position < player_camera.position):
+		direction = direction.normalized() * speed * delta
+		player_camera.position += direction
+		print(player_camera.position)
+		#print(player_camera.get_screen_center_position())
+		
 func fill_build_panel():
 	var tower_list_limit: int = 10
 	tower_list_path = [
@@ -195,8 +222,7 @@ func _unhandled_input(event):
 			precision_current_pos = get_global_mouse_position()
 
 	if (event.is_action_pressed("LMB") and is_building and is_precision_building and building != null):
-		precision_current_pos = get_global_mouse_position()
-
+		precision_current_pos = get_global_mouse_position()	
 # Cancel building
 	elif (event.is_action_pressed("RMB") and is_building and building != null):
 		cancel_build()
@@ -204,6 +230,17 @@ func _unhandled_input(event):
 # Unselect tower
 	if (event.is_action_pressed("LMB") and selected_building != null and not is_building):
 		unselect_building()
+		
+	if (event.is_action("mwheel_up")):
+		if (player_camera.zoom < player_camera_max_zoom):
+			player_camera.zoom += zoom_sensitivity
+			print(player_camera.get_screen_center_position())
+		
+	if (event.is_action("mwheel_down")):
+		if (player_camera.zoom > player_camera_min_zoom):
+			player_camera.zoom -= zoom_sensitivity
+			print(player_camera.get_screen_center_position())
+
 
 func _on_target_change_left_pressed():
 	selected_building.change_target_mode(-1)

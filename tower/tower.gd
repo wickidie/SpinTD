@@ -26,7 +26,7 @@ var TowersData: Resource = preload("res://tower/towers_data.gd")
 
 # Tower stats
 var tower_name: String
-var tower_icon: CompressedTexture2D
+var tower_icon: Texture2D
 var build_cost: float
 var attack_speed: float
 
