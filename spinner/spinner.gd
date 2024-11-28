@@ -80,7 +80,7 @@ func prize_audio(i: int) -> void:
 		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 		gpu_particles_2d.restart()
 
-func _on_area_2d_input_event(_viewport: Viewport, _event: InputEvent, _shape_idx: Shape2D) -> void:
+func _on_area_2d_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> void:
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)
 	and player.money >= spin_cost):
 		roll()

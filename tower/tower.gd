@@ -21,7 +21,7 @@ var TowersData: Resource = preload("res://tower/towers_data.gd")
 @onready var tower_area: Area2D = $TowerArea
 @onready var tower_click_area: Area2D = $TowerClickArea
 @onready var reload_bar: ProgressBar = $Debug/ReloadBar
-@onready var debug_text: Label = $Debug/HBox/RichTextLabel
+@onready var debug_label: Label = $Debug/HBox/DebugLabel
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 
 # Tower stats
@@ -65,8 +65,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	reload_bar.value = reload_bar.max_value - timer.time_left
-	debug_text.text = (
-		"target_mode : " + str(target_mode))
+	#debug_label.text = "target_mode : " + str(target_mode)
 
 func _physics_process(_delta: float) -> void:
 	set_target()
@@ -206,7 +205,7 @@ func _on_tower_area_area_exited(area: Area2D) -> void:
 		check_build_space()
 
 # Receiving tower_owner mouse input to select
-func _on_tower_click_area_input_event(_viewport: Viewport, _event: InputEvent, _shape_idx: Shape2D) -> void:
+func _on_tower_click_area_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> void:
 	if (Input.is_action_just_pressed("LMB") and is_placed and tower_owner.is_building == false):
 		tower_owner.selected_building = self
 		selected.emit()

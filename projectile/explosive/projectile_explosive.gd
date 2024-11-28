@@ -37,7 +37,7 @@ func get_enemies_in_aoe() -> void:
 		if (area.is_in_group("Enemy")):
 			m_enemies_in_aoe.append(area)
 
-	for enemy: Enemy in m_enemies_in_aoe:
+	for enemy: Area2D in m_enemies_in_aoe:
 		if (enemy.get_parent().take_damage(m_damage, m_projectile_owner)):
 			enemy_killed.emit()
 	collision.set_deferred("disable", true)

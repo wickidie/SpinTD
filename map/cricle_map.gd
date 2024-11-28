@@ -40,10 +40,6 @@ func _ready() -> void:
 				[TANK_ENEMY, 10, 0.5, 1],
 				[BONUS_ENEMY, 10, 0.2, 1]
 			],
-			"enemy_type" : [TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY, TEST_ENEMY],
-			"mob_set" : [50, 15, 5, 3, 20],
-			"spawn_interval" : [0.1, 0.1, 0.5, 0.1, 0.2],
-			"set_interval" : [3, 3, 3, 3, 3]
 		},
 		"2" : {
 			"enemy_set" : [
@@ -68,7 +64,7 @@ func _ready() -> void:
 	wave_interval.start()
 	pass
 
-func spawn_unit(enemy_type: Enemy) -> void:
+func spawn_unit(enemy_type: PackedScene) -> void:
 	var enemy: Enemy = enemy_type.instantiate()
 	map_path.add_child(enemy)
 	enemy_list.append(enemy)

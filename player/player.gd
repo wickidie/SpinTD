@@ -169,7 +169,7 @@ func select_building() -> void:
 	info_panel.visible = true
 	tower.text = (str(selected_building.tower_name))
 	target_mode.text = str(selected_building.target_mode_string)
-	target.text = (str(selected_building.target.name))
+	target.text = (str(selected_building.target.name)) # Bug : Invalid get index 'name' (on base: 'previously freed').
 	tower_image.texture = selected_building.tower_icon
 
 func unselect_building() -> void:
@@ -214,14 +214,14 @@ func buy_tower(tower_scene: String) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("1") and can_build):
-		#print(tower_list.find("TowerTest"))
-		print(tower_list.find("TowerTest"))
 		buy_tower(tower_list_path[0])
 	if (event.is_action_pressed("2") and can_build):
-		#buy_tower(BASIC_TOWER)
 		buy_tower(tower_list_path[1])
 	if (event.is_action_pressed("3") and can_build):
 		buy_tower(tower_list_path[2])
+	if (event.is_action_pressed("4") and can_build):
+		if (tower_list_path.size() >= 4):
+			buy_tower(tower_list_path[3])
 		
 	if (event.is_action_pressed("spacebar")):
 		if (Engine.time_scale == 1):
