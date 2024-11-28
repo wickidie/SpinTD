@@ -2,7 +2,7 @@ class_name ProjectilesData extends Resource
 
 var projectiles_data: Dictionary
 
-func _init():
+func _init() -> void:
 	projectiles_data = {
 		"ProjectileTest" : {
 			"speed" = 100,

@@ -23,28 +23,28 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	m_projectile_state.call()
 
-func load_projectile_stat(projectile_name):
+func load_projectile_stat(projectile_name: String) -> void:
 	var projectiles_data: ProjectilesData = ProjectilesData.new()
 	m_speed = projectiles_data.projectiles_data[projectile_name]["speed"]
 	m_damage = projectiles_data.projectiles_data[projectile_name]["damage"]
 
-func move_to_target():
+func move_to_target() -> void:
 	velocity = m_target.normalized() * m_speed
 	move_and_slide()
 	m_projectile_state = move_to_target
 
-func stop_moving():
+func stop_moving() -> void:
 	velocity = Vector2.ZERO
 	m_projectile_state = stop_moving
 
-func receive_bounty():
+func receive_bounty() -> void:
 	#m_projectile_owner.economy.money += m_enemies[0].get_parent().bounty
 	pass
 
-func apply_single_damage(enemy):
+func apply_single_damage(enemy: Enemy) -> void:
 	enemy.get_parent().take_m_damage(m_damage)
 
-func apply_area_damage():
+func apply_area_damage() -> void:
 	var aoe: Area2D = Area2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	var circle_shape: CircleShape2D = CircleShape2D.new()
@@ -66,7 +66,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		if (m_enemies[0].get_parent().take_damage(m_damage, m_projectile_owner)):
 			enemy_killed.emit()
 
-func _on_area_2d_area_exited(area):
+func _on_area_2d_area_exited(area: Area2D) -> void:
 	if (area.is_in_group("Enemy")):
 		for enemy in m_hitbox.get_overlapping_areas():
 			if (enemy.is_in_group("Enemy")):
@@ -76,5 +76,5 @@ func _on_area_2d_area_exited(area):
 func _on_timer_timeout() -> void:
 	queue_free()
 
-func call_child():
+func call_child() -> void:
 	print("im parent")

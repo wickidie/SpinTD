@@ -17,7 +17,7 @@ var animation_player: AnimationPlayer
 var player_projectile: Player
 var level_manager: LevelManager
 
-func _ready():
+func _ready() -> void:
 	level_manager = get_parent().get_parent().level_manager
 	hp_bar.max_value = health
 	hp_bar.value = health
@@ -25,7 +25,7 @@ func _ready():
 	rotation = 0
 	setup_hit_shader()
 
-func _process(delta):
+func _process(delta: float) -> void:
 	hp_bar.rotation = -rotation
 	if (rotation_degrees == 180):
 		sprite_2d.flip_v = true
@@ -33,21 +33,21 @@ func _process(delta):
 		sprite_2d.flip_v = false
 	move_unit(delta)
 
-func load_enemy_stat(enemy_name: String):
+func load_enemy_stat(enemy_name: String) -> void:
 	var enemies_data: EnemiesData = EnemiesData.new()
 	health = enemies_data.enemies_data[enemy_name]["health"]
 	speed = enemies_data.enemies_data[enemy_name]["speed"]
 	bounty = enemies_data.enemies_data[enemy_name]["bounty"]
 	damage_to_lives = enemies_data.enemies_data[enemy_name]["damage_to_lives"]
 
-func move_unit(delta):
+func move_unit(delta: float) -> void:
 	progress += speed * delta
 	if (progress_ratio == 1):
 		level_manager.lives -= damage_to_lives
 		level_manager.lives_damaged.emit()
 		queue_free()
 
-func take_damage(damage, projectile):
+func take_damage(damage: int, projectile: Player) -> bool:
 	player_projectile = projectile
 	health -= damage
 	hp_bar.value = health
@@ -56,8 +56,10 @@ func take_damage(damage, projectile):
 		player_projectile.money += bounty
 		queue_free()
 		return true
+	else:
+		return false
 
-func setup_hit_shader():
+func setup_hit_shader() -> void:
 	var shader_material: ShaderMaterial = ShaderMaterial.new()
 	shader_material.shader = HIT_SHADER
 	sprite_2d.material = shader_material

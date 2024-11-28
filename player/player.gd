@@ -9,19 +9,19 @@ class_name Player extends Node2D
 @onready var left: VisibleOnScreenNotifier2D = $CameraNotifier/Left
 @onready var right: VisibleOnScreenNotifier2D = $CameraNotifier/Right
 
-@onready var debug_label = $Debug/DebugLabel
+@onready var debug_label: Label = $Debug/DebugLabel
 
-@onready var wave = $GUI/HBoxContainer/Wave
-@onready var lives_text = $GUI/HBoxContainer/Life
-@onready var money_text = $GUI/HBoxContainer/Money
+@onready var wave: Label = $GUI/HBoxContainer/Wave
+@onready var lives_text: Label = $GUI/HBoxContainer/Life
+@onready var money_text: Label = $GUI/HBoxContainer/Money
 
-@onready var info_panel = $GUI/InfoPanel
-@onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
-@onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
-@onready var target = $GUI/InfoPanel/VBoxContainer/Target
+@onready var info_panel: Panel = $GUI/InfoPanel
+@onready var tower: Label = $GUI/InfoPanel/VBoxContainer/Tower
+@onready var target_mode: Label = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
+@onready var target: Label = $GUI/InfoPanel/VBoxContainer/Target
 @onready var tower_image: TextureRect = $GUI/InfoPanel/VBoxContainer/MarginContainer/TowerImage
 
-@onready var build_menu = $GUI/BuildPanel/BuildMenu
+@onready var build_menu: HBoxContainer = $GUI/BuildPanel/BuildMenu
 @onready var tower_menu_template: TextureButton = $GUI/BuildPanel/BuildMenu/TowerTemplate
 
 signal building_selected
@@ -43,7 +43,7 @@ var building_bool: bool
 var tower_list_path: Array
 var tower_list: Array
 var level_manager: LevelManager
-var money
+var money: int
 
 var player_camera_min_position: Vector2 = Vector2(0, 0)
 var player_camera_max_position: Vector2 = Vector2(640, 360)
@@ -52,7 +52,7 @@ var player_camera_min_zoom: Vector2 = Vector2(1, 1)
 var player_camera_max_zoom: Vector2 = Vector2(2, 2)
 
 # TODO : Money text overflow if float or 5 digit mayb?
-func _ready():
+func _ready() -> void:
 	level_manager = get_parent()
 	money = level_manager.map.starting_money
 	building_selected.connect(select_building)
@@ -65,10 +65,10 @@ func _ready():
 	left.screen_entered.connect(mamamia)
 	right.screen_entered.connect(mamamia)
 
-func mamamia():
+func mamamia() -> void:
 	print("mamamia")
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if (is_building):
 		if (is_precision_building and Input.is_action_pressed("LMB")):
 			show_precision_build()
@@ -80,13 +80,14 @@ func _process(delta):
 		"\nselected_building : " + str(selected_building) +
 		"\nis_building : " + str(is_building) +
 		"\nis_precision_building : " + str(is_precision_building) +
-		"\ncan_build : " + str(can_build))
-	wave.text = ("[center]" + "Wave: " + str(level_manager.map.wave) + "[/center]")
-	lives_text.text = ("[center]" + "Life: " + str(level_manager.lives) + "[/center]")
-	money_text.text = ("[center]" + "Money: " + str(money) + "[/center]")
+		"\ncan_build : " + str(can_build) +
+		"\ntime_scale : " + str(Engine.time_scale))
+	wave.text = ("Wave: " + str(level_manager.map.wave))
+	lives_text.text = ("Life: " + str(level_manager.lives))
+	money_text.text = ("Money: " + str(money))
 	
-	var speed = 100.0
-	var direction = Vector2.ZERO
+	var speed: float = 100.0
+	var direction: Vector2 = Vector2.ZERO
 	
 	if (Input.is_action_pressed("ui_up") && !top.is_on_screen()):  
 		direction.y -= 1
@@ -107,14 +108,14 @@ func _process(delta):
 		#print(player_camera.position)
 		#print(player_camera.get_screen_center_position())
 		
-func fill_build_panel():
+func fill_build_panel() -> void:
 	var tower_list_limit: int = 10
 	tower_list_path = [
 		"res://tower/test/test_tower.tscn",
 		"res://tower/basic/tower_basic.tscn",
 		"res://tower/gatling/tower_gatling.tscn"
 	]
-	for tower in tower_list_path:
+	for tower: String in tower_list_path:
 		var temp_tower: Tower = load(tower).instantiate()
 		tower_list.append(temp_tower)
 		print(temp_tower.tower_name)
@@ -136,14 +137,14 @@ func fill_build_panel():
 			build_menu.add_child(temp_tower_menu)
 			temp_tower_menu.get_child(1).text = "Empty"
 
-func show_build():
+func show_build() -> void:
 	building.position = get_global_mouse_position()
 
-func show_precision_build():
-	var temp_pos = precision_start_pos + (get_global_mouse_position() - precision_current_pos) / 3
+func show_precision_build() -> void:
+	var temp_pos: Vector2 = precision_start_pos + (get_global_mouse_position() - precision_current_pos) / 3
 	building.position = temp_pos
 
-func build():
+func build() -> void:
 	building.build_placed.emit()
 	money -= selected_building.build_cost
 	can_build = true
@@ -151,14 +152,14 @@ func build():
 	building = null
 	selected_building = null
 
-func cancel_build():
+func cancel_build() -> void:
 	#print("Building Canceled : ", building)
 	building.queue_free()
 	is_building = false
 	is_precision_building = false
 	building = null
 
-func select_building():
+func select_building() -> void:
 	if (get_global_mouse_position().x <=
 	get_tree().root.get_viewport().get_window().content_scale_size.x / 2):
 		info_panel.anchors_preset = Control.PRESET_TOP_RIGHT
@@ -166,21 +167,21 @@ func select_building():
 		info_panel.anchors_preset = Control.PRESET_TOP_LEFT
 
 	info_panel.visible = true
-	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
+	tower.text = (str(selected_building.tower_name))
 	target_mode.text = str(selected_building.target_mode_string)
-	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
+	target.text = (str(selected_building.target.name))
 	tower_image.texture = selected_building.tower_icon
 
-func unselect_building():
+func unselect_building() -> void:
 	#print("Unselect : ", selected_building)
 	selected_building.unselected.emit()
 	selected_building = null
 	print(selected_building)
 	info_panel.visible = false
 
-func buy_tower(tower_scene):
+func buy_tower(tower_scene: String) -> void:
 	if (is_building):
-		var new_building = load(tower_scene).instantiate()
+		var new_building: Tower = load(tower_scene).instantiate()
 		if (building.name == new_building.name):
 			print("Building the same")
 		else:
@@ -221,8 +222,15 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		buy_tower(tower_list_path[1])
 	if (event.is_action_pressed("3") and can_build):
 		buy_tower(tower_list_path[2])
+		
+	if (event.is_action_pressed("spacebar")):
+		if (Engine.time_scale == 1):
+			Engine.time_scale = 2
+		else:
+			Engine.time_scale = 1
+			
 
-func _unhandled_input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_released("LMB") and is_building and building != null):
 		if (building.can_build_here):
 			if (is_precision_building):
@@ -257,20 +265,19 @@ func _unhandled_input(event):
 			print(player_camera.get_screen_center_position())
 
 
-func _on_target_change_left_pressed():
+func _on_target_change_left_pressed() -> void:
 	selected_building.change_target_mode(-1)
 	target_mode.text = str(selected_building.target_mode_string)
 	print(selected_building.target_mode)
 	print(selected_building.target_mode_string)
 
-func _on_target_change_right_pressed():
+func _on_target_change_right_pressed() -> void:
 	selected_building.change_target_mode(1)
 	target_mode.text = str(selected_building.target_mode_string)
 	print(selected_building.target_mode)
 	print(selected_building.target_mode_string)
 
-func _on_sell_tower_button_up():
+func _on_sell_tower_button_up() -> void:
 	money += selected_building.build_cost / 2
 	selected_building.queue_free()
 	unselect_building()
-	pass # Replace with function body.

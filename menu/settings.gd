@@ -9,13 +9,13 @@ class_name Settings extends Control
 
 @onready var root_window: Window = get_tree().root.get_window()
 
-const RESOLUTIONS = [
+const RESOLUTIONS: Array = [
 	Vector2i(1920, 1080),
 	Vector2i(1280, 720),
 	Vector2i(640, 360)
 ]
 
-const DISPLAY_MODES = [
+const DISPLAY_MODES: Array = [
 	"Windowed",
 	"Fullscreen",
 	"Exclusive Fullscreen"
@@ -29,7 +29,7 @@ var default_settings_value: Dictionary = {
 	"sfx_volume" = 0.7,
 }
 
-func _ready():
+func _ready() -> void:
 	visible = false
 	display_mode_option.item_selected.connect(_on_display_mode_option_item_selected)
 	resolution_option.item_selected.connect(_on_resolution_option_item_selected)
@@ -40,20 +40,23 @@ func _ready():
 	
 	set_default_settings_value()
 
-func set_default_settings_value():
+func _unhandled_key_input(event: InputEvent) -> void:
+	if (event.is_action_pressed("esc")):
+		visible = false
+
+func set_default_settings_value() -> void:
 	_on_resolution_option_item_selected(default_settings_value["resolution"])
 	_on_display_mode_option_item_selected(default_settings_value["display_mode"])
 	_on_borderless_check_box_toggled(default_settings_value["borderless"])
 	_on_music_slider_value_changed(default_settings_value["music_volume"])
 
-func fill_options_items():
-	for resolution in RESOLUTIONS:
+func fill_options_items() -> void:
+	for resolution: Vector2i in RESOLUTIONS:
 		resolution_option.add_item(str(resolution.x) + " x " + str(resolution.y))
-	for display_mode in DISPLAY_MODES:
+	for display_mode: String in DISPLAY_MODES:
 		display_mode_option.add_item(display_mode)
 
-func _on_display_mode_option_item_selected(index):
-	print(index)
+func _on_display_mode_option_item_selected(index: int) -> void:
 	match index:
 		0 :
 			root_window.mode = Window.MODE_WINDOWED
@@ -64,18 +67,18 @@ func _on_display_mode_option_item_selected(index):
 		_:
 			print("Unkown Display Mode")
 
-func _on_resolution_option_item_selected(index):
+func _on_resolution_option_item_selected(index: int) -> void:
 	root_window.size = RESOLUTIONS[index]
 	
-func _on_borderless_check_box_toggled(toggled_on):
+func _on_borderless_check_box_toggled(toggled_on: bool) -> void:
 	root_window.borderless = toggled_on
 
-func _on_music_slider_value_changed(value: float):
+func _on_music_slider_value_changed(value: float) -> void:
 	MusicManager.music_player.volume_db = linear_to_db(value)
 	music_value.text = str(value)
 	music_slider.value = value
 	
-func _on_music_value_text_submitted(new_text: String):
+func _on_music_value_text_submitted(new_text: String) -> void:
 	var new_float: float = float(new_text)
 	print(new_float)
 	if (new_float >= 1):

@@ -1,9 +1,9 @@
+Label
+TextureRect
 VisibleOnScreenNotifier2D
 Node2D
 Camera2D
 MarginContainer
-TextureRect
-Label
 GPUParticles2D
 LineEdit
 TextEdit

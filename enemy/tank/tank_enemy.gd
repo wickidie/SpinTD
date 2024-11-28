@@ -1,5 +1,5 @@
 class_name TankEnemy extends Enemy
 
-func _init():
-	enemy_name = "TankEnemy"
+func _init() -> void:
+	enemy_name = "Tank"
 	load_enemy_stat(enemy_name)

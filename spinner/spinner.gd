@@ -6,7 +6,7 @@ class_name Spinner extends Node2D
 @onready var spinner: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sfx_spin: AudioStreamPlayer2D = $SfxSpin
 @onready var sfx_jackpot: AudioStreamPlayer2D = $SfxJackpot
-@onready var gpu_particles_2d = $GPUParticles2D
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 var particle_list: Array = [
 	"res://spinner/normal_spinner_particle.tres",
 	"res://spinner/jackpot_spinner_particle.tres"
@@ -34,7 +34,7 @@ var spin_cost: float = 20
 var cumulative_weight: float
 var player: Player
 
-func _ready():
+func _ready() -> void:
 	player = get_parent().level_manager.player
 	gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 	gpu_particles_2d.emitting = false
@@ -44,22 +44,22 @@ func _ready():
 	progress_bar.max_value = cooldown.wait_time
 	cooldown.start()
 
-func _process(_delta):
+func _process(delta: float) -> void:
 	progress_bar.value = cooldown.wait_time - cooldown.time_left
 
-func load_table():
+func load_table() -> void:
 	loot_keys = loot_table.keys()
 	for i in range(loot_table.size()):
 		cumulative_weight += loot_table[loot_keys[i]]["weight"]
 	print("Cumulative Weight : ", cumulative_weight)
 
-func roll():
+func roll() -> void:
 	sfx_spin.play()
 	#animation_player.play("spinner_spinning")
 	spinner.play()
 	can_spin = false
 	cooldown.start()
-	var roll_value = randi_range(1, cumulative_weight)
+	var roll_value: int = randi_range(1, cumulative_weight)
 	player.money -= spin_cost
 	print("\nRoll : ", roll_value)
 	for i in range(loot_table.size()):
@@ -71,7 +71,7 @@ func roll():
 		else:
 			roll_value -= loot_table[loot_keys[i]]["weight"]
 
-func prize_audio(i: int):
+func prize_audio(i: int) -> void:
 	if (i == 0):
 		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[1])
 		gpu_particles_2d.restart()
@@ -80,13 +80,13 @@ func prize_audio(i: int):
 		gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 		gpu_particles_2d.restart()
 
-func _on_area_2d_input_event(_viewport, _event, _shape_idx):
+func _on_area_2d_input_event(_viewport: Viewport, _event: InputEvent, _shape_idx: Shape2D) -> void:
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)
 	and player.money >= spin_cost):
 		roll()
 
 
-func _on_cooldown_timeout():
+func _on_cooldown_timeout() -> void:
 	spinner.stop()
 	cooldown.stop()
 	can_spin = true;
