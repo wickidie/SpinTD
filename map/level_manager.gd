@@ -23,14 +23,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			change_game_speed()
 
 func setup_game(MAP_PATH: String, PLAYER_PATH: String) -> void:
-	if (map != null): 
-		map.queue_free()
-		map = null
-		
-	if (player != null): 
-		player.queue_free()
-		player = null
-		
 	print(map)
 	print(player)
 	self.MAP_PATH = MAP_PATH
@@ -41,7 +33,6 @@ func setup_game(MAP_PATH: String, PLAYER_PATH: String) -> void:
 	add_child(level_menu_ui)
 	add_child(map)
 	add_child(player)
-	# FIXME : fix ald connected error
 	if (not lives_damaged.is_connected(_on_lives_damaged)):
 		lives_damaged.connect(_on_lives_damaged)
 	await map.ready

@@ -37,6 +37,7 @@ func _ready() -> void:
 	level_manager.lives = starting_lives
 	wave_interval.timeout.connect(_on_wave_interval_timeout)
 	start_game.connect(_on_start_game)
+	print("Wave size :", wave_list.size())
 	
 func spawn_unit(enemy_type: PackedScene) -> void:
 	var enemy: Enemy = enemy_type.instantiate()
@@ -44,20 +45,28 @@ func spawn_unit(enemy_type: PackedScene) -> void:
 	enemy_list.append(enemy)
 
 func new_wave() -> void:
-	if (wave < wave_list.size()):
+	if (wave <= wave_list.size()):
 		for i in range(wave_list[str(wave)]["enemy_set"].size()):
 			for j in range(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_SET]):
+				spawn_unit(wave_list[str(wave)]["enemy_set"][i][WAVE.ENEMY_TYPE])
 				await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_INTERVAL]).timeout
 			await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.SET_INTERVAL]).timeout
 		wave += 1
-	elif (wave >= wave_list.size()):
+	elif (wave > wave_list.size()):
 		print("infinite round")
+		wave = wave_list.size()
+		for i in range(wave_list[str(wave)]["enemy_set"].size()):
+			for j in range(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_SET]):
+				spawn_unit(wave_list[str(wave)]["enemy_set"][i][WAVE.ENEMY_TYPE])
+				await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.MOB_INTERVAL]).timeout
+			await get_tree().create_timer(wave_list[str(wave)]["enemy_set"][i][WAVE.SET_INTERVAL]).timeout
+		wave += 1
 	else:
 		print("game finish")
-	wave_finished.emit()
+	print("wave : ", wave)
 
 func _on_wave_interval_timeout() -> void:
-	for i in range(wave_list.size()):
+	for i in range(wave_list.size() + 2):
 		print("\n=== Wave ", wave, " ===\n")
 		await new_wave()
 
