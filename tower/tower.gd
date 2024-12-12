@@ -1,6 +1,6 @@
 class_name Tower extends Node2D
 
-signal enemy_spotted(enemy: Enemy)
+signal enemy_spotted(enemy: Enemy) 
 signal placed
 signal build_placed
 signal selected
@@ -61,6 +61,7 @@ func _ready() -> void:
 	timer.wait_time = 1 / attack_speed
 	reload_bar.max_value = timer.wait_time
 	timer.start()
+	self.apply_scale(Vector2(2, 2))
 	waiting_to_build()
 
 func _process(_delta: float) -> void:
@@ -76,7 +77,6 @@ func load_tower_stat(tower_name: String) -> void:
 	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
 	projectile = load(towers_data.towers_data[tower_name]["projectile"])
 	tower_icon = load(towers_data.towers_data[tower_name]["base"])
-	print(tower_icon)
 
 func set_target() -> void:
 	target_list_progress = []

@@ -14,6 +14,7 @@ class_name Player extends Node2D
 @onready var wave: Label = $GUI/HBoxContainer/Wave
 @onready var lives_text: Label = $GUI/HBoxContainer/Life
 @onready var money_text: Label = $GUI/HBoxContainer/Money
+@onready var game_speed: Label = $GUI/HBoxContainer/GameSpeed
 
 @onready var info_panel: Panel = $GUI/InfoPanel
 @onready var tower: Label = $GUI/InfoPanel/VBoxContainer/Tower
@@ -113,7 +114,9 @@ func fill_build_panel() -> void:
 	tower_list_path = [
 		"res://tower/test/test_tower.tscn",
 		"res://tower/basic/tower_basic.tscn",
-		"res://tower/gatling/tower_gatling.tscn"
+		"res://tower/gatling/tower_gatling.tscn",
+		"res://tower/bomb/tower_bomb.tscn",
+		"res://tower/rocket/tower_rocket.tscn",
 	]
 	for tower: String in tower_list_path:
 		var temp_tower: Tower = load(tower).instantiate()
@@ -130,12 +133,12 @@ func fill_build_panel() -> void:
 		temp_tower_menu.get_child(1).text = str(temp_tower.tower_name)
 		build_menu.add_child(temp_tower_menu)
 	
-	if (len(tower_list_path) < 10):
-		for i in range(tower_list_limit - len(tower_list_path)):
-			var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
-			temp_tower_menu.visible = true
-			build_menu.add_child(temp_tower_menu)
-			temp_tower_menu.get_child(1).text = "Empty"
+	#if (len(tower_list_path) < 10):
+		#for i in range(tower_list_limit - len(tower_list_path)):
+			#var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+			#temp_tower_menu.visible = true
+			#build_menu.add_child(temp_tower_menu)
+			#temp_tower_menu.get_child(1).text = "Empty"
 
 func show_build() -> void:
 	building.position = get_global_mouse_position()
@@ -219,17 +222,14 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		buy_tower(tower_list_path[1])
 	if (event.is_action_pressed("3") and can_build):
 		buy_tower(tower_list_path[2])
-	if (event.is_action_pressed("4") and can_build):
-		if (tower_list_path.size() >= 4):
-			buy_tower(tower_list_path[3])
+	if (event.is_action_pressed("4") and can_build and tower_list_path.size() >= 4):
+		buy_tower(tower_list_path[3])
+	if (event.is_action_pressed("5") and can_build):
+		if (tower_list_path.size() >= 5):
+			buy_tower(tower_list_path[4])
+	if (event.is_action_pressed("6") and can_build and tower_list_path.size() >= 6):
+		buy_tower(tower_list_path[5])
 		
-	if (event.is_action_pressed("spacebar")):
-		if (Engine.time_scale == 1):
-			Engine.time_scale = 2
-		else:
-			Engine.time_scale = 1
-			
-
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_released("LMB") and is_building and building != null):
 		if (building.can_build_here):
@@ -263,7 +263,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if (player_camera.zoom > player_camera_min_zoom):
 			player_camera.zoom -= zoom_sensitivity
 			print(player_camera.get_screen_center_position())
-
 
 func _on_target_change_left_pressed() -> void:
 	selected_building.change_target_mode(-1)

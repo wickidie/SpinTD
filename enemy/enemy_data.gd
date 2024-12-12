@@ -6,13 +6,13 @@ func _init() -> void:
 	enemies_data = {
 		"Test" : {
 			"health" : 3,
-			"speed" : 80,
+			"speed" : 50,
 			"bounty" : 1,
 			"damage_to_lives" : 1,
 		},
 		"Basic" : {
 			"health" : 3,
-			"speed" : 80,
+			"speed" : 50,
 			"bounty" : 1,
 			"damage_to_lives" : 1,
 		},

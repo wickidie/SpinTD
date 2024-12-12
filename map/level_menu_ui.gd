@@ -12,14 +12,12 @@ func open_menu() -> void:
 	visible = !visible
 	get_tree().paused = true
 
-
 func close_menu() -> void:
 	visible = !visible
 	if (level_manager.is_game_over):
 		get_tree().paused = true
 	else:
 		get_tree().paused = false
-
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("esc")):

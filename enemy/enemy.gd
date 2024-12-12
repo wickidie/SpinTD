@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 	else:
 		sprite_2d.flip_v = false
 	move_unit(delta)
-
+	
 func load_enemy_stat(enemy_name: String) -> void:
 	var enemies_data: EnemiesData = EnemiesData.new()
 	health = enemies_data.enemies_data[enemy_name]["health"]

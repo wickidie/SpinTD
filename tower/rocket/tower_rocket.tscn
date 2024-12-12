@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://gah0tyr0hid2"]
+[gd_scene load_steps=7 format=3 uid="uid://dtk2mgf0wc4q7"]
 
-[ext_resource type="Script" path="res://tower/test/test_tower.gd" id="1_gt11w"]
-[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/test_tower_base.png" id="2_1687l"]
-[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_kjxvf"]
+[ext_resource type="Script" path="res://tower/rocket/tower_rocket.gd" id="1_icuku"]
+[ext_resource type="Texture2D" uid="uid://rmu0vypxh1j3" path="res://tower/basic/tower_basic_base.png" id="2_lcc5l"]
+[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_hsvxi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
-radius = 128.0
+radius = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
 radius = 8.0
@@ -13,15 +13,15 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
 radius = 8.0
 
-[node name="TowerTest" type="Node2D"]
-script = ExtResource("1_gt11w")
+[node name="TowerRocket" type="Node2D"]
+script = ExtResource("1_icuku")
 
 [node name="Base" type="Sprite2D" parent="."]
-texture = ExtResource("2_1687l")
+texture = ExtResource("2_lcc5l")
 
 [node name="Nozzle" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
-texture = ExtResource("3_kjxvf")
+texture = ExtResource("3_hsvxi")
 
 [node name="Marker2D" type="Marker2D" parent="Nozzle"]
 position = Vector2(6, -4.76837e-07)

@@ -33,9 +33,11 @@ var loot_keys: Array
 var spin_cost: float = 20
 var cumulative_weight: float
 var player: Player
+var level_manager: LevelManager
 
 func _ready() -> void:
-	player = get_parent().level_manager.player
+	level_manager = get_parent().level_manager
+	player = level_manager.player
 	gpu_particles_2d.process_material = ResourceLoader.load(particle_list[0])
 	gpu_particles_2d.emitting = false
 	gpu_particles_2d.one_shot = true
@@ -82,7 +84,7 @@ func prize_audio(i: int) -> void:
 
 func _on_area_2d_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> void:
 	if (Input.is_action_pressed("LMB") and (can_spin or not has_cooldown)
-	and player.money >= spin_cost):
+	and player.money >= spin_cost and not level_manager.is_game_paused):
 		roll()
 
 
