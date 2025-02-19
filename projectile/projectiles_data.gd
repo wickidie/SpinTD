@@ -2,14 +2,18 @@ class_name ProjectilesData extends Resource
 
 var projectiles_data: Dictionary
 
-func _init():
+func _init() -> void:
 	projectiles_data = {
-		"TestProjectile" : {
-			"speed" = 500,
+		"ProjectileTest" : {
+			"speed" = 100,
 			"damage" = 2
 		},
-		"BasicProjectile" : {
-			"speed" = 500,
+		"ProjectileBasic" : {
+			"speed" = 100,
+			"damage" = 1
+		},
+		"ProjectileExplosive" : {
+			"speed" = 300,
 			"damage" = 1
 		}
 	}

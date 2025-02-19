@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_kjxvf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
-radius = 64.0
+radius = 128.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
 radius = 8.0

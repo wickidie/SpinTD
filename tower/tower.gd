@@ -1,6 +1,6 @@
 class_name Tower extends Node2D
 
-signal enemy_spotted(enemy)
+signal enemy_spotted(enemy: Enemy)
 signal placed
 signal build_placed
 signal selected
@@ -11,26 +11,26 @@ enum TargetMode {FIRST, LAST}
 
 var TowersData: Resource = preload("res://tower/towers_data.gd")
 
-@onready var TEST_PROJECTILE: PackedScene = preload("res://projectile/test/test_projectile.tscn")
-@onready var tower_base = $Base
-@onready var tower_nozzle = $Nozzle
-@onready var marker_2d = $Nozzle/Marker2D
+@onready var projectile: PackedScene
+@onready var tower_base: Sprite2D = $Base
+@onready var tower_nozzle: Sprite2D = $Nozzle
+@onready var marker_2d: Marker2D = $Nozzle/Marker2D
 @onready var timer: Timer = $Timer
 @onready var tower_collision: CollisionShape2D = $TowerArea/TowerCollision
-@onready var tower_range = $Range/TowerRange
+@onready var tower_range: CollisionShape2D = $Range/TowerRange
 @onready var tower_area: Area2D = $TowerArea
-@onready var tower_click_area = $TowerClickArea
+@onready var tower_click_area: Area2D = $TowerClickArea
 @onready var reload_bar: ProgressBar = $Debug/ReloadBar
-@onready var debug_text = $Debug/HBox/RichTextLabel
-@onready var ray_cast_2d = $RayCast2D
+@onready var debug_label: Label = $Debug/HBox/DebugLabel
+@onready var ray_cast_2d: RayCast2D = $RayCast2D
 
 # Tower stats
 var tower_name: String
-var tower_icon
+var tower_icon: Texture2D
 var build_cost: float
 var attack_speed: float
 
-var player: Player
+var tower_owner: Player
 var can_shoot: bool = false
 var can_build_here: bool = true
 var is_placed: bool = false
@@ -48,13 +48,13 @@ var target_first_progress: float
 var target_mode: TargetMode
 var target_mode_string: String
 
-func _ready():
+func _ready() -> void:
 	target_mode = randi_range(0, TargetMode.size() - 1)
 	target_mode_to_string(target_mode)
 	build_placed.connect(place_building)
 	selected.connect(tower_selected)
 	unselected.connect(tower_unselected)
-	player = get_parent().get_node("Player")
+	tower_owner = get_parent().get_node("Player")
 	tower_range.disabled = true
 	tower_area.input_pickable = false
 	target = self
@@ -63,24 +63,25 @@ func _ready():
 	timer.start()
 	waiting_to_build()
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	reload_bar.value = reload_bar.max_value - timer.time_left
-	debug_text.text = (
-		"target_mode : " + str(target_mode))
+	#debug_label.text = "target_mode : " + str(target_mode)
 
 func _physics_process(_delta: float) -> void:
 	set_target()
 
-func load_tower_stat(tower_name):
+func load_tower_stat(tower_name: String) -> void:
 	var towers_data: TowersData = TowersData.new()
 	build_cost = towers_data.towers_data[tower_name]["build_cost"]
 	attack_speed = towers_data.towers_data[tower_name]["attack_speed"]
+	projectile = load(towers_data.towers_data[tower_name]["projectile"])
 	tower_icon = load(towers_data.towers_data[tower_name]["base"])
+	print(tower_icon)
 
-func set_target():
+func set_target() -> void:
 	target_list_progress = []
 	if (target_list.size() != 0):
-		for enemy in target_list:
+		for enemy: Enemy in target_list:
 			target_list_progress.append(enemy.progress)
 			match target_mode:
 				TargetMode.FIRST:
@@ -95,31 +96,30 @@ func set_target():
 	elif (target == null):
 		target = self
 
-func target_mode_to_string(target_mode):
+func target_mode_to_string(target_mode: int) -> void:
 	match target_mode:
 		TargetMode.FIRST:
 			target_mode_string = "FIRST"
 		TargetMode.LAST:
 			target_mode_string = "LAST"
 
-func change_target_mode(i: int):
+func change_target_mode(i: int) -> void:
 	target_mode = abs((target_mode + i) % TargetMode.size())
 	target_mode_to_string(target_mode)
 
-func turn():
+func turn() -> void:
 	tower_nozzle.look_at(target.global_position)
 
-func shoot_projectile():
+func shoot_projectile() -> void:
 	timer.start()
-	var bullet: Projectile = TEST_PROJECTILE.instantiate()
+	var bullet: Projectile = projectile.instantiate()
 	get_parent().add_child(bullet)
-	bullet.projectile_owner = player
+	bullet.m_projectile_owner = tower_owner
 	bullet.position = marker_2d.global_position
-	bullet.look_at(target.global_position)
-	bullet.target = target.global_position - global_position
+	bullet.start(target.global_position - global_position)
 	can_shoot = false
 
-func debug():
+func debug() -> void:
 	print("Target Found : ", target_list.size())
 	print("Target List : ", target_list)
 	print("Target Progress Found : ", target_list.size())
@@ -128,10 +128,10 @@ func debug():
 	print("Index : ", target_list_progress.find(target_list_progress.max()))
 	print("Target : ", target, "\n")
 
-func waiting_to_build():
+func waiting_to_build() -> void:
 	is_waiting = true
 
-func place_building():
+func place_building() -> void:
 	is_placed = true
 	is_waiting = false
 	is_selected = false
@@ -145,15 +145,15 @@ func place_building():
 	tower_click_area.monitorable = true
 	tower_click_area.input_pickable = true
 
-func tower_selected():
+func tower_selected() -> void:
 	tower_range.visible = true
 	is_selected = true
 
-func tower_unselected():
+func tower_unselected() -> void:
 	tower_range.visible = false
 	is_selected = false
 
-func check_build_space():
+func check_build_space() -> bool:
 	if (building_obstacles.is_empty()):
 		tower_collision.debug_color = Color(0, 0.6, 0.7, 0.42)
 		can_build_here = true
@@ -165,9 +165,12 @@ func check_build_space():
 		can_build_here = false
 		if (is_placed):
 			print(self, " : Illegal Builded")
-			player.economy.money += build_cost
+			tower_owner.money += build_cost
 			queue_free()
 			return false
+		# Hack : this may break something
+		else:
+			return true
 	else:
 		print("ELSE")
 		return false
@@ -187,24 +190,24 @@ func _on_range_area_exited(area: Area2D) -> void:
 		target_list.erase(area.get_parent())
 
 # Tower building obstacle
-func _on_tower_area_area_entered(area):
+func _on_tower_area_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
 		modulate += Color(1, 0, 0, 1)
 		area.modulate += Color(1, 0, 0, 1)
 		building_obstacles.append(area)
 		check_build_space()
 
-func _on_tower_area_area_exited(area):
+func _on_tower_area_area_exited(area: Area2D) -> void:
 	if (area.is_in_group("Tower") or area.is_in_group("Obstacle")):
 		modulate -= Color(1, 0, 0, 1)
 		area.modulate -= Color(1, 0, 0, 1)
 		building_obstacles.remove_at(building_obstacles.find(area))
 		check_build_space()
 
-# Receiving player mouse input to select
-func _on_tower_click_area_input_event(_viewport, _event, _shape_idx):
-	if (Input.is_action_just_pressed("LMB") and is_placed and player.is_building == false):
-		player.selected_building = self
+# Receiving tower_owner mouse input to select
+func _on_tower_click_area_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> void:
+	if (Input.is_action_just_pressed("LMB") and is_placed and tower_owner.is_building == false):
+		tower_owner.selected_building = self
 		selected.emit()
-		player.building_selected.emit()
+		tower_owner.building_selected.emit()
 		print("Select : ", self)

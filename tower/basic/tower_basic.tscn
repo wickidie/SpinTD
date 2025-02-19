@@ -68,13 +68,9 @@ offset_bottom = 64.0
 size_flags_horizontal = 4
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Debug/HBox"]
+[node name="DebugLabel" type="Label" parent="Debug/HBox"]
 layout_mode = 2
-mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 8
-bbcode_enabled = true
 text = "dasdes"
-fit_content = true
 
 [node name="ReloadBar" type="ProgressBar" parent="Debug"]
 layout_mode = 0

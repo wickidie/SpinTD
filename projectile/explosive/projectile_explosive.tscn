@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2fmesyer24n"]
+
+[ext_resource type="Script" path="res://projectile/explosive/projectile_explosive.gd" id="1_n82kv"]
+[ext_resource type="Texture2D" uid="uid://c5ql2syben01i" path="res://projectile/test/projectile_test.png" id="2_cfv6n"]
+[ext_resource type="Material" uid="uid://da2ri5gss0qf7" path="res://projectile/explosive/explosive_particle.tres" id="3_r345w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aos1u"]
+size = Vector2(8, 8)
+
+[node name="ProjectileExplosive" type="CharacterBody2D"]
+script = ExtResource("1_n82kv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_cfv6n")
+
+[node name="Area2D" type="Area2D" parent="." groups=["TowerProjectile"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_aos1u")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ExplosiveParticle" type="GPUParticles2D" parent="."]
+amount = 64
+process_material = ExtResource("3_r345w")
+explosiveness = 1.0
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

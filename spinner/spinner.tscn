@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://do75tovfr1fr8"]
 
 [ext_resource type="Script" path="res://spinner/spinner.gd" id="1_h18x4"]
-[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://icon.svg" id="1_m2qdv"]
+[ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://godot_icon.svg" id="1_m2qdv"]
 [ext_resource type="AudioStream" uid="uid://ddndmlylxyrcw" path="res://spinner/generic-ka-ching.mp3" id="3_i5aqv"]
 [ext_resource type="AudioStream" uid="uid://cf8cbup7wofo0" path="res://spinner/money_2.mp3" id="4_sbrbf"]
 [ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_2nyfp"]

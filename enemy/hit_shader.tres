@@ -1,0 +1,76 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://dnvnd5508ru6j"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_2xt5u"]
+output_port_for_preview = 0
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_0vsb6"]
+parameter_name = "BooleanParameter"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_ty80e"]
+output_port_for_preview = 0
+default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_wlktq"]
+parameter_name = "ColorParameter"
+default_value_enabled = true
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool BooleanParameter = false;
+uniform vec4 ColorParameter : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+
+void fragment() {
+// BooleanParameter:2
+	bool n_out2p0 = BooleanParameter;
+
+
+// ColorParameter:9
+	vec4 n_out9p0 = ColorParameter;
+
+
+// Input:10
+	vec4 n_out10p0 = COLOR;
+
+
+	vec3 n_out8p0;
+// If:8
+	float n_in8p1 = 1.00000;
+	float n_in8p2 = 0.00001;
+	if(abs((n_out2p0 ? 1.0 : 0.0) - n_in8p1) < n_in8p2)
+	{
+		n_out8p0 = vec3(n_out9p0.xyz);
+	}
+	else if((n_out2p0 ? 1.0 : 0.0) < n_in8p1)
+	{
+		n_out8p0 = vec3(n_out10p0.xyz);
+	}
+	else
+	{
+		n_out8p0 = vec3(n_out10p0.xyz);
+	}
+
+
+// Output:0
+	COLOR.rgb = n_out8p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(680, -100)
+nodes/fragment/2/node = SubResource("VisualShaderNodeBooleanParameter_0vsb6")
+nodes/fragment/2/position = Vector2(-320, -400)
+nodes/fragment/8/node = SubResource("VisualShaderNodeIf_ty80e")
+nodes/fragment/8/position = Vector2(380, -120)
+nodes/fragment/9/node = SubResource("VisualShaderNodeColorParameter_wlktq")
+nodes/fragment/9/position = Vector2(-200, -180)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_2xt5u")
+nodes/fragment/10/position = Vector2(-180, 100)
+nodes/fragment/connections = PackedInt32Array(2, 0, 8, 0, 8, 0, 0, 0, 9, 0, 8, 3, 10, 0, 8, 4, 10, 0, 8, 5)

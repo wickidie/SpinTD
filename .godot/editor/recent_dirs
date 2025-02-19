@@ -1,6 +1,11 @@
-res://spinner
+res://menu
+res://projectile/explosive
 res://
 res://gui
+res://map
+res://enemy
+res://addons
+res://spinner
 res://player
 D:/Hobby/GameDev/Godot/Project/4.x/SpinTD/build
 res://tower

@@ -3,17 +3,26 @@ class_name Player extends Node2D
 @onready var TEST_TOWER: PackedScene = preload("res://tower/test/test_tower.tscn")
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
-@onready var debug_label = $Debug/DebugLabel
-@onready var info_panel = $GUI/InfoPanel
-@onready var tower = $GUI/InfoPanel/VBoxContainer/Tower
-@onready var target_mode = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
-@onready var target = $GUI/InfoPanel/VBoxContainer/Target
-@onready var wave = $GUI/HBoxContainer/Wave
-@onready var life = $GUI/HBoxContainer/Life
-@onready var money = $GUI/HBoxContainer/Money
+@onready var player_camera: Camera2D = $PlayerCamera
+@onready var top: VisibleOnScreenNotifier2D = $CameraNotifier/Top
+@onready var bottom: VisibleOnScreenNotifier2D = $CameraNotifier/Bottom
+@onready var left: VisibleOnScreenNotifier2D = $CameraNotifier/Left
+@onready var right: VisibleOnScreenNotifier2D = $CameraNotifier/Right
 
-@onready var build_menu = $GUI/Panel/BuildMenu
-@onready var tower_menu_template: TextureButton = $GUI/Panel/BuildMenu/TowerTemplate
+@onready var debug_label: Label = $Debug/DebugLabel
+
+@onready var wave: Label = $GUI/HBoxContainer/Wave
+@onready var lives_text: Label = $GUI/HBoxContainer/Life
+@onready var money_text: Label = $GUI/HBoxContainer/Money
+
+@onready var info_panel: Panel = $GUI/InfoPanel
+@onready var tower: Label = $GUI/InfoPanel/VBoxContainer/Tower
+@onready var target_mode: Label = $GUI/InfoPanel/VBoxContainer/HBoxContainer/TargetMode
+@onready var target: Label = $GUI/InfoPanel/VBoxContainer/Target
+@onready var tower_image: TextureRect = $GUI/InfoPanel/VBoxContainer/MarginContainer/TowerImage
+
+@onready var build_menu: HBoxContainer = $GUI/BuildPanel/BuildMenu
+@onready var tower_menu_template: TextureButton = $GUI/BuildPanel/BuildMenu/TowerTemplate
 
 signal building_selected
 
@@ -30,36 +39,36 @@ var precision_current_pos: Vector2
 var selected_building_bool: bool
 var building_bool: bool
 
-var economy: PlayerEconomy
+#var economy: PlayerEconomy
 var tower_list_path: Array
 var tower_list: Array
+var level_manager: LevelManager
+var money: int
 
-func _ready():
-	tower_list_path = [
-		"res://tower/test/test_tower.tscn",
-		"res://tower/basic/tower_basic.tscn",
-		"res://tower/gatling/tower_gatling.tscn"
-	]
-	for tower in tower_list_path:
-		var temp_tower: Tower = load(tower).instantiate()
-		tower_list.append(temp_tower)
+var player_camera_min_position: Vector2 = Vector2(0, 0)
+var player_camera_max_position: Vector2 = Vector2(640, 360)
+var zoom_sensitivity: Vector2 = Vector2(0.1, 0.1)
+var player_camera_min_zoom: Vector2 = Vector2(1, 1)
+var player_camera_max_zoom: Vector2 = Vector2(2, 2)
 
-		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
-		temp_tower_menu.visible = true
-		temp_tower_menu.name = temp_tower.tower_name
-		temp_tower_menu.set_meta("TowerPath", tower)
-		temp_tower_menu.pressed.connect(buy_tower.bind(temp_tower_menu.get_meta("TowerPath")))
-		temp_tower_menu.texture_normal = temp_tower.tower_icon
-		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
-		#temp_tower_menu.connect()
-		build_menu.add_child(temp_tower_menu)
-
+# TODO : Money text overflow if float or 5 digit mayb?
+func _ready() -> void:
+	level_manager = get_parent()
+	money = level_manager.map.starting_money
 	building_selected.connect(select_building)
-	GameManager.player_list.append(self)
-	economy = PlayerEconomy.new()
+	#GameManager.player_list.append(self)
+	#economy = PlayerEconomy.new()
 	info_panel.visible = false
+	fill_build_panel()
+	top.screen_entered.connect(mamamia)
+	bottom.screen_entered.connect(mamamia)
+	left.screen_entered.connect(mamamia)
+	right.screen_entered.connect(mamamia)
 
-func _process(_delta):
+func mamamia() -> void:
+	print("mamamia")
+
+func _process(delta: float) -> void:
 	if (is_building):
 		if (is_precision_building and Input.is_action_pressed("LMB")):
 			show_precision_build()
@@ -71,34 +80,86 @@ func _process(_delta):
 		"\nselected_building : " + str(selected_building) +
 		"\nis_building : " + str(is_building) +
 		"\nis_precision_building : " + str(is_precision_building) +
-		"\ncan_build : " + str(can_build))
-	wave.text = ("[center]" + "Wave: " + str(GameManager.map.wave) + "[/center]")
-	life.text = ("[center]" + "Life: " + str(GameManager.life) + "[/center]")
-	money.text = ("[center]" + "Money: " + str(economy.money) + "[/center]")
+		"\ncan_build : " + str(can_build) +
+		"\ntime_scale : " + str(Engine.time_scale))
+	wave.text = ("Wave: " + str(level_manager.map.wave))
+	lives_text.text = ("Life: " + str(level_manager.lives))
+	money_text.text = ("Money: " + str(money))
+	
+	var speed: float = 100.0
+	var direction: Vector2 = Vector2.ZERO
+	
+	if (Input.is_action_pressed("ui_up") && !top.is_on_screen()):  
+		direction.y -= 1
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_down") && !bottom.is_on_screen()):
+		direction.y += 1
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_left") && !left.is_on_screen()):
+		direction.x -= 1
+		print(player_camera.position)
+	if (Input.is_action_pressed("ui_right") && !right.is_on_screen()):
+		direction.x += 1
+		print(player_camera.position)
+	
+	if (player_camera_min_position < player_camera.position):
+		direction = direction.normalized() * speed * delta
+		player_camera.position += direction
+		#print(player_camera.position)
+		#print(player_camera.get_screen_center_position())
+		
+func fill_build_panel() -> void:
+	var tower_list_limit: int = 10
+	tower_list_path = [
+		"res://tower/test/test_tower.tscn",
+		"res://tower/basic/tower_basic.tscn",
+		"res://tower/gatling/tower_gatling.tscn"
+	]
+	for tower: String in tower_list_path:
+		var temp_tower: Tower = load(tower).instantiate()
+		tower_list.append(temp_tower)
+		print(temp_tower.tower_name)
 
-func show_build():
+		var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+		temp_tower_menu.visible = true
+		temp_tower_menu.name = temp_tower.tower_name
+		temp_tower_menu.set_meta("TowerPath", tower)
+		temp_tower_menu.pressed.connect(buy_tower.bind(temp_tower_menu.get_meta("TowerPath")))
+		temp_tower_menu.texture_normal = temp_tower.tower_icon
+		temp_tower_menu.get_child(0).text = str(temp_tower.build_cost)
+		temp_tower_menu.get_child(1).text = str(temp_tower.tower_name)
+		build_menu.add_child(temp_tower_menu)
+	
+	if (len(tower_list_path) < 10):
+		for i in range(tower_list_limit - len(tower_list_path)):
+			var temp_tower_menu: TextureButton = tower_menu_template.duplicate()
+			temp_tower_menu.visible = true
+			build_menu.add_child(temp_tower_menu)
+			temp_tower_menu.get_child(1).text = "Empty"
+
+func show_build() -> void:
 	building.position = get_global_mouse_position()
 
-func show_precision_build():
-	var temp_pos = precision_start_pos + (get_global_mouse_position() - precision_current_pos) / 3
+func show_precision_build() -> void:
+	var temp_pos: Vector2 = precision_start_pos + (get_global_mouse_position() - precision_current_pos) / 3
 	building.position = temp_pos
 
-func build():
+func build() -> void:
 	building.build_placed.emit()
-	economy.money -= selected_building.build_cost
+	money -= selected_building.build_cost
 	can_build = true
 	is_building = false
 	building = null
 	selected_building = null
 
-func cancel_build():
+func cancel_build() -> void:
 	#print("Building Canceled : ", building)
 	building.queue_free()
 	is_building = false
 	is_precision_building = false
 	building = null
 
-func select_building():
+func select_building() -> void:
 	if (get_global_mouse_position().x <=
 	get_tree().root.get_viewport().get_window().content_scale_size.x / 2):
 		info_panel.anchors_preset = Control.PRESET_TOP_RIGHT
@@ -106,24 +167,25 @@ func select_building():
 		info_panel.anchors_preset = Control.PRESET_TOP_LEFT
 
 	info_panel.visible = true
-	tower.text = ("[center]" + str(selected_building.tower_name) + "[/center]")
+	tower.text = (str(selected_building.tower_name))
 	target_mode.text = str(selected_building.target_mode_string)
-	target.text = ("[center]" + str(selected_building.target.name) + "[/center]")
+	target.text = (str(selected_building.target.name)) # Bug : Invalid get index 'name' (on base: 'previously freed').
+	tower_image.texture = selected_building.tower_icon
 
-func unselect_building():
+func unselect_building() -> void:
 	#print("Unselect : ", selected_building)
 	selected_building.unselected.emit()
 	selected_building = null
 	print(selected_building)
 	info_panel.visible = false
 
-func buy_tower(tower_scene):
+func buy_tower(tower_scene: String) -> void:
 	if (is_building):
-		var new_building = load(tower_scene).instantiate()
+		var new_building: Tower = load(tower_scene).instantiate()
 		if (building.name == new_building.name):
 			print("Building the same")
 		else:
-			if (economy.money >= new_building.build_cost):
+			if (money >= new_building.build_cost):
 				building.queue_free()
 				building = new_building
 				selected_building = new_building
@@ -141,7 +203,7 @@ func buy_tower(tower_scene):
 		else:
 			building = load(tower_scene).instantiate()
 			selected_building = building
-			if (economy.money >= selected_building.build_cost):
+			if (money >= selected_building.build_cost):
 				building.is_selected = true
 				is_building = true
 				get_parent().add_child(building)
@@ -152,16 +214,23 @@ func buy_tower(tower_scene):
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("1") and can_build):
-		#print(tower_list.find("TowerTest"))
-		print(tower_list.find("TowerTest"))
 		buy_tower(tower_list_path[0])
 	if (event.is_action_pressed("2") and can_build):
-		#buy_tower(BASIC_TOWER)
 		buy_tower(tower_list_path[1])
 	if (event.is_action_pressed("3") and can_build):
 		buy_tower(tower_list_path[2])
+	if (event.is_action_pressed("4") and can_build):
+		if (tower_list_path.size() >= 4):
+			buy_tower(tower_list_path[3])
+		
+	if (event.is_action_pressed("spacebar")):
+		if (Engine.time_scale == 1):
+			Engine.time_scale = 2
+		else:
+			Engine.time_scale = 1
+			
 
-func _unhandled_input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_released("LMB") and is_building and building != null):
 		if (building.can_build_here):
 			if (is_precision_building):
@@ -176,8 +245,7 @@ func _unhandled_input(event):
 			precision_current_pos = get_global_mouse_position()
 
 	if (event.is_action_pressed("LMB") and is_building and is_precision_building and building != null):
-		precision_current_pos = get_global_mouse_position()
-
+		precision_current_pos = get_global_mouse_position()	
 # Cancel building
 	elif (event.is_action_pressed("RMB") and is_building and building != null):
 		cancel_build()
@@ -185,15 +253,31 @@ func _unhandled_input(event):
 # Unselect tower
 	if (event.is_action_pressed("LMB") and selected_building != null and not is_building):
 		unselect_building()
+		
+	if (event.is_action("mwheel_up")):
+		if (player_camera.zoom < player_camera_max_zoom):
+			player_camera.zoom += zoom_sensitivity
+			print(player_camera.get_screen_center_position())
+		
+	if (event.is_action("mwheel_down")):
+		if (player_camera.zoom > player_camera_min_zoom):
+			player_camera.zoom -= zoom_sensitivity
+			print(player_camera.get_screen_center_position())
 
-func _on_target_change_left_pressed():
+
+func _on_target_change_left_pressed() -> void:
 	selected_building.change_target_mode(-1)
 	target_mode.text = str(selected_building.target_mode_string)
 	print(selected_building.target_mode)
 	print(selected_building.target_mode_string)
 
-func _on_target_change_right_pressed():
+func _on_target_change_right_pressed() -> void:
 	selected_building.change_target_mode(1)
 	target_mode.text = str(selected_building.target_mode_string)
 	print(selected_building.target_mode)
 	print(selected_building.target_mode_string)
+
+func _on_sell_tower_button_up() -> void:
+	money += selected_building.build_cost / 2
+	selected_building.queue_free()
+	unselect_building()
