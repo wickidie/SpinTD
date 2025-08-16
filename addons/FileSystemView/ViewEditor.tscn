@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdup7mldjgpqd"]
 
-[ext_resource type="Script" path="res://addons/FileSystemView/ViewEditor.gd" id="1"]
+[ext_resource type="Script" uid="uid://dycd1ojr1by2r" path="res://addons/FileSystemView/ViewEditor.gd" id="1"]
 
 [node name="ViewEditor" type="AcceptDialog"]
 title = "View Config"

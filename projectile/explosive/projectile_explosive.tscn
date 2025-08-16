@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d2fmesyer24n"]
 
-[ext_resource type="Script" path="res://projectile/explosive/projectile_explosive.gd" id="1_n82kv"]
+[ext_resource type="Script" uid="uid://ceyidw7tt3bcf" path="res://projectile/explosive/projectile_explosive.gd" id="1_n82kv"]
 [ext_resource type="Texture2D" uid="uid://c5ql2syben01i" path="res://projectile/test/projectile_test.png" id="2_cfv6n"]
 [ext_resource type="Material" uid="uid://da2ri5gss0qf7" path="res://projectile/explosive/explosive_particle.tres" id="3_r345w"]
 

@@ -64,7 +64,6 @@ func change_game_speed() -> void:
 		Engine.time_scale = 2
 	else:
 		Engine.time_scale = 1
-	print("b")
 	player.game_speed.text = ("Speed: " + str(Engine.time_scale))
 
 func _on_lives_damaged() -> void:
@@ -72,5 +71,5 @@ func _on_lives_damaged() -> void:
 		print("Game over bro u suck")
 		#is_game_over = true
 		#level_menu_ui.open_menu()
-	else:
+	else:		
 		print("Oi open ur eye, the enemy is damaging u")

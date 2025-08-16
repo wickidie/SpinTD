@@ -14,4 +14,3 @@ func load_enemy_scene() -> void:
 	FAST_ENEMY = load("res://enemy/fast/fast_enemy.tscn")
 	TANK_ENEMY = load("res://enemy/tank/tank_enemy.tscn")
 	BONUS_ENEMY= load("res://enemy/bonus/bonus_enemy.tscn")
-

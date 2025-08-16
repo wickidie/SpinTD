@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ghrc36g4j2by"]
 
-[ext_resource type="Script" path="res://map/cricle_map.gd" id="1_wa886"]
+[ext_resource type="Script" uid="uid://cwu336i0r8kj" path="res://map/cricle_map.gd" id="1_wa886"]
 [ext_resource type="Texture2D" uid="uid://dapy8oe4vov86" path="res://map/map_circle.png" id="4_8qhj7"]
 [ext_resource type="PackedScene" uid="uid://do75tovfr1fr8" path="res://spinner/spinner.tscn" id="4_403tx"]
 

@@ -33,8 +33,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jms50"]
 _data = {
-"RESET": SubResource("Animation_miflo"),
-"hit_flash": SubResource("Animation_7il4y")
+&"RESET": SubResource("Animation_miflo"),
+&"hit_flash": SubResource("Animation_7il4y")
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer"]

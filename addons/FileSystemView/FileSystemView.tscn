@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8w0x221pxua3"]
 
-[ext_resource type="Script" path="res://addons/FileSystemView/FileSystemView.gd" id="1"]
+[ext_resource type="Script" uid="uid://bvy2j3tdvqjaw" path="res://addons/FileSystemView/FileSystemView.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://t1e8tppf6dbo" path="res://addons/FileSystemView/icons/folder_empty.svg" id="2"]
 [ext_resource type="Texture2D" uid="uid://cearmldmd07eb" path="res://addons/FileSystemView/icons/filter_include.svg" id="3"]
 [ext_resource type="Texture2D" uid="uid://drmvs0cnl2eiq" path="res://addons/FileSystemView/icons/filter_exclude.svg" id="4"]
-[ext_resource type="Script" path="res://addons/FileSystemView/FileSystemView.Popup.gd" id="5"]
+[ext_resource type="Script" uid="uid://crgagsw40gulr" path="res://addons/FileSystemView/FileSystemView.Popup.gd" id="5"]
 
 [node name="View" type="Control"]
 layout_mode = 3

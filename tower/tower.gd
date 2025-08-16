@@ -7,7 +7,10 @@ signal selected
 signal unselected
 signal build_area_cleared
 
-enum TargetMode {FIRST, LAST}
+enum TargetMode {
+	FIRST, 
+	LAST
+}
 
 var TowersData: Resource = preload("res://tower/towers_data.gd")
 

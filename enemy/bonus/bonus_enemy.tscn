@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bymb8ih5by8d6"]
 
-[ext_resource type="Script" path="res://enemy/bonus/bonus_enemy.gd" id="1_wy01j"]
+[ext_resource type="Script" uid="uid://dvm8fc88ys657" path="res://enemy/bonus/bonus_enemy.gd" id="1_wy01j"]
 [ext_resource type="Texture2D" uid="uid://dso5630bq1pqt" path="res://enemy/bonus/enemy_bonus.png" id="2_jbsds"]
 [ext_resource type="Texture2D" uid="uid://dswcagyst0smr" path="res://enemy/nine_patch_red.png" id="3_1cdsf"]
 

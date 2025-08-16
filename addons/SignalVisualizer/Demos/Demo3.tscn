@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://dtlyxmwytc8u6"]
 
-[ext_resource type="Script" path="res://Demos/Demo3.gd" id="1_2jtwt"]
+[sub_resource type="Resource" id="Resource_2e1ek"]
+metadata/__load_path__ = "res://Demos/Demo3.gd"
 
 [node name="Demo3" type="Node2D"]
-script = ExtResource("1_2jtwt")
+script = SubResource("Resource_2e1ek")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

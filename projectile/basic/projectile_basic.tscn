@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ds55tr7qslrw1"]
 
-[ext_resource type="Script" path="res://projectile/basic/projectile_basic.gd" id="1_kcp7a"]
+[ext_resource type="Script" uid="uid://dngwu7pq31wkr" path="res://projectile/basic/projectile_basic.gd" id="1_kcp7a"]
 [ext_resource type="Texture2D" uid="uid://bsr6j0m6a1m2g" path="res://godot_icon.svg" id="2_0mpi0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aos1u"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://0m7rgqejk0sm"]
 
-[ext_resource type="Script" path="res://map/level_menu_ui.gd" id="1_5dpdu"]
+[ext_resource type="Script" uid="uid://00y1ef2e70nf" path="res://map/level_menu_ui.gd" id="1_5dpdu"]
 
 [node name="LevelMenuUI" type="Control"]
 process_mode = 3

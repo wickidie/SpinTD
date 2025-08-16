@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c445k4ypuoks6"]
 
-[ext_resource type="Script" path="res://enemy/fast/fast_enemy.gd" id="1_2j4nr"]
+[ext_resource type="Script" uid="uid://ntjgdqckljha" path="res://enemy/fast/fast_enemy.gd" id="1_2j4nr"]
 [ext_resource type="Texture2D" uid="uid://ptvs8ho8yo0h" path="res://enemy/fast/fast_enemy.png" id="2_7pfsl"]
 [ext_resource type="Texture2D" uid="uid://dswcagyst0smr" path="res://enemy/nine_patch_red.png" id="3_wqxl6"]
 
