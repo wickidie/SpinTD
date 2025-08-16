@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://slxpqtm0l3hl" path="res://gui/triangle.png" id="4_g0ujx"]
 [ext_resource type="LabelSettings" uid="uid://dpjcyio37q86j" path="res://gui/DefaultLabel.tres" id="4_vhc4r"]
 [ext_resource type="Theme" uid="uid://dfjac8wn71aur" path="res://gui/SpinTDTheme.tres" id="5_1ydk1"]
-[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/test_tower_base.png" id="5_o0egp"]
+[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/tower_test_base.png" id="5_o0egp"]
 [ext_resource type="Texture2D" uid="uid://dje4n6n0dtfjt" path="res://gui/button.png" id="5_qc0a5"]
 
 [node name="Player" type="Node2D"]

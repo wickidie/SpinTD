@@ -1,6 +1,6 @@
 class_name Player extends Node2D
 
-@onready var TEST_TOWER: PackedScene = preload("res://tower/test/test_tower.tscn")
+@onready var TEST_TOWER: PackedScene = preload("res://tower/test/tower_test.tscn")
 @onready var BASIC_TOWER: PackedScene = preload("res://tower/basic/tower_basic.tscn")
 
 @onready var player_camera: Camera2D = $PlayerCamera
@@ -61,13 +61,6 @@ func _ready() -> void:
 	#economy = PlayerEconomy.new()
 	info_panel.visible = false
 	fill_build_panel()
-	top.screen_entered.connect(mamamia)
-	bottom.screen_entered.connect(mamamia)
-	left.screen_entered.connect(mamamia)
-	right.screen_entered.connect(mamamia)
-
-func mamamia() -> void:
-	print("mamamia")
 
 func _process(delta: float) -> void:
 	if (is_building):
@@ -112,7 +105,7 @@ func _process(delta: float) -> void:
 func fill_build_panel() -> void:
 	var tower_list_limit: int = 10
 	tower_list_path = [
-		"res://tower/test/test_tower.tscn",
+		"res://tower/test/tower_test.tscn",
 		"res://tower/basic/tower_basic.tscn",
 		"res://tower/gatling/tower_gatling.tscn",
 		"res://tower/bomb/tower_bomb.tscn",

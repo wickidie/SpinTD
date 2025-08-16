@@ -1,17 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dn1roosptm8rd"]
+[gd_scene load_steps=6 format=3 uid="uid://dn1roosptm8rd"]
 
 [ext_resource type="Script" uid="uid://cquwi0vkrk6hg" path="res://tower/basic/tower_basic.gd" id="1_bxpgv"]
 [ext_resource type="Texture2D" uid="uid://rmu0vypxh1j3" path="res://tower/basic/tower_basic_base.png" id="2_ff7vo"]
-[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_deols"]
+[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/tower_test_nozzle.png" id="3_deols"]
+[ext_resource type="Shape2D" uid="uid://yguxgfd8ks4d" path="res://tower/tower_square_collision.tres" id="4_rbph4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
 radius = 64.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
-radius = 8.0
 
 [node name="TowerBasic" type="Node2D"]
 script = ExtResource("1_bxpgv")
@@ -36,7 +31,7 @@ shape = SubResource("CircleShape2D_ibm4v")
 [node name="TowerArea" type="Area2D" parent="." groups=["Tower"]]
 
 [node name="TowerCollision" type="CollisionShape2D" parent="TowerArea"]
-shape = SubResource("CircleShape2D_jatt3")
+shape = ExtResource("4_rbph4")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="TowerClickArea" type="Area2D" parent="."]
@@ -44,7 +39,7 @@ input_pickable = false
 monitorable = false
 
 [node name="ClickCollision" type="CollisionShape2D" parent="TowerClickArea"]
-shape = SubResource("CircleShape2D_qepsb")
+shape = ExtResource("4_rbph4")
 debug_color = Color(0.482353, 0.588235, 0, 0.419608)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

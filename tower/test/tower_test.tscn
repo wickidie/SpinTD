@@ -1,27 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://gah0tyr0hid2"]
+[gd_scene load_steps=6 format=3 uid="uid://gah0tyr0hid2"]
 
-[ext_resource type="Script" uid="uid://cpkmbgxe63b4r" path="res://tower/test/test_tower.gd" id="1_gt11w"]
-[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/test_tower_base.png" id="2_1687l"]
-[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/test_tower_nozzle.png" id="3_kjxvf"]
+[ext_resource type="Script" uid="uid://cpkmbgxe63b4r" path="res://tower/test/tower_test.gd" id="1_lfeen"]
+[ext_resource type="Texture2D" uid="uid://yrso8usxkqjv" path="res://tower/test/tower_test_base.png" id="2_q42sq"]
+[ext_resource type="Texture2D" uid="uid://dksqd03jwosu" path="res://tower/test/tower_test_nozzle.png" id="3_8xcg3"]
+[ext_resource type="Shape2D" uid="uid://yguxgfd8ks4d" path="res://tower/tower_square_collision.tres" id="4_q42sq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ibm4v"]
 radius = 128.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jatt3"]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qepsb"]
-radius = 8.0
-
 [node name="TowerTest" type="Node2D"]
-script = ExtResource("1_gt11w")
+script = ExtResource("1_lfeen")
 
 [node name="Base" type="Sprite2D" parent="."]
-texture = ExtResource("2_1687l")
+texture = ExtResource("2_q42sq")
 
 [node name="Nozzle" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
-texture = ExtResource("3_kjxvf")
+texture = ExtResource("3_8xcg3")
 
 [node name="Marker2D" type="Marker2D" parent="Nozzle"]
 position = Vector2(6, -4.76837e-07)
@@ -36,7 +31,7 @@ shape = SubResource("CircleShape2D_ibm4v")
 [node name="TowerArea" type="Area2D" parent="." groups=["Tower"]]
 
 [node name="TowerCollision" type="CollisionShape2D" parent="TowerArea"]
-shape = SubResource("CircleShape2D_jatt3")
+shape = ExtResource("4_q42sq")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="TowerClickArea" type="Area2D" parent="."]
@@ -44,7 +39,7 @@ input_pickable = false
 monitorable = false
 
 [node name="ClickCollision" type="CollisionShape2D" parent="TowerClickArea"]
-shape = SubResource("CircleShape2D_qepsb")
+shape = ExtResource("4_q42sq")
 debug_color = Color(0.482353, 0.588235, 0, 0.419608)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

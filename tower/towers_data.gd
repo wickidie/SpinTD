@@ -5,35 +5,35 @@ var towers_data: Dictionary = {
 		"build_cost" : 1,
 		"attack_speed" : 1,
 		"projectile" : "res://projectile/explosive/projectile_explosive.tscn",
-		"base" : "res://tower/test/test_tower_base.png",
-		"nozzle" : "res://tower/test/test_tower_nozzle.png"
+		"base" : "res://tower/test/tower_test_base.png",
+		"nozzle" : "res://tower/test/tower_test_nozzle.png"
 	},
 	"Basic" : {
 		"build_cost" : 10,
 		"attack_speed" : 1,
 		"projectile" : "res://projectile/basic/projectile_basic.tscn",
 		"base" : "res://tower/basic/tower_basic_base.png",
-		"nozzle" : "res://tower/test/test_tower_nozzle.png"
+		"nozzle" : "res://tower/test/tower_test_nozzle.png"
 	},
 	"Gatling" : {
 		"build_cost" : 30,
 		"attack_speed" : 2,
 		"projectile" : "res://projectile/basic/projectile_basic.tscn",
 		"base" : "res://tower/gatling/tower_base_gatling.png",
-		"nozzle" : "res://tower/test/test_tower_nozzle.png"
+		"nozzle" : "res://tower/test/tower_test_nozzle.png"
 	},
 	"Bomb" : {
 		"build_cost" : 20,
 		"attack_speed" : 1,
 		"projectile" : "res://projectile/explosive/projectile_explosive.tscn",
 		"base" : "res://tower/gatling/tower_base_gatling.png",
-		"nozzle" : "res://tower/test/test_tower_nozzle.png"
+		"nozzle" : "res://tower/test/tower_test_nozzle.png"
 	},
 	"Rocket" : {
 		"build_cost" : 50,
 		"attack_speed" : 2,
 		"projectile" : "res://projectile/explosive/projectile_explosive.tscn",
 		"base" : "res://tower/gatling/tower_base_gatling.png",
-		"nozzle" : "res://tower/test/test_tower_nozzle.png"
+		"nozzle" : "res://tower/test/tower_test_nozzle.png"
 	},
 }
