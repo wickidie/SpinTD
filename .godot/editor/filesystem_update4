@@ -15,3 +15,4 @@ res://spinner/spinner_anim.tres
 res://spinner/normal_spinner_particle.tres
 res://tower/bomb/tower_bomb.tscn
 res://map/cricle_map.tscn
+res://spinner/spinner.tscn

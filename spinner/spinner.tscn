@@ -71,7 +71,7 @@ texture = ExtResource("1_m2qdv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hq8fb")
+&"": SubResource("AnimationLibrary_hq8fb")
 }
 
 [node name="SfxSpin" type="AudioStreamPlayer2D" parent="."]
@@ -121,10 +121,10 @@ vertical_alignment = 1
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 amount = 50
-process_material = ExtResource("7_sdqhg")
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 10
+process_material = ExtResource("7_sdqhg")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
