@@ -57,7 +57,16 @@ func _ready() -> void:
 	build_placed.connect(place_building)
 	selected.connect(tower_selected)
 	unselected.connect(tower_unselected)
-	tower_owner = get_parent().get_node("Player")
+	tower_owner = get_parent().get_node("Player") 
+	"""
+	E 0:01:47:105   tower.gd:60 @ _ready(): Node not found: "Player" (relative to "/root/LevelManager").
+  <C++ Error>   Method/function failed. Returning: nullptr
+  <C++ Source>  scene/main/node.cpp:1877 @ get_node()
+  <Stack Trace> tower.gd:60 @ _ready()
+				player.gd:205 @ buy_tower()
+				player.gd:213 @ _unhandled_key_input()
+
+	"""
 	tower_range.disabled = true
 	tower_area.input_pickable = false
 	target = self
